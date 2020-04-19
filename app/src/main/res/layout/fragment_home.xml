@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vertical_guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.333"
+            />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vertical_guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.666"
+            />
+
+        <ImageView
+            android:id="@+id/imageViewClock"
+            android:layout_width="0dp"
+            android:layout_height="130sp"
+            android:contentDescription="@string/clock"
+            android:layout_marginHorizontal="@dimen/activity_vertical_margin"
+            app:srcCompat="@drawable/clock"
+            android:layout_marginBottom="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/vertical_guideline1"
+            />
+
+        <ImageView
+            android:id="@+id/imageViewChampagne"
+            android:layout_width="0dp"
+            android:layout_height="300sp"
+            android:contentDescription="@string/champagne"
+            android:layout_marginHorizontal="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="20dp"
+            app:srcCompat="@drawable/champagne"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline1"
+            app:layout_constraintEnd_toStartOf="@id/vertical_guideline2"
+            />
+
+        <ImageView
+            android:id="@+id/imageViewEgg"
+            android:layout_width="0dp"
+            android:layout_height="130sp"
+            android:layout_marginHorizontal="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="20dp"
+            android:contentDescription="@string/egg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/vertical_guideline2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/egg" />
+
+        <ImageView
+            android:id="@+id/imageViewPotatoes"
+            android:layout_width="0dp"
+            android:layout_height="130sp"
+            android:layout_marginHorizontal="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="@string/clock"
+            app:layout_constraintBottom_toTopOf="@id/imageViewClock"
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/potatoes" />
+
+        <ImageView
+            android:id="@+id/imageViewBread"
+            android:layout_width="0dp"
+            android:layout_height="130sp"
+            android:layout_marginHorizontal="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="@string/clock"
+            app:layout_constraintBottom_toTopOf="@id/imageViewPotatoes"
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/bread" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.stho.mayai.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_alarm_countdown"
+            app:destination="@id/navigation_alarm_countdown"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_settings"
+            app:destination="@id/navigation_settings" />
+        <action
+            android:id="@+id/action_navigation_home_to_navigation_notifications"
+            app:destination="@id/navigation_alarms" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_alarm_countdown"
+        android:name="com.stho.mayai.ui.alarm.AlarmCountdownFragment"
+        tools:layout="@layout/fragment_alarm_countdown" >
+        <argument
+            android:name="Alarm"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="null" />
+        <action
+            android:id="@+id/action_navigation_alarm_countdown_to_navigation_alarm_modify"
+            app:destination="@id/navigation_alarm_modify" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_alarm_modify"
+        android:name="com.stho.mayai.ui.alarm.AlarmModifyFragment"
+        tools:layout="@layout/fragment_alarm_modify" >
+        <argument
+            android:name="Alarm"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="null" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.stho.mayai.ui.settings.SettingsFragment"
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_navigation_settings_to_navigation_show_log"
+            app:destination="@id/navigation_show_log" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_show_log"
+        android:name="com.stho.mayai.ui.showlog.ShowLogFragment"
+        tools:layout="@layout/fragment_show_log" />
+
+    <fragment
+        android:id="@+id/navigation_alarms"
+        android:name="com.stho.mayai.ui.alarms.AlarmsFragment"
+        tools:layout="@layout/fragment_alarms" />
+
+    <action
+        android:id="@+id/action_global_navigation_alarm_countdown"
+        app:destination="@id/navigation_alarm_countdown">
+         <argument
+            android:name="Alarm"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="null" />
+    </action>
+
+    <action
+        android:id="@+id/action_global_navigation_alarms"
+        app:destination="@id/navigation_alarms" />
+
+</navigation>
+

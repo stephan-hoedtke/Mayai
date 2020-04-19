@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/settings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="25sp"
+            android:textAlignment="center"
+            android:layout_margin="@dimen/activity_vertical_margin"
+            android:text="@string/label_settings" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vertical_guideline1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.09"
+            />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vertical_guideline2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.23"
+            />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vertical_guideline3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.77"
+            />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/vertical_guideline4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.91"
+            />
+
+        <TextView
+            android:id="@+id/next_alarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/settings"
+            android:layout_margin="@dimen/activity_vertical_margin"
+            android:text="@string/default_next_alarm"
+            />
+
+        <ImageView
+            android:id="@+id/buttonStartPlaying"
+            android:layout_width="0dp"
+            android:layout_height="100sp"
+            app:layout_constraintBottom_toTopOf="@id/buttonOpenChannelSettings"
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline1"
+            app:layout_constraintEnd_toStartOf="@id/vertical_guideline2"
+            android:src="@drawable/ring_pressable"
+            android:contentDescription="@string/label_start_alarm"
+            />
+
+        <ImageView
+            android:id="@+id/buttonStopPlaying"
+            android:layout_width="0dp"
+            android:layout_height="100sp"
+            app:layout_constraintBottom_toTopOf="@id/buttonOpenChannelSettings"
+            app:layout_constraintStart_toEndOf="@id/vertical_guideline3"
+            app:layout_constraintEnd_toStartOf="@id/vertical_guideline4"
+            android:src="@drawable/stop_pressable"
+            android:contentDescription="@string/label_start_alarm"
+            />
+
+        <Button
+            android:id="@+id/buttonShowLog"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@string/label_show_log"
+            android:layout_margin="5dp"
+            />
+
+        <Button
+            android:id="@+id/buttonSendNotification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/buttonShowLog"
+            android:text="@string/label_send_notification"
+            android:layout_margin="5dp"
+            />
+
+        <Button
+            android:id="@+id/buttonStartService"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/buttonSendNotification"
+            android:text="@string/label_start_service"
+            android:layout_margin="5dp"
+            />
+
+        <Button
+            android:id="@+id/buttonStopService"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/buttonStartService"
+            android:text="@string/label_stop_service"
+            android:layout_margin="5dp"
+            />
+
+        <Button
+            android:id="@+id/buttonStopAlarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/buttonStopService"
+            android:text="@string/lable_stop_alarm"
+            android:layout_margin="5dp"
+            />
+
+        <Button
+            android:id="@+id/buttonOpenAlarm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/buttonStopAlarm"
+            android:text="@string/label_open_alarm"
+            android:layout_margin="5dp"
+            />
+
+        <Button
+            android:id="@+id/buttonOpenChannelSettings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/buttonOpenAlarm"
+            android:text="@string/label_channel_settings"
+            android:layout_margin="5dp"
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
+
