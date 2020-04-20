@@ -42,67 +42,28 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_settings, container, false);
-        binding.buttonStartPlaying.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                player.ring();
-            }
+        binding.buttonStartPlaying.setOnClickListener(v -> player.ring());
+        binding.buttonStopPlaying.setOnClickListener(v -> player.silence());
+        binding.buttonSendNotification.setOnClickListener(v -> {
+            MayaiNotificationManager.build(getContext()).setCountdown(Alarm.createTest()).sendNotification();
+            viewModel.update(getContext());
         });
-        binding.buttonStopPlaying.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                player.silence();
-            }
+        binding.buttonStartService.setOnClickListener(v -> {
+            MayaiNotificationService.startAsForegroundService(getContext(), Alarm.createTest());
+            viewModel.update(getContext());
         });
-        binding.buttonSendNotification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MayaiNotificationManager.build(getContext()).setCountdown(Alarm.createTest()).sendNotification();
-                viewModel.update(getContext());
-            }
+        binding.buttonStopService.setOnClickListener(v -> {
+            MayaiNotificationService.stop(getContext());
+            viewModel.update(getContext());
         });
-        binding.buttonStartService.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MayaiNotificationService.startAsForegroundService(getContext(), Alarm.createTest());
-                viewModel.update(getContext());
-            }
+        binding.buttonStopAlarm.setOnClickListener(v -> {
+            MayaiWorker.build(getContext()).cancel();
+            viewModel.update(getContext());
         });
-        binding.buttonStopService.setOnClickListener(new View.OnClickListener() {
-            @SuppressWarnings("ConstantConditions")
-            @Override
-            public void onClick(View v) {
-                MayaiNotificationService.stop(getContext());
-                viewModel.update(getContext());
-            }
-        });
-        binding.buttonStopAlarm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MayaiWorker.build(getContext()).cancel();
-                viewModel.update(getContext());
-            }
-        });
-        binding.buttonOpenAlarm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                viewModel.openAlarmFromClockInfo(getContext());
-            }
-        });
-        binding.buttonOpenChannelSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                MayaiNotificationManager.build(getContext()).openChannelSettings();
-            }
-        });
-        binding.buttonShowLog.setOnClickListener(new View.OnClickListener() {
-            @SuppressWarnings("ConstantConditions")
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(getActivity(), R.id.nav_host_fragment)
-                        .navigate(SettingsFragmentDirections.actionNavigationSettingsToNavigationShowLog());
-            }
-        });
+        binding.buttonOpenAlarm.setOnClickListener(view -> viewModel.openAlarmFromClockInfo(getContext()));
+        binding.buttonOpenChannelSettings.setOnClickListener(view -> MayaiNotificationManager.build(getContext()).openChannelSettings());
+        binding.buttonShowLog.setOnClickListener(view -> Navigation.findNavController(getActivity(), R.id.nav_host_fragment)
+                .navigate(SettingsFragmentDirections.actionNavigationSettingsToNavigationShowLog()));
         viewModel.getInfoLD().observe(getViewLifecycleOwner(), info -> binding.nextAlarm.setText(info));
         viewModel.getVersionLD().observe(getViewLifecycleOwner(), this::updateActionBar);
         return binding.getRoot();

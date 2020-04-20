@@ -1,5 +1,6 @@
 package com.stho.mayai.ui.alarms;
 
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -24,19 +26,23 @@ public class AlarmsFragment extends Fragment {
     private AlarmsViewModel viewModel;
     private FragmentAlarmsBinding binding;
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = AlarmsViewModel.build(this);
     }
 
+    @SuppressWarnings("ConstantConditions")
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alarms, container, false);
         binding.list.setLayoutManager(new LinearLayoutManager(getContext()));
-        AlarmsRecyclerViewAdapter adapter = new AlarmsRecyclerViewAdapter(getContext(), viewModel.getAlarms());
+        final AlarmsRecyclerViewAdapter adapter = new AlarmsRecyclerViewAdapter(getActivity(), viewModel.getAlarms());
         binding.list.setAdapter(adapter);
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeAlarmToDelete(adapter));
+        final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeAlarmToDelete(adapter));
         itemTouchHelper.attachToRecyclerView(binding.list);
+        final DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
+        binding.list.addItemDecoration(dividerItemDecoration);
         updateActionBar();
         return binding.getRoot();
     }

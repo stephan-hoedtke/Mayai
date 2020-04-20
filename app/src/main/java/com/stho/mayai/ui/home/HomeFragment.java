@@ -34,36 +34,11 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
-        binding.imageViewEgg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startCounter(Alarm.TYPE_EGG, "EGG", 7.0);
-            }
-        });
-        binding.imageViewChampagne.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startCounter(Alarm.TYPE_CHAMPAGNE, "CHAMPAGNE", 20);
-            }
-        });
-        binding.imageViewClock.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startCounter(Alarm.TYPE_CLOCK, "CLOCK", 3);
-            }
-        });
-        binding.imageViewBread.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startCounter(Alarm.TYPE_BREAD, "BREAD", 10);
-            }
-        });
-        binding.imageViewPotatoes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startCounter(Alarm.TYPE_POTATOES, "POTATOES", 25);
-            }
-        });
+        binding.imageViewEgg.setOnClickListener(v -> startCounter(Alarm.TYPE_EGG, "EGG", 7.0));
+        binding.imageViewChampagne.setOnClickListener(v -> startCounter(Alarm.TYPE_CHAMPAGNE, "CHAMPAGNE", 20));
+        binding.imageViewClock.setOnClickListener(v -> startCounter(Alarm.TYPE_CLOCK, "CLOCK", 3));
+        binding.imageViewBread.setOnClickListener(v -> startCounter(Alarm.TYPE_BREAD, "BREAD", 10));
+        binding.imageViewPotatoes.setOnClickListener(v -> startCounter(Alarm.TYPE_POTATOES, "POTATOES", 25));
         updateActionBar();
         return binding.getRoot();
     }

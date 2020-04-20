@@ -1,14 +1,20 @@
 package com.stho.mayai.ui.alarms;
 
+import android.content.ClipData;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.stho.mayai.Alarm;
 import com.stho.mayai.IAlarms;
 import com.stho.mayai.MayaiWorker;
@@ -18,12 +24,18 @@ import org.jetbrains.annotations.NotNull;
 
 public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecyclerViewAdapter.ViewHolder> {
 
-    private final IAlarms alarms;
+    private final FragmentActivity activity;
     private final Context context;
+    private final IAlarms alarms;
 
-    AlarmsRecyclerViewAdapter(Context context, IAlarms alarms) {
-        this.context = context;
+    AlarmsRecyclerViewAdapter(FragmentActivity activity, IAlarms alarms) {
+        this.activity = activity;
+        this.context = activity.getApplicationContext();
         this.alarms = alarms;
+    }
+
+    public Context getContext() {
+        return context;
     }
 
     @NotNull
@@ -40,6 +52,10 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
         holder.timeView.setText(holder.alarm.getTriggerTimeAsString());
         holder.statusView.setText(holder.alarm.getStatusName());
         holder.nameView.setText(holder.alarm.getName());
+        holder.itemView.setOnLongClickListener(view -> {
+            editItem(position);
+            return true;
+        });
     }
 
     @Override
@@ -50,7 +66,26 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
     void deleteItem(int position) {
         Alarm alarm = alarms.get(position);
         MayaiWorker.build(context).delete(alarm);
+        // notify the item removed by position
+        // to perform recycler view delete animations
+        // NOTE: don't call notifyDataSetChanged()
         notifyItemRemoved(position);
+        notifyDataSetChanged();
+        showUndoSnackBar(position, alarm);
+    }
+
+    private void showUndoSnackBar(final int position, final Alarm alarm) {
+
+        View container = activity.findViewById(R.id.container);
+        Snackbar snackbar = Snackbar.make(container, "Alarm was deleted", Snackbar.LENGTH_LONG);
+        snackbar.setAction("Undo", view -> undoDelete(position, alarm));
+        snackbar.setActionTextColor(Color.YELLOW);
+        snackbar.show();
+    }
+
+    private void undoDelete(final int position, final Alarm alarm) {
+        MayaiWorker.build(context).undoDelete(position, alarm);
+        notifyItemInserted(position);
         notifyDataSetChanged();
     }
 
@@ -65,6 +100,8 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
         final TextView timeView;
         final TextView statusView;
         final TextView nameView;
+        final ConstraintLayout viewBackground;
+        final ConstraintLayout viewForeground;
         Alarm alarm;
 
         ViewHolder(View view) {
@@ -74,6 +111,8 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
             this.timeView = view.findViewById(R.id.time);
             this.statusView = view.findViewById(R.id.status);
             this.nameView = view.findViewById(R.id.name);
+            this.viewBackground = view.findViewById(R.id.view_background);
+            this.viewForeground = view.findViewById(R.id.view_foreground);
         }
     }
 }

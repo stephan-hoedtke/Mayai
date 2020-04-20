@@ -97,22 +97,9 @@
             android:contentDescription="@string/label_stop_alarm"
             app:layout_constraintTop_toBottomOf="@id/horizontal_guideline2"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/vertical_guideline3"
-            app:layout_constraintEnd_toStartOf="@id/vertical_guideline4"
-            />
-
-        <ImageView
-            android:id="@+id/buttonEdit"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:src="@drawable/pencil_pressable"
-            android:contentDescription="@string/label_modify_alarm"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/horizontal_guideline2"
             app:layout_constraintStart_toEndOf="@id/vertical_guideline5"
             app:layout_constraintEnd_toStartOf="@id/vertical_guideline6"
             />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

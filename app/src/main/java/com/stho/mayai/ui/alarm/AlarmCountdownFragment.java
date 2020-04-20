@@ -41,25 +41,8 @@ public class AlarmCountdownFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alarm_countdown, container, false);
-        binding.image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                edit();
-            }
-        });
-        binding.buttonEdit.setOnClickListener(new View.OnClickListener() {
-            @SuppressWarnings("ConstantConditions")
-            @Override
-            public void onClick(View v) {
-                edit();
-            }
-        });
-        binding.buttonStopPlaying.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cancelAlarm();
-            }
-        });
+        binding.image.setOnClickListener(v -> edit());
+        binding.buttonStopPlaying.setOnClickListener(v -> cancelAlarm());
         viewModel.getAlarmLD().observe(getViewLifecycleOwner(), this::onUpdateAlarm);
         viewModel.getRemainingSecondsLD().observe(getViewLifecycleOwner(), this::onUpdateRemainingSeconds);
         viewModel.setAlarm(Helpers.getAlarmFromFragmentArguments(this));

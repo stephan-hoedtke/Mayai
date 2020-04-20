@@ -120,6 +120,16 @@ public class MayaiWorker {
         }
     }
 
+    public void undoDelete(int position, Alarm alarm) {
+        try {
+            repository.getAlarms().undoDelete(position, alarm);
+            scheduleNextPendingAlarm();
+            repository.save(context);
+        } catch (Exception ex) {
+            onError(ex);
+        }
+    }
+
     public void cancel() {
         try {
             alarmManager.cancelAlarm(Alarm.REQUEST_CODE);

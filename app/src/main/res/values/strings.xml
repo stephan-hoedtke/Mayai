@@ -34,7 +34,6 @@
     <string name="label_send_notification">Send Notification</string>
     <string name="label_start_service">Start Service</string>
     <string name="label_stop_service">Stop Service</string>
-    <string name="lable_stop_alarm">Stop Alarm</string>
     <string name="label_channel_settings">Open Channel Settings</string>
     <string name="label_open_alarm">Open Alarm</string>
 
@@ -43,10 +42,8 @@
     <string name="label_default_time">17:03</string>
     <string name="default_log_entry">log entry test sample</string>
     <string name="label_show_log">Open Log</string>
-    <string name="default_status">Pending...</string>
+    <string name="default_status">Pending…</string>
     <string name="label_edit">edit</string>
-    <string name="label_delete">delete</string>
     <string name="label_alarms">Alarms</string>
-    <string name="label_to_delete"><![CDATA[... << to delete]]></string>
-    <string name="label_to_edit"><![CDATA[to edit >> ...]]></string>
+    <string name="label_delete">delete</string>
 </resources>

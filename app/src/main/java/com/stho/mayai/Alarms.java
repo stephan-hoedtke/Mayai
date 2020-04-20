@@ -39,8 +39,8 @@ public class Alarms implements IAlarms {
 
     public Alarm get(int position) {
         if (0 <= position && position < keys.size()) {
-            long key = keys.get(position);
-            return map.get(key);
+            long id = keys.get(position);
+            return map.get(id);
         }
         return null;
     }
@@ -49,6 +49,12 @@ public class Alarms implements IAlarms {
         long id = alarm.getId();
         map.remove(id);
         keys.remove(id);
+    }
+
+    void undoDelete(int position, Alarm alarm) {
+        long id = alarm.getId();
+        keys.add(position, id);
+        map.put(id, alarm);
     }
 
     @Nullable Alarm getNextPendingAlarm() {
@@ -64,11 +70,6 @@ public class Alarms implements IAlarms {
             }
         }
         return nextAlarm;
-    }
-
-    void clear() {
-        map.clear();;
-        keys.clear();
     }
 
     Collection<Alarm> getCollection() {

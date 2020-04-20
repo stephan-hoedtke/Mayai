@@ -41,18 +41,10 @@ public class AlarmModifyFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alarm_modify, container, false);
-        binding.buttonStopPlaying.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stopAlarm();
-            }
-        });
-        binding.rotary.setOnAngleChangedListener(new RotaryView.OnAngleChangedListener() {
-            @Override
-            public void onAngleChanged(double angle) {
-                touch.touch();
-                viewModel.rotate(angle);
-            }
+        binding.buttonStopPlaying.setOnClickListener(v -> stopAlarm());
+        binding.rotary.setOnAngleChangedListener(angle -> {
+            touch.touch();
+            viewModel.rotate(angle);
         });
         viewModel.getAlarmLD().observe(getViewLifecycleOwner(), this::onUpdateAlarm);
         viewModel.getRemainingSecondsLD().observe(getViewLifecycleOwner(), this::onUpdateRemainingSeconds);

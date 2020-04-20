@@ -32,13 +32,9 @@ public class ShowLogFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_show_log, container, false);
         binding.list.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.list.setAdapter(new ShowLogRecyclerViewAdapter(viewModel.getLog()));
-        binding.buttonDelete.setOnClickListener(new View.OnClickListener() {
-            @SuppressWarnings("ConstantConditions")
-            @Override
-            public void onClick(View view) {
-                viewModel.clearLog();
-                binding.list.getAdapter().notifyDataSetChanged();
-            }
+        binding.buttonDelete.setOnClickListener(view -> {
+            viewModel.clearLog();
+            binding.list.getAdapter().notifyDataSetChanged();
         });
         updateActionBar();
         return binding.getRoot();
