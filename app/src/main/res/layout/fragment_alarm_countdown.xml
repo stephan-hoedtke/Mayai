@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.09"
+            app:layout_constraintGuide_percent="0.10"
             />
 
         <androidx.constraintlayout.widget.Guideline
@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.23"
+            app:layout_constraintGuide_percent="0.20"
             />
 
         <androidx.constraintlayout.widget.Guideline
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.77"
+            app:layout_constraintGuide_percent="0.80"
             />
 
         <androidx.constraintlayout.widget.Guideline
@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.91"
+            app:layout_constraintGuide_percent="0.90"
             />
 
         <ImageView
@@ -93,7 +93,7 @@
             android:id="@+id/buttonStopPlaying"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:src="@drawable/stop_pressable"
+            android:src="@drawable/alarm_pressable"
             android:contentDescription="@string/label_stop_alarm"
             app:layout_constraintTop_toBottomOf="@id/horizontal_guideline2"
             app:layout_constraintBottom_toBottomOf="parent"

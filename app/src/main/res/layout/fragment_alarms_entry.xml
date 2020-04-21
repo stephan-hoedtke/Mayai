@@ -7,13 +7,12 @@
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/view_background"
+        android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorPrimaryDark">
 
         <ImageView
-            android:id="@+id/delete_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -22,27 +21,42 @@
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_margin="7sp"
             android:scaleType="fitEnd"
-            android:src="@android:drawable/ic_menu_delete" />
+            android:src="@android:drawable/ic_menu_delete"
+            android:contentDescription="@string/label_delete"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_margin="7sp"
+            android:scaleType="fitEnd"
+            android:src="@android:drawable/ic_menu_delete"
+            android:contentDescription="@string/label_delete"
+            />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toStartOf="@id/delete_icon"
-            android:layout_marginHorizontal="20sp"
+            android:text="@string/label_delete"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:text="@string/label_delete"
-            android:textAlignment="center"
-            android:textColor="@color/design_default_color_error"
-            android:textSize="13sp" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/colorAccent"
+            android:textSize="20sp"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/view_foreground"
+        android:id="@+id/foreground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/black">
+        android:background="@drawable/background_selector">
 
         <ImageView
             android:id="@+id/image"
@@ -87,6 +101,19 @@
             app:layout_constraintTop_toBottomOf="@id/time"
             android:text="@string/default_log_entry"
             android:textAppearance="?attr/textAppearanceListItem" />
+
+        <TextView
+            android:id="@+id/textViewRemainingTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/time"
+            android:layout_marginHorizontal="16sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:text="@string/default_time"
+            android:textAppearance="?attr/textAppearanceListItem" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

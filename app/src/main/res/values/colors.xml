@@ -3,6 +3,7 @@
     <color name="colorPrimary">#55AA88</color>
     <color name="colorPrimaryDark">#DDAACC</color>
     <color name="colorAccent">#B81B60</color>
-
-    <color name="black_overlay">#66000000</color>
+    <color name="colorSelection">#001122</color>
+    <color name="colorActionBar">#66000000</color>
+    <color name="colorBackground">#000000</color>
 </resources>

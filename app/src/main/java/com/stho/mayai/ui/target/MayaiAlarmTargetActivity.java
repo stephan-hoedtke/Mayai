@@ -30,18 +30,8 @@ public class MayaiAlarmTargetActivity extends AppCompatActivity {
         onNewIntent(getIntent());
         turnScreenOnAndKeyguardOff();
         binding = DataBindingUtil.setContentView(this, R.layout.activity_alarm_target);
-        binding.image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                snooze();
-            }
-        });
-        binding.buttonStopPlaying.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                cancel();
-            }
-        });
+        binding.image.setOnClickListener(view -> snooze());
+        binding.buttonStopPlaying.setOnClickListener(view -> cancel());
     }
 
     @Override

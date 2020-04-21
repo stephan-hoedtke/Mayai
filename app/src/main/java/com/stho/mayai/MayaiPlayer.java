@@ -14,7 +14,7 @@ public class MayaiPlayer {
     }
 
     private MayaiPlayer(Context context) {
-        this.context = context;
+        this.context = context.getApplicationContext();
     }
 
     public void ring() {

@@ -26,6 +26,7 @@ public class MainViewModel extends AndroidViewModel {
     public MainViewModel(@NonNull Application application) {
         super(application);
         repository = MayaiRepository.getRepository(application);
+
     }
 
     boolean hasUnfinishedAlarms() {

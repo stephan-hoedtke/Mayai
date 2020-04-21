@@ -80,7 +80,7 @@
             android:id="@+id/buttonStopPlaying"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:src="@drawable/stop_pressable"
+            android:src="@drawable/alarm_pressable"
             android:contentDescription="@string/label_stop_alarm"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/horizontal_guideline2"

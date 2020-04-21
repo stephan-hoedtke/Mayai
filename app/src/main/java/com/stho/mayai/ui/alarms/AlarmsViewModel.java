@@ -6,6 +6,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -27,6 +28,8 @@ public class AlarmsViewModel extends AndroidViewModel {
         super(application);
         repository = MayaiRepository.getRepository(application.getBaseContext());
     }
+
+    LiveData<Alarms> getAlarmsLD() { return repository.getAlarmsLD(); }
 
     IAlarms getAlarms() {
         return repository.getAlarms();

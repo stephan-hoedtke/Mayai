@@ -52,6 +52,11 @@ public class MayaiRepository implements IRepository {
      */
     void save(Context context) {
         MayaiPersister.build(context, this).save();
+        touch();
+    }
+
+    private void touch() {
+        alarmsLiveData.postValue(alarmsLiveData.getValue());
     }
 
     public Alarms getAlarms() {

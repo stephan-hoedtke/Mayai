@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.stho.mayai.Alarm;
+import com.stho.mayai.Helpers;
 import com.stho.mayai.IAlarms;
 import com.stho.mayai.MayaiWorker;
 import com.stho.mayai.R;
@@ -32,6 +34,10 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
         this.activity = activity;
         this.context = activity.getApplicationContext();
         this.alarms = alarms;
+    }
+
+    public void onUpdateAlarms() {
+        notifyDataSetChanged();
     }
 
     public Context getContext() {
@@ -52,6 +58,12 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
         holder.timeView.setText(holder.alarm.getTriggerTimeAsString());
         holder.statusView.setText(holder.alarm.getStatusName());
         holder.nameView.setText(holder.alarm.getName());
+        if (holder.alarm.isPending()) {
+            holder.textViewRemainingTime.setText(Helpers.getSecondsAsString(holder.alarm.getRemainingSeconds()));
+        }
+        else {
+            holder.textViewRemainingTime.setText("");
+        }
         holder.itemView.setOnLongClickListener(view -> {
             editItem(position);
             return true;
@@ -89,7 +101,7 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
         notifyDataSetChanged();
     }
 
-    void editItem(int position) {
+    private void editItem(int position) {
         Alarm alarm = alarms.get(position);
         MayaiWorker.build(context).open(alarm);
     }
@@ -100,8 +112,9 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
         final TextView timeView;
         final TextView statusView;
         final TextView nameView;
-        final ConstraintLayout viewBackground;
-        final ConstraintLayout viewForeground;
+        final TextView textViewRemainingTime;
+        final ConstraintLayout background;
+        final ConstraintLayout foreground;
         Alarm alarm;
 
         ViewHolder(View view) {
@@ -111,8 +124,9 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
             this.timeView = view.findViewById(R.id.time);
             this.statusView = view.findViewById(R.id.status);
             this.nameView = view.findViewById(R.id.name);
-            this.viewBackground = view.findViewById(R.id.view_background);
-            this.viewForeground = view.findViewById(R.id.view_foreground);
+            this.textViewRemainingTime = view.findViewById(R.id.textViewRemainingTime);
+            this.background = view.findViewById(R.id.background);
+            this.foreground = view.findViewById(R.id.foreground);
         }
     }
 }

@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             if (viewModel.hasUnfinishedAlarms()) {
+                MayaiWorker.build(this).initialize();
                 findNavController().navigate(
                         MobileNavigationDirections.actionGlobalNavigationAlarms());
             }

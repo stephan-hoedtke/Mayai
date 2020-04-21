@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.09"
+            app:layout_constraintGuide_percent="0.10"
             />
 
         <androidx.constraintlayout.widget.Guideline
@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.23"
+            app:layout_constraintGuide_percent="0.20"
             />
 
 
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.77"
+            app:layout_constraintGuide_percent="0.80"
             />
 
         <androidx.constraintlayout.widget.Guideline
@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.91"
+            app:layout_constraintGuide_percent="0.90"
             />
 
         <TextView
@@ -61,24 +61,13 @@
             />
 
         <ImageView
-            android:id="@+id/buttonStartPlaying"
-            android:layout_width="0dp"
-            android:layout_height="100sp"
-            app:layout_constraintBottom_toTopOf="@id/buttonOpenChannelSettings"
-            app:layout_constraintStart_toEndOf="@id/vertical_guideline1"
-            app:layout_constraintEnd_toStartOf="@id/vertical_guideline2"
-            android:src="@drawable/ring_pressable"
-            android:contentDescription="@string/label_start_alarm"
-            />
-
-        <ImageView
             android:id="@+id/buttonStopPlaying"
             android:layout_width="0dp"
             android:layout_height="100sp"
             app:layout_constraintBottom_toTopOf="@id/buttonOpenChannelSettings"
             app:layout_constraintStart_toEndOf="@id/vertical_guideline3"
             app:layout_constraintEnd_toStartOf="@id/vertical_guideline4"
-            android:src="@drawable/stop_pressable"
+            android:src="@drawable/alarm_pressable"
             android:contentDescription="@string/label_start_alarm"
             />
 
@@ -92,46 +81,10 @@
             />
 
         <Button
-            android:id="@+id/buttonSendNotification"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/buttonShowLog"
-            android:text="@string/label_send_notification"
-            android:layout_margin="5dp"
-            />
-
-        <Button
-            android:id="@+id/buttonStartService"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/buttonSendNotification"
-            android:text="@string/label_start_service"
-            android:layout_margin="5dp"
-            />
-
-        <Button
-            android:id="@+id/buttonStopService"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/buttonStartService"
-            android:text="@string/label_stop_service"
-            android:layout_margin="5dp"
-            />
-
-        <Button
-            android:id="@+id/buttonStopAlarm"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/buttonStopService"
-            android:text="@string/label_stop_alarm"
-            android:layout_margin="5dp"
-            />
-
-        <Button
             android:id="@+id/buttonOpenAlarm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/buttonStopAlarm"
+            app:layout_constraintBottom_toTopOf="@id/buttonShowLog"
             android:text="@string/label_open_alarm"
             android:layout_margin="5dp"
             />

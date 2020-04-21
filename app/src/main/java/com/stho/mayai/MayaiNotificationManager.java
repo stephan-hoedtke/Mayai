@@ -33,7 +33,7 @@ public class MayaiNotificationManager {
     private Alarm alarm;
 
     private MayaiNotificationManager(Context context) {
-        this.context = context;
+        this.context = context.getApplicationContext();
     }
 
     public static MayaiNotificationManager build(Context context) {

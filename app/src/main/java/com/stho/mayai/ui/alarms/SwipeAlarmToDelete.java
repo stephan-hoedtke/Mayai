@@ -18,6 +18,9 @@ import com.stho.mayai.R;
 
 import org.jetbrains.annotations.NotNull;
 
+import static androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_DRAG;
+import static androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_IDLE;
+import static androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE;
 import static androidx.recyclerview.widget.ItemTouchHelper.LEFT;
 import static androidx.recyclerview.widget.ItemTouchHelper.RIGHT;
 
@@ -31,7 +34,7 @@ public class SwipeAlarmToDelete extends ItemTouchHelper.SimpleCallback {
     private final AlarmsRecyclerViewAdapter adapter;
 
     public SwipeAlarmToDelete(AlarmsRecyclerViewAdapter adapter) {
-        super(0, ItemTouchHelper.LEFT);
+        super(0, LEFT | RIGHT);
         this.adapter = adapter;
     }
 
@@ -43,7 +46,7 @@ public class SwipeAlarmToDelete extends ItemTouchHelper.SimpleCallback {
     @Override
     public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
         int position = viewHolder.getAdapterPosition();
-        if (direction == LEFT) {
+        if (direction == LEFT || direction == RIGHT) {
             adapter.deleteItem(position);
         }
     }
@@ -51,27 +54,28 @@ public class SwipeAlarmToDelete extends ItemTouchHelper.SimpleCallback {
     @Override
     public void onSelectedChanged(@Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
         if (viewHolder != null) {
-            final View foregroundView = ((AlarmsRecyclerViewAdapter.ViewHolder) viewHolder).viewForeground;
-            getDefaultUIUtil().onSelected(foregroundView);
+            final View foreground = ((AlarmsRecyclerViewAdapter.ViewHolder) viewHolder).foreground;
+            getDefaultUIUtil().onSelected(foreground);
         }
     }
 
     @Override
     public void onChildDrawOver(@NonNull Canvas c, @NonNull RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-        final View foregroundView = ((AlarmsRecyclerViewAdapter.ViewHolder) viewHolder).viewForeground;
-        getDefaultUIUtil().onDrawOver(c, recyclerView, foregroundView, dX, dY, actionState, isCurrentlyActive);
+        final View foreground = ((AlarmsRecyclerViewAdapter.ViewHolder) viewHolder).foreground;
+        foreground.setBackgroundColor(ContextCompat.getColor(foreground.getContext(), isCurrentlyActive ? R.color.colorSelection : R.color.colorBackground));
+        getDefaultUIUtil().onDrawOver(c, recyclerView, foreground, dX, dY, actionState, isCurrentlyActive);
     }
 
     @Override
     public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-        final View foregroundView = ((AlarmsRecyclerViewAdapter.ViewHolder) viewHolder).viewForeground;
-        getDefaultUIUtil().clearView(foregroundView);
+        final View foreground = ((AlarmsRecyclerViewAdapter.ViewHolder) viewHolder).foreground;
+        getDefaultUIUtil().clearView(foreground);
     }
 
     @Override
     public void onChildDraw(@NotNull Canvas c, @NotNull RecyclerView recyclerView, @NotNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-        final View foregroundView = ((AlarmsRecyclerViewAdapter.ViewHolder) viewHolder).viewForeground;
-        getDefaultUIUtil().onDraw(c, recyclerView, foregroundView, dX, dY, actionState, isCurrentlyActive);
+        final View foreground = ((AlarmsRecyclerViewAdapter.ViewHolder) viewHolder).foreground;
+        getDefaultUIUtil().onDraw(c, recyclerView, foreground, dX, dY, actionState, isCurrentlyActive);
     }
 }
 

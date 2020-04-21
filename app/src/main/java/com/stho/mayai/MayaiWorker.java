@@ -1,5 +1,6 @@
 package com.stho.mayai;
 
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -23,7 +24,7 @@ public class MayaiWorker {
     private final MayaiAlarmManager alarmManager;
 
     private MayaiWorker(Context context) {
-        this.context = context;
+        this.context = context.getApplicationContext();
         this.repository = MayaiRepository.getRepository(context);
         this.alarmManager = MayaiAlarmManager.build(context);
     }
@@ -39,6 +40,10 @@ public class MayaiWorker {
         } catch (Exception ex) {
             onError(ex);
         }
+    }
+
+    public void initialize() {
+        scheduleNextPendingAlarm();
     }
 
     public void open(Alarm alarm) {
@@ -91,17 +96,6 @@ public class MayaiWorker {
         }
     }
 
-    public void reset(Alarm alarm) {
-        try {
-            alarm = repository.getAlarm(alarm);
-            alarm.setStatus(STATUS_NONE);
-            scheduleNextPendingAlarm();
-            repository.save(context);
-        } catch (Exception ex) {
-            onError(ex);
-        }
-    }
-
     public void delete(Alarm alarm) {
         try {
             alarm = repository.getAlarm(alarm);
@@ -132,6 +126,7 @@ public class MayaiWorker {
 
     public void cancel() {
         try {
+            cancelNotification();
             alarmManager.cancelAlarm(Alarm.REQUEST_CODE);
             Alarms alarms = repository.getAlarms();
             for (Alarm alarm : alarms.getCollection()) {

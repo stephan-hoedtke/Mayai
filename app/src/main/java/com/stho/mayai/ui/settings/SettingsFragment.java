@@ -39,24 +39,11 @@ public class SettingsFragment extends Fragment {
         player = MayaiPlayer.build(getContext());
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_settings, container, false);
-        binding.buttonStartPlaying.setOnClickListener(v -> player.ring());
-        binding.buttonStopPlaying.setOnClickListener(v -> player.silence());
-        binding.buttonSendNotification.setOnClickListener(v -> {
-            MayaiNotificationManager.build(getContext()).setCountdown(Alarm.createTest()).sendNotification();
-            viewModel.update(getContext());
-        });
-        binding.buttonStartService.setOnClickListener(v -> {
-            MayaiNotificationService.startAsForegroundService(getContext(), Alarm.createTest());
-            viewModel.update(getContext());
-        });
-        binding.buttonStopService.setOnClickListener(v -> {
-            MayaiNotificationService.stop(getContext());
-            viewModel.update(getContext());
-        });
-        binding.buttonStopAlarm.setOnClickListener(v -> {
+        binding.buttonStopPlaying.setOnClickListener(v -> {
             MayaiWorker.build(getContext()).cancel();
             viewModel.update(getContext());
         });

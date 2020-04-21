@@ -37,7 +37,7 @@ public class MayaiAlarmManager {
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setAlarmClock(new AlarmManager.AlarmClockInfo(alarm.getTriggerTimeInMillis(), showIntent), alarmIntent);
-        MayaiRepository.log("Alarm set: " + alarm.getTriggerTimeAsString());
+        MayaiRepository.log("Alarm for " + alarm.getName() + " set: " + alarm.getTriggerTimeAsString());
     }
 
     public void cancelAlarm(Alarm alarm) {

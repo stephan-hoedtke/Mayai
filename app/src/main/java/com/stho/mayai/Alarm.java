@@ -60,32 +60,20 @@ public class Alarm {
         this.status = status;
     }
 
-    void setStatus(int status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
-    boolean isOutdated() {
-        return isFinished() && isOutdated(triggerTime);
-    }
-
-    boolean isUnfinished() {
+    public boolean isUnfinished() {
         return status != STATUS_FINISHED;
     }
 
-    boolean isFinished() {
+    public boolean isFinished() {
         return (status == STATUS_FINISHED);
     }
 
-    boolean isPending() {
+    public boolean isPending() {
         return (status == STATUS_PENDING || status == STATUS_SCHEDULED);
-    }
-
-    private static final long TWO_MINUTES_IN_MILLIS = 120000;
-
-    private boolean isOutdated(Calendar calendar) {
-        Calendar now = Calendar.getInstance();
-        long difference = now.getTimeInMillis() - calendar.getTimeInMillis();
-        return (difference > TWO_MINUTES_IN_MILLIS);
     }
 
     public long getId() {
