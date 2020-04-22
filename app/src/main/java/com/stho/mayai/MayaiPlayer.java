@@ -17,7 +17,7 @@ public class MayaiPlayer {
         this.context = context.getApplicationContext();
     }
 
-    public void ring() {
+    void ring() {
         try {
             if (ringtone != null) {
                 ringtone.stop();
@@ -27,12 +27,12 @@ public class MayaiPlayer {
             ringtone.play();
         }
         catch (Exception ex) {
-            MayaiRepository.log("Error in MayaiPlayer: " + ex.toString());
+            Logger.log("Error in MayaiPlayer: " + ex.toString());
             // ignore
         }
     }
 
-    public void silence() {
+    void silence() {
         if (ringtone != null) {
             ringtone.stop();
         }

@@ -22,6 +22,7 @@ public class MayaiBroadcastReceiver extends BroadcastReceiver {
 
     private static final String myWakeLockTag = "MAYAI:ALARM";
 
+    @SuppressWarnings("ConstantConditions")
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -33,8 +34,6 @@ public class MayaiBroadcastReceiver extends BroadcastReceiver {
 
             Alarm alarm = Helpers.getAlarmFromIntent(intent);
             if (alarm != null) {
-
-                MayaiRepository.log("Alarm broadcast received: " + alarm.getName());
 
                 // Vibrate the mobile phone
                 Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
@@ -49,7 +48,7 @@ public class MayaiBroadcastReceiver extends BroadcastReceiver {
             }
         }
         catch (Exception ex) {
-            MayaiRepository.log("Error in MayaiBroadcastReceiver: " + ex.toString());
+            Logger.log("Error in MayaiBroadcastReceiver: " + ex.toString());
             Toast.makeText(context, ex.toString(), Toast.LENGTH_LONG).show();
         }
         finally {

@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.stho.mayai.BuildConfig;
+import com.stho.mayai.Logger;
 import com.stho.mayai.MainViewModel;
 import com.stho.mayai.MayaiRepository;
 
@@ -73,7 +74,7 @@ public class SettingsViewModel extends AndroidViewModel {
             }
         }
         catch (Exception ex) {
-            MayaiRepository.log("Error in SettingsViewModel: " + ex.toString());
+            Logger.log("Error in SettingsViewModel: " + ex.toString());
             sb.append("Error: ");
             sb.append(ex.toString());
             sb.append(EOL);
@@ -93,7 +94,7 @@ public class SettingsViewModel extends AndroidViewModel {
                 }
             }
         } catch (Exception ex) {
-            MayaiRepository.log("Error in SettingsViewModel: " + ex.toString());
+            Logger.log("Error in SettingsViewModel: " + ex.toString());
             Toast.makeText(context, ex.toString(), Toast.LENGTH_LONG).show();
         }
     }

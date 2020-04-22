@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 public class MayaiRepository implements IRepository {
@@ -17,11 +16,6 @@ public class MayaiRepository implements IRepository {
         Singleton pattern
      */
     private static MayaiRepository singleton = null;
-
-    /*
-        Logging
-     */
-    private final static ArrayList<LogEntry> log = new ArrayList<>();
 
     /*
         List of all Alarms
@@ -63,7 +57,7 @@ public class MayaiRepository implements IRepository {
         return alarmsLiveData.getValue();
     }
 
-    public boolean hasUnfinishedAlarms() {
+    boolean hasUnfinishedAlarms() {
        return getAlarms().hasUnfinishedAlarms();
     }
 
@@ -71,14 +65,6 @@ public class MayaiRepository implements IRepository {
     public void setAlarms(Collection<Alarm> alarms) {
         Alarms map = alarmsLiveData.getValue();
         map.addRange(alarms);
-    }
-
-    public ArrayList<LogEntry> getLog() {
-        return log;
-    }
-
-    public void setLog(Collection<LogEntry> entries) {
-        log.addAll(entries);
     }
 
     public @Nullable Alarm getAlarmOrDefault(@Nullable Alarm alarm) {
@@ -105,13 +91,5 @@ public class MayaiRepository implements IRepository {
     }
 
     public LiveData<Alarms> getAlarmsLD() { return alarmsLiveData; }
-
-    public static void log(String message) {
-        log.add(new LogEntry(message));
-    }
-
-    public void clearLog() {
-        log.clear();
-    }
 }
 

@@ -26,7 +26,6 @@ public class SettingsFragment extends Fragment {
 
     private SettingsViewModel viewModel;
     private FragmentSettingsBinding binding;
-    private MayaiPlayer player;
 
     public static SettingsFragment newInstance() {
         return new SettingsFragment();
@@ -36,7 +35,6 @@ public class SettingsFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = SettingsViewModel.build(this);
-        player = MayaiPlayer.build(getContext());
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -54,13 +52,6 @@ public class SettingsFragment extends Fragment {
         viewModel.getInfoLD().observe(getViewLifecycleOwner(), info -> binding.nextAlarm.setText(info));
         viewModel.getVersionLD().observe(getViewLifecycleOwner(), this::updateActionBar);
         return binding.getRoot();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (player != null)
-            player.silence();
     }
 
     @SuppressWarnings("ConstantConditions")

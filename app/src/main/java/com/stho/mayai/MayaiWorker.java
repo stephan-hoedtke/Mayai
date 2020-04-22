@@ -148,7 +148,7 @@ public class MayaiWorker {
     }
 
     private void onError(Exception ex) {
-        MayaiRepository.log("Error in MayaiWorker: " + ex.toString());
+        Logger.log("Error in MayaiWorker: " + ex.toString());
         Toast.makeText(context, ex.toString(), Toast.LENGTH_LONG).show();
     }
 }

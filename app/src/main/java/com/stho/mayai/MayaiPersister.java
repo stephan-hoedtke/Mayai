@@ -42,7 +42,7 @@ public class MayaiPersister {
             if (value != null) {
                 Collection<LogEntry> log = parseLog(value);
                 if (log != null) {
-                    repository.setLog(filterLog(log));
+                    Logger.setLog(filterLog(log));
                 }
             }
         }
@@ -53,7 +53,7 @@ public class MayaiPersister {
         if (preferences != null) {
             SharedPreferences.Editor editor = preferences.edit();
             editor.putString(KEY_ALARMS, serializeAlarms(repository.getAlarms().getCollection()));
-            editor.putString(KEY_LOG, serializeLog(repository.getLog()));
+            editor.putString(KEY_LOG, serializeLog(Logger.getLog()));
             editor.apply();
         }
     }

@@ -17,7 +17,6 @@ public class MayaiNotificationService extends Service {
 
     public static void startAsForegroundService(Context context, Alarm alarm) {
         if (context != null) {
-            MayaiRepository.log("Start notification service for: " + alarm.getName());
             Intent intent = new Intent(context, MayaiNotificationService.class);
             Helpers.putAlarmToIntent(intent, alarm);
             context.startForegroundService(intent);
@@ -49,8 +48,7 @@ public class MayaiNotificationService extends Service {
         try {
             Alarm alarm = Helpers.getAlarmFromIntent(intent);
             if (alarm != null) {
-                MayaiRepository.log("Service about to send notification for " + alarm.getName());
-                startPlaying();
+                 startPlaying();
                 startAutoStopHandler();
                 // Send a foreground notification as the service was started as foreground service:
                 MayaiNotificationManager
@@ -60,7 +58,7 @@ public class MayaiNotificationService extends Service {
             }
         }
         catch (Exception ex) {
-            MayaiRepository.log("Error in MayaiNotificationService: " + ex.toString());
+            Logger.log("Error in MayaiNotificationService: " + ex.toString());
             Toast.makeText(this, ex.toString(), Toast.LENGTH_LONG).show();
         }
     }
@@ -94,7 +92,6 @@ public class MayaiNotificationService extends Service {
         super.onDestroy();
         stopAutoStopHandler();
         stopPlaying();
-        MayaiRepository.log("Notification service stopped");
     }
 
     @Nullable

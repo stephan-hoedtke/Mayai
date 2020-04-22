@@ -41,10 +41,7 @@ public class AlarmCountdownFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alarm_countdown, container, false);
-        binding.image.setOnLongClickListener(view -> {
-            edit();
-            return false;
-        });
+        binding.image.setOnClickListener(view -> edit());
         binding.buttonStopPlaying.setOnClickListener(v -> cancelAlarm());
         viewModel.getAlarmLD().observe(getViewLifecycleOwner(), this::onUpdateAlarm);
         viewModel.getRemainingSecondsLD().observe(getViewLifecycleOwner(), this::onUpdateRemainingSeconds);

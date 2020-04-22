@@ -38,7 +38,7 @@ public class MayaiAlarmManager {
 
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setAlarmClock(new AlarmManager.AlarmClockInfo(alarm.getTriggerTimeInMillis(), showIntent), alarmIntent);
-        MayaiRepository.log("Alarm for " + alarm.getName() + " set: " + alarm.getTriggerTimeAsString());
+        Logger.log("Alarm for " + alarm.getName() + " set: " + alarm.getTriggerTimeAsString());
     }
 
     public void cancelAlarm(Alarm alarm) {
@@ -47,7 +47,7 @@ public class MayaiAlarmManager {
 
         @SuppressWarnings("ConstantConditions")
     public void cancelAlarm(int requestCode) {
-        MayaiRepository.log("Cancel alarm");
+        Logger.log("Cancel alarm");
         PendingIntent cancelIntent = getCancelIntentFor(requestCode);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(cancelIntent);

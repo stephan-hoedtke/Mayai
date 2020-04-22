@@ -63,10 +63,9 @@ public class MayaiNotificationManager {
                     | NotificationManager.INTERRUPTION_FILTER_PRIORITY;
             final NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(MY_NOTIFICATION_ID, notification);
-            MayaiRepository.log("Notification sent");
         }
         catch(Exception ex) {
-            MayaiRepository.log("Error in MayaiNotificationManager: " + ex.toString());
+            Logger.log("Error in MayaiNotificationManager: " + ex.toString());
             Toast.makeText(context, ex.toString(), Toast.LENGTH_LONG).show();
         }
     }
@@ -80,9 +79,8 @@ public class MayaiNotificationManager {
                     | Notification.BADGE_ICON_LARGE
                     | NotificationManager.INTERRUPTION_FILTER_PRIORITY;
             service.startForeground(MY_NOTIFICATION_ID, notification);
-            MayaiRepository.log("Foreground notification sent");
         } catch (Exception ex) {
-            MayaiRepository.log("Error in MayaiNotificationManager: " + ex.toString());
+            Logger.log("Error in MayaiNotificationManager: " + ex.toString());
             Toast.makeText(context, ex.toString(), Toast.LENGTH_LONG).show();
         }
     }
