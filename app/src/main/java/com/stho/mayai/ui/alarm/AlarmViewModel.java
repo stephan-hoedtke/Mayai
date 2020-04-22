@@ -15,10 +15,12 @@ import com.stho.mayai.Alarm;
 import com.stho.mayai.Alarms;
 import com.stho.mayai.MainViewModel;
 import com.stho.mayai.MayaiRepository;
+import com.stho.mayai.MayaiWorker;
 
 public class AlarmViewModel extends AndroidViewModel {
 
     private MutableLiveData<Alarm> alarmLiveData = new MutableLiveData<>();
+    private MutableLiveData<String> statusNameLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> remainingSecondsLiveData = new MutableLiveData<>();
     private MutableLiveData<Double> secondsPerTurnLiveData = new MutableLiveData<>();
     private MayaiRepository repository;
@@ -34,9 +36,11 @@ public class AlarmViewModel extends AndroidViewModel {
         super(application);
         repository = MayaiRepository.getRepository(application.getBaseContext());
         remainingSecondsLiveData.setValue(0);
+        statusNameLiveData.setValue("");
         secondsPerTurnLiveData.setValue(600.0);
     }
 
+    LiveData<String> getStatusNameLD() { return statusNameLiveData; }
     LiveData<Integer> getRemainingSecondsLD() { return remainingSecondsLiveData; }
     LiveData<Float> getAngleLD() { return Transformations.map(remainingSecondsLiveData, this::getAngle); }
     LiveData<Alarm> getAlarmLD() { return alarmLiveData; }
@@ -55,6 +59,9 @@ public class AlarmViewModel extends AndroidViewModel {
             int seconds = alarm.getRemainingSeconds();
             if (remainingSecondsLiveData.getValue() != seconds) {
                 remainingSecondsLiveData.postValue(seconds);
+            }
+            if (!statusNameLiveData.getValue().equals(alarm.getStatusName())) {
+                statusNameLiveData.postValue(alarm.getStatusName());
             }
         }
     }
@@ -84,7 +91,7 @@ public class AlarmViewModel extends AndroidViewModel {
             if (minutes < 0)
                 minutes = 0;
 
-            alarm.reschedule(minutes);
+            MayaiWorker.build(getApplication()).reschedule(alarm, minutes);
             touchAlarm();
         }
     }

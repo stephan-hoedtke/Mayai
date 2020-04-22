@@ -1,27 +1,24 @@
 package com.stho.mayai.ui.alarm;
 
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
+import android.media.MediaPlayer;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
 import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
 import com.stho.mayai.Alarm;
 import com.stho.mayai.Helpers;
-import com.stho.mayai.MayaiAlarmManager;
 import com.stho.mayai.MayaiWorker;
 import com.stho.mayai.R;
-import com.stho.mayai.RotaryView;
 import com.stho.mayai.Touch;
 import com.stho.mayai.databinding.FragmentAlarmModifyBinding;
 
@@ -31,11 +28,13 @@ public class AlarmModifyFragment extends Fragment {
     private FragmentAlarmModifyBinding binding;
     private Handler handler = new Handler();
     private Touch touch = new Touch(300);
+    private MediaPlayer mediaPlayer = null;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = AlarmViewModel.build(this);
+        mediaPlayer = MediaPlayer.create(getContext(), R.raw.crack);
     }
 
     @Override
@@ -47,6 +46,7 @@ public class AlarmModifyFragment extends Fragment {
             viewModel.rotate(angle);
         });
         viewModel.getAlarmLD().observe(getViewLifecycleOwner(), this::onUpdateAlarm);
+        viewModel.getStatusNameLD().observe(getViewLifecycleOwner(), this::onUpdateStatusName);
         viewModel.getRemainingSecondsLD().observe(getViewLifecycleOwner(), this::onUpdateRemainingSeconds);
         viewModel.getAngleLD().observe(getViewLifecycleOwner(), this::setAngle);
         viewModel.setAlarm(Helpers.getAlarmFromFragmentArguments(this));
@@ -63,6 +63,7 @@ public class AlarmModifyFragment extends Fragment {
 
     private void setAngle(float angle) {
         binding.rotary.setAngle(angle);
+        mediaPlayer.start();
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -80,6 +81,11 @@ public class AlarmModifyFragment extends Fragment {
     public void onResume() {
         super.onResume();
         update();
+        prepareUpdateHandler();
+        prepareMediaPlayer();
+    }
+
+    private void prepareUpdateHandler() {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -87,21 +93,39 @@ public class AlarmModifyFragment extends Fragment {
                 handler.postDelayed(this, DELAY_MILLIS);
             }
         }, DELAY_MILLIS);
+
+    }
+    private void prepareMediaPlayer() {
+        try {
+            mediaPlayer = MediaPlayer.create(getContext(), R.raw.crack);
+            mediaPlayer.prepare();
+        }
+        catch (Exception ex) {
+            // ignore
+        }
+
     }
 
     @Override
     public void onPause() {
         super.onPause();
         handler.removeCallbacksAndMessages(null);
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
     }
-
-    @SuppressWarnings("ConstantConditions")
+    
     private void update() {
         if (touch.isReady()) {
             Alarm alarm = viewModel.getAlarm();
             MayaiWorker.build(getContext()).scheduleAlarm(alarm);
         }
         viewModel.update();
+    }
+
+    private void onUpdateStatusName(String statusName) {
+        binding.textViewStatusName.setText(statusName);
     }
 
     private void onUpdateRemainingSeconds(int remainingSeconds) {

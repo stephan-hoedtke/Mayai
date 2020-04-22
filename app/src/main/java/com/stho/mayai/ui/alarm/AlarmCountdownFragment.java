@@ -44,6 +44,7 @@ public class AlarmCountdownFragment extends Fragment {
         binding.image.setOnClickListener(view -> edit());
         binding.buttonStopPlaying.setOnClickListener(v -> cancelAlarm());
         viewModel.getAlarmLD().observe(getViewLifecycleOwner(), this::onUpdateAlarm);
+        viewModel.getStatusNameLD().observe(getViewLifecycleOwner(), this::onUpdateStatusName);
         viewModel.getRemainingSecondsLD().observe(getViewLifecycleOwner(), this::onUpdateRemainingSeconds);
         viewModel.setAlarm(Helpers.getAlarmFromFragmentArguments(this));
         return binding.getRoot();
@@ -87,6 +88,10 @@ public class AlarmCountdownFragment extends Fragment {
             binding.image.setImageResource(alarm.getIconId());
             updateActionBar(alarm);
         }
+    }
+
+    private void onUpdateStatusName(String statusName) {
+        binding.textViewStatusName.setText(statusName);
     }
 
     private void onUpdateRemainingSeconds(int remainingSeconds) {

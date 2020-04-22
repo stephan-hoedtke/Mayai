@@ -1,9 +1,11 @@
 package com.stho.mayai;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Handler;
 
 public class MayaiPlayer {
     private final Context context;
@@ -25,8 +27,7 @@ public class MayaiPlayer {
             Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
             ringtone = RingtoneManager.getRingtone(context, notification);
             ringtone.play();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             Logger.log("Error in MayaiPlayer: " + ex.toString());
             // ignore
         }

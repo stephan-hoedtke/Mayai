@@ -56,9 +56,20 @@ public class MayaiWorker {
 
     public void snooze(Alarm alarm) {
         try {
+            Logger.log("Snooze alarm " + alarm.getName());
             cancelNotification();
-            alarm = repository.getAlarm(alarm).reschedule(2.0).setStatus(STATUS_SCHEDULED);
-            alarmManager.scheduleAlarm(alarm);
+            repository.getAlarm(alarm).reschedule(2.0).setStatus(STATUS_PENDING);
+            scheduleNextPendingAlarm();
+            repository.save(context);
+        } catch (Exception ex) {
+            onError(ex);
+        }
+    }
+
+    public void reschedule(Alarm alarm, double minutes) {
+        try {
+            repository.getAlarm(alarm).reschedule(minutes).setStatus(STATUS_PENDING);
+            scheduleNextPendingAlarm();
             repository.save(context);
         } catch (Exception ex) {
             onError(ex);
@@ -67,6 +78,7 @@ public class MayaiWorker {
 
     public void cancel(Alarm alarm) {
         try {
+            Logger.log("Cancel alarm " + alarm.getName());
             cancelNotification();
             alarm = repository.getAlarm(alarm).setStatus(STATUS_FINISHED);
             alarmManager.cancelAlarm(alarm);
@@ -93,7 +105,6 @@ public class MayaiWorker {
             switch (alarm.getStatus()) {
                 case STATUS_SCHEDULED:
                 case STATUS_PENDING:
-                    alarm.setStatus(STATUS_FINISHED);
                     alarmManager.cancelAlarm(alarm);
                     break;
             }
@@ -140,10 +151,19 @@ public class MayaiWorker {
     }
 
     private void scheduleNextPendingAlarm() {
-        Alarm alarm = repository.getAlarms().getNextPendingAlarm();
-        if (alarm != null) {
-            alarm.setStatus(STATUS_SCHEDULED);
-            alarmManager.scheduleAlarm(alarm);
+        long id = -1;
+        Alarm nextAlarm = repository.getAlarms().getNextPendingAlarm();
+        if (nextAlarm != null) {
+            nextAlarm.setStatus(STATUS_SCHEDULED);
+            alarmManager.scheduleAlarm(nextAlarm);
+            id = nextAlarm.getId();
+        }
+        for (Alarm alarm : repository.getAlarms().getCollection()) {
+            if (alarm.isPending()) {
+                if (alarm.getId() != id) {
+                    alarm.setStatus(STATUS_PENDING);
+                }
+            }
         }
     }
 
