@@ -1,6 +1,5 @@
 package com.stho.mayai;
 
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -11,12 +10,8 @@ import static com.stho.mayai.Alarm.STATUS_FINISHED;
 import static com.stho.mayai.Alarm.STATUS_NONE;
 import static com.stho.mayai.Alarm.STATUS_PENDING;
 import static com.stho.mayai.Alarm.STATUS_SCHEDULED;
-import static com.stho.mayai.Alarm.TYPE_BREAD;
-import static com.stho.mayai.Alarm.TYPE_CHAMPAGNE;
-import static com.stho.mayai.Alarm.TYPE_CLOCK;
-import static com.stho.mayai.Alarm.TYPE_EGG;
-import static com.stho.mayai.Alarm.TYPE_POTATOES;
 
+@SuppressWarnings("WeakerAccess")
 public class MayaiWorker {
 
     private final Context context;
@@ -62,9 +57,7 @@ public class MayaiWorker {
     public void snooze(Alarm alarm) {
         try {
             cancelNotification();
-            alarm = repository.getAlarm(alarm);
-            alarm.reschedule(1.0);
-            alarm.setStatus(STATUS_SCHEDULED);
+            alarm = repository.getAlarm(alarm).reschedule(2.0).setStatus(STATUS_SCHEDULED);
             alarmManager.scheduleAlarm(alarm);
             repository.save(context);
         } catch (Exception ex) {
@@ -75,8 +68,7 @@ public class MayaiWorker {
     public void cancel(Alarm alarm) {
         try {
             cancelNotification();
-            alarm = repository.getAlarm(alarm);
-            alarm.setStatus(STATUS_FINISHED);
+            alarm = repository.getAlarm(alarm).setStatus(STATUS_FINISHED);
             alarmManager.cancelAlarm(alarm);
             scheduleNextPendingAlarm();
             repository.save(context);
@@ -87,8 +79,7 @@ public class MayaiWorker {
 
     public void scheduleAlarm(Alarm alarm) {
         try {
-            alarm = repository.getAlarm(alarm);
-            alarm.setStatus(STATUS_PENDING);
+            repository.getAlarm(alarm).setStatus(STATUS_PENDING);
             scheduleNextPendingAlarm();
             repository.save(context);
         } catch (Exception ex) {
@@ -116,6 +107,9 @@ public class MayaiWorker {
 
     public void undoDelete(int position, Alarm alarm) {
         try {
+            if (alarm.getRemainingSeconds() > 0) {
+                alarm.setStatus(STATUS_PENDING);
+            }
             repository.getAlarms().undoDelete(position, alarm);
             scheduleNextPendingAlarm();
             repository.save(context);
@@ -132,7 +126,7 @@ public class MayaiWorker {
             for (Alarm alarm : alarms.getCollection()) {
                 if (alarm.isPending()) {
                     alarm.setStatus(STATUS_NONE);
-                };
+                }
             }
             repository.save(context);
         } catch (Exception ex) {

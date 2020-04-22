@@ -34,16 +34,30 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
-        binding.imageViewEgg.setOnClickListener(v -> startCounter(Alarm.TYPE_EGG, "EGG", 7.0));
-        binding.imageViewChampagne.setOnClickListener(v -> startCounter(Alarm.TYPE_CHAMPAGNE, "CHAMPAGNE", 20));
-        binding.imageViewClock.setOnClickListener(v -> startCounter(Alarm.TYPE_CLOCK, "CLOCK", 3));
-        binding.imageViewBread.setOnClickListener(v -> startCounter(Alarm.TYPE_BREAD, "BREAD", 10));
-        binding.imageViewPotatoes.setOnClickListener(v -> startCounter(Alarm.TYPE_POTATOES, "POTATOES", 25));
+        binding.imageViewEgg.setOnLongClickListener(view -> {
+            startCounter(Alarm.TYPE_EGG, "EGG", 7.2);
+            return false;
+        });
+        binding.imageViewChampagne.setOnLongClickListener(view -> {
+            startCounter(Alarm.TYPE_CHAMPAGNE, "CHAMPAGNE", 27);
+            return false;
+        });
+        binding.imageViewClock.setOnLongClickListener(view -> {
+            startCounter(Alarm.TYPE_CLOCK, "CLOCK", 3);
+            return false;
+        });
+        binding.imageViewBread.setOnLongClickListener(view -> {
+            startCounter(Alarm.TYPE_BREAD, "BREAD", 10);
+            return false;
+        });
+        binding.imageViewPotatoes.setOnLongClickListener(view -> {
+            startCounter(Alarm.TYPE_POTATOES, "POTATOES", 25);
+            return false;
+        });
         updateActionBar();
         return binding.getRoot();
     }
 
-    @SuppressWarnings("ConstantConditions")
     private void startCounter(int key, String name, double durationInMinutes) {
         Alarm alarm = new Alarm(key, name, durationInMinutes);
 

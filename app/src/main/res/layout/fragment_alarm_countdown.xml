@@ -12,7 +12,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@android:color/black"
+        android:background="@color/colorBackground"
         tools:context=".ui.alarm.AlarmCountdownFragment"
         android:keepScreenOn="true"
         >
@@ -73,6 +73,7 @@
             app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline2"
             android:src="@drawable/egg"
             android:contentDescription="@string/egg"
+            android:background="@drawable/background_selector"
             style="?android:borderlessButtonStyle"
             />
 

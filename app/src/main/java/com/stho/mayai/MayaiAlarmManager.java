@@ -7,6 +7,7 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 
+@SuppressWarnings("WeakerAccess")
 public class MayaiAlarmManager {
 
     private final Context context;
@@ -46,10 +47,10 @@ public class MayaiAlarmManager {
 
         @SuppressWarnings("ConstantConditions")
     public void cancelAlarm(int requestCode) {
+        MayaiRepository.log("Cancel alarm");
         PendingIntent cancelIntent = getCancelIntentFor(requestCode);
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(cancelIntent);
-        MayaiRepository.log("Alarm canceled");
     }
 
     /*

@@ -1,17 +1,14 @@
 package com.stho.mayai.ui.alarms;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,10 +31,14 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
         this.activity = activity;
         this.context = activity.getApplicationContext();
         this.alarms = alarms;
+        // to avoid flicker on update during swipe: See also getItemId
+        this.setHasStableIds(true);
     }
 
-    public void onUpdateAlarms() {
-        notifyDataSetChanged();
+    @Override
+    public long getItemId(int position) {
+        Alarm alarm = alarms.get(position);
+        return alarm.getId();
     }
 
     public Context getContext() {
@@ -87,7 +88,6 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
     }
 
     private void showUndoSnackBar(final int position, final Alarm alarm) {
-
         View container = activity.findViewById(R.id.container);
         Snackbar snackbar = Snackbar.make(container, "Alarm was deleted", Snackbar.LENGTH_LONG);
         snackbar.setAction("Undo", view -> undoDelete(position, alarm));

@@ -78,7 +78,7 @@ public class AlarmViewModel extends AndroidViewModel {
         Alarm alarm = getAlarm();
         if (alarm != null) {
             double secondsPerTurn = secondsPerTurnLiveData.getValue();
-            double seconds = alarm.getDurationInSeconds() + ((angle / 360) * secondsPerTurn);
+            double seconds = alarm.getRemainingSeconds() + ((angle / 360) * secondsPerTurn);
             double minutes = seconds / 60;
 
             if (minutes < 0)

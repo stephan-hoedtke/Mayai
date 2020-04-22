@@ -21,6 +21,7 @@ import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 
 // for review:
 // https://www.journaldev.com/19421/android-notification-channel-dots
+@SuppressWarnings("WeakerAccess")
 public class MayaiNotificationManager {
 
     private static final String MY_CHANNEL_ID = "com.stho.mayai.ALARM";
@@ -62,6 +63,7 @@ public class MayaiNotificationManager {
                     | NotificationManager.INTERRUPTION_FILTER_PRIORITY;
             final NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(MY_NOTIFICATION_ID, notification);
+            MayaiRepository.log("Notification sent");
         }
         catch(Exception ex) {
             MayaiRepository.log("Error in MayaiNotificationManager: " + ex.toString());
@@ -78,16 +80,16 @@ public class MayaiNotificationManager {
                     | Notification.BADGE_ICON_LARGE
                     | NotificationManager.INTERRUPTION_FILTER_PRIORITY;
             service.startForeground(MY_NOTIFICATION_ID, notification);
+            MayaiRepository.log("Foreground notification sent");
         } catch (Exception ex) {
             MayaiRepository.log("Error in MayaiNotificationManager: " + ex.toString());
             Toast.makeText(context, ex.toString(), Toast.LENGTH_LONG).show();
         }
     }
 
-    public Notification createNotification() {
+    private Notification createNotification() {
         registerNotificationChannel();
         final PendingIntent pendingIntent = getTargetPendingIntent();
-        final NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(context, MY_CHANNEL_ID);
         builder.setDefaults(Notification.DEFAULT_ALL);
         builder.setSmallIcon(R.drawable.bell128);

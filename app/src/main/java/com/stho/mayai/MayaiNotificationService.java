@@ -17,10 +17,10 @@ public class MayaiNotificationService extends Service {
 
     public static void startAsForegroundService(Context context, Alarm alarm) {
         if (context != null) {
+            MayaiRepository.log("Start notification service for: " + alarm.getName());
             Intent intent = new Intent(context, MayaiNotificationService.class);
             Helpers.putAlarmToIntent(intent, alarm);
             context.startForegroundService(intent);
-            MayaiRepository.log("Service started: " + alarm.getName());
         }
     }
 
@@ -28,7 +28,6 @@ public class MayaiNotificationService extends Service {
         if (context != null) {
             Intent intent = new Intent(context, MayaiNotificationService.class);
             context.stopService(intent);
-            MayaiRepository.log("Service stopped");
         }
     }
 
@@ -42,7 +41,6 @@ public class MayaiNotificationService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        // for debugging: Toast.makeText(this, "service starting", Toast.LENGTH_SHORT).show();
         onHandleIntent(intent);
         return super.onStartCommand(intent, flags, startId);
     }
@@ -54,12 +52,11 @@ public class MayaiNotificationService extends Service {
                 MayaiRepository.log("Service about to send notification for " + alarm.getName());
                 startPlaying();
                 startAutoStopHandler();
-                // Send a foreground notification as the service was started as foreground service
+                // Send a foreground notification as the service was started as foreground service:
                 MayaiNotificationManager
                         .build(this)
                         .setCountdown(alarm)
                         .sendForegroundNotificationFromService(this);
-                MayaiRepository.log("Foreground notification sent for " + alarm.getName());
             }
         }
         catch (Exception ex) {
@@ -97,6 +94,7 @@ public class MayaiNotificationService extends Service {
         super.onDestroy();
         stopAutoStopHandler();
         stopPlaying();
+        MayaiRepository.log("Notification service stopped");
     }
 
     @Nullable

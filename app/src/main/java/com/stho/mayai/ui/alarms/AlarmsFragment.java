@@ -1,10 +1,8 @@
 package com.stho.mayai.ui.alarms;
 
-import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,9 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.stho.mayai.Alarm;
 import com.stho.mayai.R;
 import com.stho.mayai.databinding.FragmentAlarmsBinding;
 
@@ -28,7 +24,6 @@ public class AlarmsFragment extends Fragment {
 
     private AlarmsViewModel viewModel;
     private FragmentAlarmsBinding binding;
-    private AlarmsRecyclerViewAdapter adapter;
     private Handler handler = new Handler();
 
     @Override
@@ -41,18 +36,17 @@ public class AlarmsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alarms, container, false);
         binding.list.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new AlarmsRecyclerViewAdapter(getActivity(), viewModel.getAlarms());
+        final AlarmsRecyclerViewAdapter adapter = new AlarmsRecyclerViewAdapter(getActivity(), viewModel.getAlarms());
         binding.list.setAdapter(adapter);
         final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeAlarmToDelete(adapter));
         itemTouchHelper.attachToRecyclerView(binding.list);
         final DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
-        binding.list.addItemDecoration(dividerItemDecoration);
-        updateActionBar();
-        viewModel.getAlarmsLD().observe(getViewLifecycleOwner(), alarms -> onUpdateAlarms());
+         binding.list.addItemDecoration(dividerItemDecoration);
+        viewModel.getAlarmsLD().observe(getViewLifecycleOwner(), alarms -> update());
         return binding.getRoot();
     }
 
-    private static final int DELAY_MILLIS = 3000;
+    private static final int DELAY_MILLIS = 1000;
 
     @Override
     public void onResume() {
@@ -73,12 +67,9 @@ public class AlarmsFragment extends Fragment {
         handler.removeCallbacksAndMessages(null);
     }
 
+    @SuppressWarnings("ConstantConditions")
     private void update() {
-        adapter.onUpdateAlarms();
-    }
-
-    private void onUpdateAlarms() {
-        adapter.onUpdateAlarms();
+        binding.list.getAdapter().notifyDataSetChanged();
     }
 
     @SuppressWarnings("ConstantConditions")

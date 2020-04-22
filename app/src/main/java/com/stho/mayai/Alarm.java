@@ -2,12 +2,12 @@ package com.stho.mayai;
 
 import androidx.annotation.NonNull;
 
-import java.security.InvalidParameterException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+@SuppressWarnings("WeakerAccess")
 public class Alarm {
 
     public static final int TYPE_EGG = 1;
@@ -51,16 +51,17 @@ public class Alarm {
         return this;
     }
 
+    public Alarm setStatus(int status) {
+        this.status = status;
+        return this;
+    }
+
     private Alarm(long id, int type, String name, long durationInMillis, long endTimeInMillis, int status) {
         this.id = id;
         this.type = type;
         this.name = name;
         this.durationInMillis = durationInMillis;
         this.triggerTime = Alarm.createCalendar(endTimeInMillis);
-        this.status = status;
-    }
-
-    public void setStatus(int status) {
         this.status = status;
     }
 
@@ -78,10 +79,6 @@ public class Alarm {
 
     public long getId() {
         return id;
-    }
-
-    public int getType() {
-        return type;
     }
 
     public String getName() { return name; }
@@ -166,11 +163,6 @@ public class Alarm {
         }
     }
 
-
-    public static Alarm createTest() {
-        return new Alarm(Alarm.TYPE_CHAMPAGNE, "Test", 0.2);
-    }
-
     public static final int REQUEST_CODE = 103840284;
 
     public int getRequestCode() {
@@ -178,8 +170,7 @@ public class Alarm {
     }
 
     public int getRemainingSeconds() {
-        Calendar now = Calendar.getInstance();
-        long millis = triggerTime.getTimeInMillis() - now.getTimeInMillis();
+        long millis = triggerTime.getTimeInMillis() - Alarm.getCurrentTimeInMillis();
         return millis > 0 ? Alarm.toSeconds(millis) : 0;
     }
 
@@ -203,6 +194,7 @@ public class Alarm {
 
     private static final String DELIMITER = ":";
 
+    @SuppressWarnings("UnnecessaryCallToStringValueOf")
     public String serialize() {
         return Long.toString(this.id)
                 + DELIMITER
@@ -245,6 +237,7 @@ public class Alarm {
                 && this.durationInMillis == alarm.durationInMillis;
     }
 
+    @SuppressWarnings("UnnecessaryCallToStringValueOf")
     @NonNull
     @Override
     public String toString() {
