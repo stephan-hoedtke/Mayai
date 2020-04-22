@@ -115,7 +115,7 @@ public class AlarmModifyFragment extends Fragment {
             mediaPlayer = null;
         }
     }
-    
+
     private void update() {
         if (touch.isReady()) {
             Alarm alarm = viewModel.getAlarm();
