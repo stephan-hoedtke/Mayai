@@ -3,6 +3,8 @@ package com.stho.mayai;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -26,6 +28,7 @@ public class MayaiPersister {
     private final static String KEY_MAYAI = "Mayai";
     private final static String KEY_ALARMS = "Alarms";
     private final static String KEY_LOG = "Log";
+    private final static String KEY_SETTINGS = "Settings";
 
     void load() {
         SharedPreferences preferences = getSharedPreferences();
@@ -45,15 +48,30 @@ public class MayaiPersister {
                     Logger.setLog(filterLog(log));
                 }
             }
+            value = preferences.getString(KEY_SETTINGS, null);
+            if (value != null) {
+                Settings settings = Settings.parseSettings(value);
+                if (settings != null) {
+                    repository.setSettings(settings);
+                }
+            }
         }
     }
 
     void save() {
+        save(
+                repository.getAlarms(),
+                repository.getSettings(),
+                Logger.getLog());
+    }
+
+    private void save(Alarms alarms, Settings settings, Collection<LogEntry> log) {
         SharedPreferences preferences = getSharedPreferences();
         if (preferences != null) {
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putString(KEY_ALARMS, serializeAlarms(repository.getAlarms().getCollection()));
-            editor.putString(KEY_LOG, serializeLog(Logger.getLog()));
+            editor.putString(KEY_ALARMS, serializeAlarms(alarms.getCollection()));
+            editor.putString(KEY_LOG, serializeLog(log));
+            editor.putString(KEY_SETTINGS, settings.serialize());
             editor.apply();
         }
     }

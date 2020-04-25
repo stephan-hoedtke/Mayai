@@ -128,23 +128,39 @@ public class MayaiNotificationManager {
 
     @SuppressWarnings("ConstantConditions")
     void registerNotificationChannel() {
-        NotificationChannel channel = new NotificationChannel(MY_CHANNEL_ID, "Mayai", NotificationManager.IMPORTANCE_HIGH);
-        channel.setDescription("Mayai:Alarm");
-        channel.setShowBadge(true);
-        channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
-        channel.enableLights(true);
-        channel.setLightColor(Color.GREEN);
-        channel.enableVibration(true);
-        channel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
-        channel.setBypassDnd(true);
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.createNotificationChannel(channel);
+        try {
+            NotificationChannel channel = new NotificationChannel(MY_CHANNEL_ID, "Mayai", NotificationManager.IMPORTANCE_HIGH);
+            channel.setDescription("Mayai:Alarm");
+            channel.setShowBadge(true);
+            channel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC);
+            channel.enableLights(true);
+            channel.setLightColor(Color.GREEN);
+            channel.enableVibration(true);
+            channel.setVibrationPattern(new long[]{100, 200, 300, 400, 500, 400, 300, 200, 400});
+            channel.setBypassDnd(true);
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.createNotificationChannel(channel);
+        } catch (Exception ex) {
+            Logger.log("Error in MayaiNotificationManager: " + ex.toString());
+            Toast.makeText(context, ex.toString(), Toast.LENGTH_LONG).show();
+        }
     }
 
-    public void openChannelSettings() {
-        Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
-        intent.putExtra(Settings.EXTRA_CHANNEL_ID, MY_CHANNEL_ID);
-        intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
-        context.startActivity(intent);
+    /*
+        Context: the context of an activity context.
+        Don't use getApplicationContext() here. Or you will see this error message:
+        Calling startActivity() from outside of an Activity  context requires the FLAG_ACTIVITY_NEW_TASK flag. Is this really what you want?
+     */
+    public static void openChannelSettings(Context context) {
+
+        try {
+            Intent intent = new Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS);
+            intent.putExtra(Settings.EXTRA_CHANNEL_ID, MY_CHANNEL_ID);
+            intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.getPackageName());
+            context.startActivity(intent);
+        } catch (Exception ex) {
+            Logger.log("Error in MayaiNotificationManager: " + ex.toString());
+            Toast.makeText(context, ex.toString(), Toast.LENGTH_LONG).show();
+        }
     }
 }

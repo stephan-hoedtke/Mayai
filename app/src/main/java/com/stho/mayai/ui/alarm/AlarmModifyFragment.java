@@ -28,13 +28,11 @@ public class AlarmModifyFragment extends Fragment {
     private FragmentAlarmModifyBinding binding;
     private Handler handler = new Handler();
     private Touch touch = new Touch(300);
-    private MediaPlayer mediaPlayer = null;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = AlarmViewModel.build(this);
-        mediaPlayer = MediaPlayer.create(getContext(), R.raw.crack);
     }
 
     @Override
@@ -63,7 +61,6 @@ public class AlarmModifyFragment extends Fragment {
 
     private void setAngle(float angle) {
         binding.rotary.setAngle(angle);
-        mediaPlayer.start();
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -82,7 +79,6 @@ public class AlarmModifyFragment extends Fragment {
         super.onResume();
         update();
         prepareUpdateHandler();
-        prepareMediaPlayer();
     }
 
     private void prepareUpdateHandler() {
@@ -93,27 +89,12 @@ public class AlarmModifyFragment extends Fragment {
                 handler.postDelayed(this, DELAY_MILLIS);
             }
         }, DELAY_MILLIS);
-
-    }
-    private void prepareMediaPlayer() {
-        try {
-            mediaPlayer = MediaPlayer.create(getContext(), R.raw.crack);
-            mediaPlayer.prepare();
-        }
-        catch (Exception ex) {
-            // ignore
-        }
-
     }
 
     @Override
     public void onPause() {
         super.onPause();
         handler.removeCallbacksAndMessages(null);
-        if (mediaPlayer != null) {
-            mediaPlayer.release();
-            mediaPlayer = null;
-        }
     }
 
     private void update() {

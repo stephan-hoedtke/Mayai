@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.stho.mayai.Alarm;
 import com.stho.mayai.Alarms;
 import com.stho.mayai.MayaiRepository;
+import com.stho.mayai.Settings;
 
 public class HomeViewModel extends AndroidViewModel {
 
@@ -29,4 +30,7 @@ public class HomeViewModel extends AndroidViewModel {
     @NonNull Alarm getAlarm(@NonNull Alarm alarm) {
         return repository.getAlarm(alarm);
     }
+
+    @NonNull
+    Settings getSettings() { return repository.getSettings(); }
 }

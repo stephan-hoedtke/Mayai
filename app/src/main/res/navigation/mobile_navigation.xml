@@ -55,7 +55,19 @@
         android:name="com.stho.mayai.ui.settings.SettingsFragment"
         tools:layout="@layout/fragment_settings" >
         <action
+            android:id="@+id/action_navigation_settings_to_navigation_debug"
+            app:destination="@id/navigation_debug" />
+        <action
             android:id="@+id/action_navigation_settings_to_navigation_show_log"
+            app:destination="@id/navigation_show_log" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_debug"
+        android:name="com.stho.mayai.ui.debug.DebugFragment"
+        tools:layout="@layout/fragment_debug" >
+        <action
+            android:id="@+id/action_navigation_debug_to_navigation_show_log"
             app:destination="@id/navigation_show_log" />
     </fragment>
 
