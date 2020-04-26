@@ -16,7 +16,10 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.stho.mayai.Alarm;
+import com.stho.mayai.Alarms;
 import com.stho.mayai.R;
+import com.stho.mayai.Summary;
 import com.stho.mayai.databinding.FragmentAlarmsBinding;
 
 
@@ -41,8 +44,9 @@ public class AlarmsFragment extends Fragment {
         final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeAlarmToDelete(adapter));
         itemTouchHelper.attachToRecyclerView(binding.list);
         final DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
-         binding.list.addItemDecoration(dividerItemDecoration);
-        viewModel.getAlarmsLD().observe(getViewLifecycleOwner(), alarms -> update());
+        binding.list.addItemDecoration(dividerItemDecoration);
+        viewModel.getAlarmsLD().observe(getViewLifecycleOwner(), this::updateAlarms);
+        viewModel.getSummaryLD().observe(getViewLifecycleOwner(), this::updateSummary);
         return binding.getRoot();
     }
 
@@ -67,15 +71,25 @@ public class AlarmsFragment extends Fragment {
         handler.removeCallbacksAndMessages(null);
     }
 
+    private void updateAlarms(Alarms alarms) {
+        update();
+    }
+
+    private void updateSummary(Summary summary) {
+        updateActionBar(summary);
+    }
+
     @SuppressWarnings("ConstantConditions")
     private void update() {
+        viewModel.updateSummary();
         binding.list.getAdapter().notifyDataSetChanged();
     }
 
     @SuppressWarnings("ConstantConditions")
-    private void updateActionBar() {
+    private void updateActionBar(Summary summary) {
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        actionBar.setTitle("Alarms");
+        int counter = summary.getPendingAlarmsCounter();
+        actionBar.setTitle(counter == 0 ? "Alarms" : ("Alarms: " + Integer.toString(counter)));
         actionBar.setSubtitle(null);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);

@@ -73,7 +73,7 @@ public class Alarms implements IAlarms {
         return nextAlarm;
     }
 
-    Collection<Alarm> getCollection() {
+    public Collection<Alarm> getCollection() {
         return map.values();
     }
 
@@ -90,6 +90,16 @@ public class Alarms implements IAlarms {
             }
         }
         return false;
+    }
+
+    public int getCount(int type) {
+        int count = 0;
+        for (Alarm alarm : map.values()) {
+            if (alarm.isPending() && alarm.getType() == type) {
+                count++;
+            }
+        }
+        return count;
     }
 }
 

@@ -81,6 +81,8 @@ public class Alarm {
         return id;
     }
 
+    public int getType() { return type; }
+
     public String getName() { return name; }
 
     public int getStatus() {
@@ -173,6 +175,12 @@ public class Alarm {
         long millis = triggerTime.getTimeInMillis() - Alarm.getCurrentTimeInMillis();
         return millis > 0 ? Alarm.toSeconds(millis) : 0;
     }
+
+    public static Calendar createCalendarForMinutes(double minutes) {
+        long millis = (long) (minutes * 60000);
+        return createCalendar(Alarm.getCurrentTimeInMillis() + millis);
+    }
+
 
     private static long getCurrentTimeInMillis() {
         return GregorianCalendar.getInstance().getTimeInMillis();

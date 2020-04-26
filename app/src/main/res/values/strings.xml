@@ -52,4 +52,5 @@
     <string name="label_alarms">Alarms</string>
     <string name="label_delete">delete</string>
     <string name="label_empty" />
+    <string name="label_default_count">2</string>
 </resources>

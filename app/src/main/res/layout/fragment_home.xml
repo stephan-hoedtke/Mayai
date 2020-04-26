@@ -93,6 +93,114 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:srcCompat="@drawable/bread" />
 
+        <ImageView
+            android:id="@+id/infoCircleEgg"
+            android:layout_width="@dimen/counter_image_size"
+            android:layout_height="@dimen/counter_image_size"
+            app:layout_constraintTop_toTopOf="@id/imageViewEgg"
+            app:layout_constraintEnd_toEndOf="@id/imageViewEgg"
+            android:src="@drawable/circle_green"
+            />
+
+        <ImageView
+            android:id="@+id/infoCircleChampagne"
+            android:layout_width="@dimen/counter_image_size"
+            android:layout_height="@dimen/counter_image_size"
+            app:layout_constraintTop_toTopOf="@id/imageViewChampagne"
+            app:layout_constraintEnd_toEndOf="@id/imageViewChampagne"
+            android:src="@drawable/circle_green"
+            />
+
+        <ImageView
+            android:id="@+id/infoCircleBread"
+            android:layout_width="@dimen/counter_image_size"
+            android:layout_height="@dimen/counter_image_size"
+            app:layout_constraintTop_toTopOf="@id/imageViewBread"
+            app:layout_constraintEnd_toEndOf="@id/imageViewBread"
+            android:src="@drawable/circle_green"
+            />
+        <ImageView
+            android:id="@+id/infoCirclePotatoes"
+            android:layout_width="@dimen/counter_image_size"
+            android:layout_height="@dimen/counter_image_size"
+            app:layout_constraintTop_toTopOf="@id/imageViewPotatoes"
+            app:layout_constraintEnd_toEndOf="@id/imageViewPotatoes"
+            android:src="@drawable/circle_green"
+            />
+        <ImageView
+            android:id="@+id/infoCircleClock"
+            android:layout_width="@dimen/counter_image_size"
+            android:layout_height="@dimen/counter_image_size"
+            app:layout_constraintTop_toTopOf="@id/imageViewClock"
+            app:layout_constraintEnd_toEndOf="@id/imageViewClock"
+            android:src="@drawable/circle_green"
+            />
+
+        <TextView
+            android:id="@+id/infoCounterEgg"
+            android:layout_width="@dimen/counter_image_size"
+            android:layout_height="@dimen/counter_image_size"
+            app:layout_constraintTop_toTopOf="@id/imageViewEgg"
+            app:layout_constraintEnd_toEndOf="@id/imageViewEgg"
+            android:textAlignment="center"
+            android:textColor="@color/colorBackground"
+            android:gravity="center"
+            android:textSize="@dimen/counter_text_size"
+            android:text="@string/label_default_count"
+            />
+
+        <TextView
+            android:id="@+id/infoCounterChampagne"
+            android:layout_width="@dimen/counter_image_size"
+            android:layout_height="@dimen/counter_image_size"
+            app:layout_constraintTop_toTopOf="@id/imageViewChampagne"
+            app:layout_constraintEnd_toEndOf="@id/imageViewChampagne"
+            android:textAlignment="center"
+            android:textColor="@color/colorBackground"
+            android:gravity="center"
+            android:textSize="@dimen/counter_text_size"
+            android:text="@string/label_default_count"
+            />
+
+        <TextView
+            android:id="@+id/infoCounterBread"
+            android:layout_width="@dimen/counter_image_size"
+            android:layout_height="@dimen/counter_image_size"
+            app:layout_constraintTop_toTopOf="@id/imageViewBread"
+            app:layout_constraintEnd_toEndOf="@id/imageViewBread"
+            android:textAlignment="center"
+            android:textColor="@color/colorBackground"
+            android:gravity="center"
+            android:textSize="@dimen/counter_text_size"
+            android:text="@string/label_default_count"
+            />
+
+        <TextView
+            android:id="@+id/infoCounterPotatoes"
+            android:layout_width="@dimen/counter_image_size"
+            android:layout_height="@dimen/counter_image_size"
+            app:layout_constraintTop_toTopOf="@id/imageViewPotatoes"
+            app:layout_constraintEnd_toEndOf="@id/imageViewPotatoes"
+            android:textAlignment="center"
+            android:textColor="@color/colorBackground"
+            android:gravity="center"
+            android:textSize="@dimen/counter_text_size"
+            android:text="@string/label_default_count"
+            />
+
+        <TextView
+            android:id="@+id/infoCounterClock"
+            android:layout_width="@dimen/counter_image_size"
+            android:layout_height="@dimen/counter_image_size"
+            app:layout_constraintTop_toTopOf="@id/imageViewClock"
+            app:layout_constraintEnd_toEndOf="@id/imageViewClock"
+            android:textAlignment="center"
+            android:textColor="@color/colorBackground"
+            android:gravity="center"
+            android:textSize="@dimen/counter_text_size"
+            android:text="@string/label_default_count"
+            />
+
         <TextView
             android:id="@+id/headline"
             android:layout_width="match_parent"
