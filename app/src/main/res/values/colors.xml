@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#55AA88</color>
-    <color name="colorPrimaryDark">#DDAACC</color>
-    <color name="colorAccent">#B81B60</color>
-    <color name="colorSelection">#001122</color>
-    <color name="colorActionBar">#66000000</color>
+    <color name="colorSelection">#002010</color>
+    <color name="colorActionBar">#60000000</color>
     <color name="colorBackground">#000000</color>
-    <color name="colorGoldenText">#FFC72C</color>
+
+<!-- 
+    <color name="primaryColor">#ffc107</color>
+    <color name="primaryLightColor">#fff350</color>
+    <color name="primaryDarkColor">#c79100</color>
+    <color name="secondaryColor">#ef6c00</color>
+    <color name="secondaryLightColor">#ff9d3f</color>
+    <color name="secondaryDarkColor">#b53d00</color>
+    <color name="primaryTextColor">#0b0e3a</color>
+    <color name="secondaryTextColor">#080d3f</color>
+-->
+
+    <color name="primaryColor">#008900</color>
+    <color name="primaryLightColor">#4eba3c</color>
+    <color name="primaryDarkColor">#005a00</color>
+    <color name="secondaryColor">#ffb300</color>
+    <color name="secondaryLightColor">#ffe54c</color>
+    <color name="secondaryDarkColor">#c68400</color>
+    <color name="primaryTextColor">#fffac5</color>
+    <color name="secondaryTextColor">#001100</color>
 </resources>

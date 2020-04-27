@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
+import androidx.core.content.res.ComplexColorCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -91,7 +93,9 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
         View container = activity.findViewById(R.id.container);
         Snackbar snackbar = Snackbar.make(container, "Alarm was deleted", Snackbar.LENGTH_LONG);
         snackbar.setAction("Undo", view -> undoDelete(position, alarm));
-        snackbar.setActionTextColor(Color.YELLOW);
+        snackbar.setActionTextColor(ContextCompat.getColor(getContext(), R.color.secondaryLightColor));
+        snackbar.setBackgroundTint(ContextCompat.getColor(getContext(), R.color.secondaryDarkColor));
+        snackbar.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryTextColor));
         snackbar.show();
     }
 

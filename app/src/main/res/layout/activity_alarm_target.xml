@@ -60,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/egg"
-            android:contentDescription="@string/egg"
+            android:contentDescription="@string/label_empty"
             />
 
         <TextView
@@ -71,7 +71,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_margin="@dimen/activity_vertical_margin"
             android:textSize="30sp"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/primaryTextColor"
             android:textAlignment="center"
             android:text="@{Helpers.getSecondsAsString(alarm.durationInSeconds), default=`@string/default_time`}"
             />

@@ -127,8 +127,8 @@ public class HomeFragment extends Fragment {
     private void showScheduleAlarmSnackBar() {
         View container = getActivity().findViewById(R.id.container);
         Snackbar snackbar = Snackbar.make(container, "Alarm scheduled.", Snackbar.LENGTH_LONG);
-        snackbar.setBackgroundTint(ContextCompat.getColor(getContext(), R.color.colorPrimaryDark));
-        snackbar.setTextColor(ContextCompat.getColor(getContext(), R.color.colorBackground));
+        snackbar.setBackgroundTint(ContextCompat.getColor(getContext(), R.color.secondaryDarkColor));
+        snackbar.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryTextColor));
         snackbar.show();
     }
 

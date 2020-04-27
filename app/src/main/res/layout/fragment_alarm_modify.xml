@@ -55,7 +55,7 @@
             app:layout_constraintTop_toTopOf="@id/horizontal_guideline1"
             app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline2"
             android:src="@drawable/egg"
-            android:contentDescription="@string/egg"
+            android:contentDescription="@string/label_empty"
             android:alpha="0.4"
             style="?android:borderlessButtonStyle"
             />
@@ -81,7 +81,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_margin="@dimen/activity_vertical_margin"
             android:textSize="30sp"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/primaryTextColor"
             android:textAlignment="center"
             android:text="@string/default_time"
             />
@@ -92,8 +92,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@id/horizontal_guideline1"
             app:layout_constraintTop_toBottomOf="@id/headline"
-            android:textSize="17sp"
-            android:textColor="@color/colorPrimary"
+            android:textSize="27sp"
+            android:textColor="@color/secondaryColor"
             android:textAlignment="center"
             android:text="@string/default_status"
             />
@@ -115,8 +115,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
-            android:textColor="@color/colorPrimaryDark"
-            android:textSize="21sp"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="13sp"
             android:textAlignment="center"
             android:layout_margin="@dimen/activity_vertical_margin"
             android:text="@string/label_headline_modify" />
