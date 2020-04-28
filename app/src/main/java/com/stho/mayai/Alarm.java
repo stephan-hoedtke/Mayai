@@ -2,6 +2,7 @@ package com.stho.mayai;
 
 import androidx.annotation.NonNull;
 
+import java.security.InvalidParameterException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -27,6 +28,7 @@ public class Alarm {
     private Calendar triggerTime;
     private long durationInMillis;
     private int status;
+    private boolean isHot;
 
     private final static String DEFAULT_TIME = "--:--:--";
     private final static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
@@ -89,6 +91,12 @@ public class Alarm {
         return status;
     }
 
+    public boolean isHot() { return isHot; }
+
+    public void setHot(boolean isHot) {
+        this.isHot = isHot;
+    }
+
     public String getStatusName() {
         switch (status) {
             case STATUS_FINISHED:
@@ -128,7 +136,12 @@ public class Alarm {
     public String getDurationAsString() { return Helpers.getSecondsAsString(getDurationInSeconds()); }
 
     public int getIconId() {
-        switch (type) {
+        return getIconId(getType());
+    }
+
+    public static int getIconId(int type) {
+
+            switch (type) {
             case TYPE_EGG:
                 return R.drawable.egg;
 
@@ -143,6 +156,29 @@ public class Alarm {
 
             default:
                 return R.drawable.clock;
+        }
+    }
+
+    public int getTypeStringId() {
+        return getIconId(getType());
+    }
+
+    public static int getTypeStringId(int type) {
+        switch (type) {
+            case TYPE_EGG:
+                return R.string.title_egg;
+
+            case TYPE_CHAMPAGNE:
+                return R.string.title_champagne;
+
+            case TYPE_POTATOES:
+                return R.string.title_potatoes;
+
+            case TYPE_BREAD:
+                return R.string.title_bread;
+
+            default:
+                return R.string.title_clock;
         }
     }
 

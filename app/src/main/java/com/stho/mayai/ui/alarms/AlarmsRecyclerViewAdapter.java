@@ -63,6 +63,7 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
         holder.nameView.setText(holder.alarm.getName());
         if (holder.alarm.isPending()) {
             holder.textViewRemainingTime.setText(Helpers.getSecondsAsString(holder.alarm.getRemainingSeconds()));
+            holder.textViewRemainingTime.setTextColor(ContextCompat.getColor(getContext(), holder.alarm.isHot() ? R.color.primaryAccentTextColor : R.color.primaryTextColor));
         }
         else {
             holder.textViewRemainingTime.setText("");
@@ -93,7 +94,7 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
         View container = activity.findViewById(R.id.container);
         Snackbar snackbar = Snackbar.make(container, "Alarm was deleted", Snackbar.LENGTH_LONG);
         snackbar.setAction("Undo", view -> undoDelete(position, alarm));
-        snackbar.setActionTextColor(ContextCompat.getColor(getContext(), R.color.secondaryLightColor));
+        snackbar.setActionTextColor(ContextCompat.getColor(getContext(), R.color.secondaryAccentTextColor));
         snackbar.setBackgroundTint(ContextCompat.getColor(getContext(), R.color.secondaryDarkColor));
         snackbar.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryTextColor));
         snackbar.show();

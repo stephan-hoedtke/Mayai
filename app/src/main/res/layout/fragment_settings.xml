@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -80,11 +80,27 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.67"
+                app:layout_constraintGuide_percent="0.55"
                 />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/vertical_inner_guideline4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.75"
+                />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/vertical_inner_guideline5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.80"
+                />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/vertical_inner_guideline6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -103,16 +119,6 @@
                 />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@id/vertical_inner_guideline2"
-                app:layout_constraintEnd_toEndOf="@id/vertical_inner_guideline3"
-                app:layout_constraintBottom_toBottomOf="@id/minutesEgg"
-                android:layout_marginHorizontal="20sp"
-                android:background="@drawable/dotted_line"
-                />
-
-            <EditText
                 android:id="@+id/minutesEgg"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -120,10 +126,21 @@
                 app:layout_constraintBottom_toBottomOf="@id/imageEgg"
                 app:layout_constraintStart_toStartOf="@id/vertical_inner_guideline3"
                 app:layout_constraintEnd_toEndOf="@id/vertical_inner_guideline4"
+                android:textColor="@color/primaryTextColor"
                 android:text="@string/default_time"
-                android:autofillHints="Minutes"
-                android:inputType="numberDecimal"
-                tools:ignore="LabelFor" />
+                />
+
+            <ImageView
+                android:id="@+id/buttonModifyEgg"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="@id/imageEgg"
+                app:layout_constraintBottom_toBottomOf="@id/imageEgg"
+                app:layout_constraintStart_toStartOf="@id/vertical_inner_guideline5"
+                app:layout_constraintEnd_toEndOf="@id/vertical_inner_guideline6"
+                android:src="@drawable/pencil_pressable"
+                android:contentDescription="@string/label_empty"
+                 />
 
             <ImageView
                 android:id="@+id/imageChampagne"
@@ -137,16 +154,6 @@
                 />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@id/vertical_inner_guideline2"
-                app:layout_constraintEnd_toEndOf="@id/vertical_inner_guideline3"
-                app:layout_constraintBottom_toBottomOf="@id/minutesChampagne"
-                android:layout_marginHorizontal="20sp"
-                android:background="@drawable/dotted_line"
-                />
-
-            <EditText
                 android:id="@+id/minutesChampagne"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -154,10 +161,21 @@
                 app:layout_constraintBottom_toBottomOf="@id/imageChampagne"
                 app:layout_constraintStart_toStartOf="@id/vertical_inner_guideline3"
                 app:layout_constraintEnd_toEndOf="@id/vertical_inner_guideline4"
+                android:textColor="@color/primaryTextColor"
                 android:text="@string/default_time"
-                android:autofillHints="Minutes"
-                android:inputType="numberDecimal"
-                tools:ignore="LabelFor" />
+                />
+
+            <ImageView
+                android:id="@+id/buttonModifyChampagne"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="@id/imageChampagne"
+                app:layout_constraintBottom_toBottomOf="@id/imageChampagne"
+                app:layout_constraintStart_toStartOf="@id/vertical_inner_guideline5"
+                app:layout_constraintEnd_toEndOf="@id/vertical_inner_guideline6"
+                android:src="@drawable/pencil_pressable"
+                android:contentDescription="@string/label_empty"
+                />
 
             <ImageView
                 android:id="@+id/imageBread"
@@ -171,16 +189,6 @@
                 />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@id/vertical_inner_guideline2"
-                app:layout_constraintEnd_toEndOf="@id/vertical_inner_guideline3"
-                app:layout_constraintBottom_toBottomOf="@id/minutesBread"
-                android:layout_marginHorizontal="20sp"
-                android:background="@drawable/dotted_line"
-                />
-
-            <EditText
                 android:id="@+id/minutesBread"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -188,10 +196,21 @@
                 app:layout_constraintBottom_toBottomOf="@id/imageBread"
                 app:layout_constraintStart_toStartOf="@id/vertical_inner_guideline3"
                 app:layout_constraintEnd_toEndOf="@id/vertical_inner_guideline4"
+                android:textColor="@color/primaryTextColor"
                 android:text="@string/default_time"
-                android:autofillHints="Minutes"
-                android:inputType="numberDecimal"
-                tools:ignore="LabelFor" />
+                />
+
+            <ImageView
+                android:id="@+id/buttonModifyBread"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="@id/imageBread"
+                app:layout_constraintBottom_toBottomOf="@id/imageBread"
+                app:layout_constraintStart_toStartOf="@id/vertical_inner_guideline5"
+                app:layout_constraintEnd_toEndOf="@id/vertical_inner_guideline6"
+                android:src="@drawable/pencil_pressable"
+                android:contentDescription="@string/label_empty"
+                />
 
             <ImageView
                 android:id="@+id/imageViewPotatoes"
@@ -205,16 +224,6 @@
                 />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@id/vertical_inner_guideline2"
-                app:layout_constraintEnd_toEndOf="@id/vertical_inner_guideline3"
-                app:layout_constraintBottom_toBottomOf="@id/minutesPotatoes"
-                android:layout_marginHorizontal="20sp"
-                android:background="@drawable/dotted_line"
-                />
-
-            <EditText
                 android:id="@+id/minutesPotatoes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -222,10 +231,22 @@
                 app:layout_constraintBottom_toBottomOf="@id/imageViewPotatoes"
                 app:layout_constraintStart_toStartOf="@id/vertical_inner_guideline3"
                 app:layout_constraintEnd_toEndOf="@id/vertical_inner_guideline4"
+                android:textColor="@color/primaryTextColor"
                 android:text="@string/default_time"
-                android:autofillHints="Minutes"
-                android:inputType="numberDecimal"
-                tools:ignore="LabelFor" />
+                />
+
+            <ImageView
+                android:id="@+id/buttonModifyPotatoes"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/label_empty"
+                android:src="@drawable/pencil_pressable"
+                app:layout_constraintBottom_toBottomOf="@id/imageViewPotatoes"
+                app:layout_constraintEnd_toEndOf="@id/vertical_inner_guideline6"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@id/vertical_inner_guideline5"
+                app:layout_constraintTop_toTopOf="@id/imageViewPotatoes"
+                app:layout_constraintVertical_bias="0.498" />
 
             <ImageView
                 android:id="@+id/imageViewClock"
@@ -239,16 +260,6 @@
                 />
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="@id/vertical_inner_guideline2"
-                app:layout_constraintEnd_toEndOf="@id/vertical_inner_guideline3"
-                app:layout_constraintBottom_toBottomOf="@id/minutesClock"
-                android:layout_marginHorizontal="20sp"
-                android:background="@drawable/dotted_line"
-                />
-
-            <EditText
                 android:id="@+id/minutesClock"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -256,25 +267,25 @@
                 app:layout_constraintBottom_toBottomOf="@id/imageViewClock"
                 app:layout_constraintStart_toStartOf="@id/vertical_inner_guideline3"
                 app:layout_constraintEnd_toEndOf="@id/vertical_inner_guideline4"
+                android:textColor="@color/primaryTextColor"
                 android:text="@string/default_time"
-                android:autofillHints="Minutes"
-                android:inputType="numberDecimal"
-                tools:ignore="LabelFor" />
+                />
+
+            <ImageView
+                android:id="@+id/buttonModifyClock"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="@id/imageViewClock"
+                app:layout_constraintBottom_toBottomOf="@id/imageViewClock"
+                app:layout_constraintStart_toStartOf="@id/vertical_inner_guideline5"
+                app:layout_constraintEnd_toEndOf="@id/vertical_inner_guideline6"
+                android:src="@drawable/pencil_pressable"
+                android:contentDescription="@string/label_empty"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-    <ImageView
-            android:id="@+id/buttonShowLog"
-            android:layout_width="0dp"
-            android:layout_height="80sp"
-            android:src="@drawable/log_pressable"
-            app:layout_constraintStart_toStartOf="@id/vertical_guideline1"
-            app:layout_constraintEnd_toEndOf="@id/vertical_guideline2"
-            app:layout_constraintBottom_toTopOf="@id/buttonSave"
-            android:contentDescription="@string/label_show_log"
-            />
 
         <ImageView
             android:id="@+id/buttonDebug"
@@ -292,6 +303,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
+            android:textColor="@color/primaryTextColor"
             android:text="@string/label_save"
             android:layout_margin="5dp"
             />

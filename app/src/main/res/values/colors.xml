@@ -3,24 +3,14 @@
     <color name="colorSelection">#002010</color>
     <color name="colorActionBar">#60000000</color>
     <color name="colorBackground">#000000</color>
-
-<!-- 
-    <color name="primaryColor">#ffc107</color>
-    <color name="primaryLightColor">#fff350</color>
-    <color name="primaryDarkColor">#c79100</color>
-    <color name="secondaryColor">#ef6c00</color>
-    <color name="secondaryLightColor">#ff9d3f</color>
-    <color name="secondaryDarkColor">#b53d00</color>
-    <color name="primaryTextColor">#0b0e3a</color>
-    <color name="secondaryTextColor">#080d3f</color>
--->
-
-    <color name="primaryColor">#008900</color>
-    <color name="primaryLightColor">#4eba3c</color>
-    <color name="primaryDarkColor">#005a00</color>
+    <color name="primaryColor">#1b5e20</color>
+    <color name="primaryLightColor">#1b5e20</color>
+    <color name="primaryDarkColor">#003300</color>
+    <color name="primaryTextColor">#fffac5</color>
+    <color name="primaryAccentTextColor">#f4511e</color>
     <color name="secondaryColor">#ffb300</color>
     <color name="secondaryLightColor">#ffe54c</color>
     <color name="secondaryDarkColor">#c68400</color>
-    <color name="primaryTextColor">#fffac5</color>
     <color name="secondaryTextColor">#001100</color>
+    <color name="secondaryAccentTextColor">#ffe54c</color>
 </resources>

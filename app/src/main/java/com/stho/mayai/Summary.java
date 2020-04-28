@@ -11,14 +11,38 @@ public class Summary {
     private int counter;
 
     public static class AlarmInfo {
-        int type;
-        public int counter;
-        public boolean isHot;
+        private int type;
+        private int counter;
+        private boolean isHot;
 
         private AlarmInfo(int type) {
             this.type = type;
             this.counter = 0;
             this.isHot = false;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
+
+        public int getCounter() {
+            return counter;
+        }
+
+        public void setCounter(int counter) {
+            this.counter = counter;
+        }
+
+        public boolean isHot() {
+            return isHot;
+        }
+
+        void setHot() {
+            isHot = true;
         }
     }
 
@@ -47,7 +71,11 @@ public class Summary {
                 info.counter++;
                 counter++;
                 if (alarm.getTriggerTime().before(soon)) {
-                    info.isHot = true;
+                    info.setHot();
+                    alarm.setHot(true);
+                }
+                else {
+                    alarm.setHot(false);
                 }
             }
         }

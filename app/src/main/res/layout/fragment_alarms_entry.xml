@@ -10,7 +10,7 @@
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/primaryColor">
+        android:background="@color/secondaryColor">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:textColor="@color/primaryTextColor"
+            android:textColor="@color/secondaryTextColor"
             android:textSize="20sp"
             />
 
@@ -119,7 +119,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/time"
             android:layout_marginHorizontal="16sp"
-            android:textColor="@color/secondaryColor"
+            android:textColor="@color/primaryAccentTextColor"
             android:text="@string/default_time"
             android:textAppearance="?attr/textAppearanceListItem" />
 

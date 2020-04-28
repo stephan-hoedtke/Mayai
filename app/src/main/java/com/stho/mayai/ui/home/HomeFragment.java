@@ -1,10 +1,8 @@
 package com.stho.mayai.ui.home;
 
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,26 +16,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.stho.mayai.Alarm;
-import com.stho.mayai.Alarms;
-import com.stho.mayai.MainViewModel;
-import com.stho.mayai.MayaiAlarmManager;
 import com.stho.mayai.MayaiWorker;
 import com.stho.mayai.R;
 import com.stho.mayai.Summary;
 import com.stho.mayai.databinding.FragmentHomeBinding;
-
-import org.w3c.dom.Text;
-
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.HashMap;
 
 import static com.stho.mayai.Alarm.TYPE_BREAD;
 import static com.stho.mayai.Alarm.TYPE_CHAMPAGNE;
@@ -59,11 +46,11 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
-        binding.imageViewEgg.setOnClickListener(view -> startCounter(TYPE_EGG, "EGG", viewModel.getSettings().getMinutesEgg()));
-        binding.imageViewChampagne.setOnClickListener(view -> startCounter(Alarm.TYPE_CHAMPAGNE, "CHAMPAGNE", viewModel.getSettings().getMinutesChampagne()));
-        binding.imageViewBread.setOnClickListener(view -> startCounter(Alarm.TYPE_BREAD, "BREAD", viewModel.getSettings().getMinutesBread()));
-        binding.imageViewPotatoes.setOnClickListener(view -> startCounter(Alarm.TYPE_POTATOES, "POTATOES", viewModel.getSettings().getMinutesPotatoes()));
-        binding.imageViewClock.setOnClickListener(view -> startCounter(Alarm.TYPE_CLOCK, "CLOCK", viewModel.getSettings().getMinutesClock()));
+        binding.imageViewEgg.setOnClickListener(view -> startCounter(TYPE_EGG,  viewModel.getSettings().getMinutesEgg()));
+        binding.imageViewChampagne.setOnClickListener(view -> startCounter(Alarm.TYPE_CHAMPAGNE, viewModel.getSettings().getMinutesChampagne()));
+        binding.imageViewBread.setOnClickListener(view -> startCounter(Alarm.TYPE_BREAD, viewModel.getSettings().getMinutesBread()));
+        binding.imageViewPotatoes.setOnClickListener(view -> startCounter(Alarm.TYPE_POTATOES, viewModel.getSettings().getMinutesPotatoes()));
+        binding.imageViewClock.setOnClickListener(view -> startCounter(Alarm.TYPE_CLOCK, viewModel.getSettings().getMinutesClock()));
         binding.imageViewEgg.setOnLongClickListener(view -> { display(); return false; });
         binding.imageViewChampagne.setOnLongClickListener(view -> { display(); return false; });
         binding.imageViewBread.setOnLongClickListener(view -> { display(); return false; });
@@ -103,9 +90,8 @@ public class HomeFragment extends Fragment {
         findNavController().navigate(HomeFragmentDirections.actionGlobalNavigationAlarms());
     }
 
-    private void startCounter(int key, String name, double durationInMinutes) {
-        Alarm alarm = new Alarm(key, name, durationInMinutes);
-
+    private void startCounter(int type, double durationInMinutes) {
+        Alarm alarm = new Alarm(type, getString(Alarm.getTypeStringId(type)), durationInMinutes);
         MayaiWorker.build(getContext()).scheduleAlarm(alarm);
 
         findNavController().navigate(
@@ -134,11 +120,11 @@ public class HomeFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void updateUI(Summary.AlarmInfo i, ImageView infoCircle, TextView imageCounter) {
-        if (i.counter > 0) {
+        if (i.getCounter() > 0) {
             infoCircle.setVisibility(View.VISIBLE);
-            infoCircle.setImageResource(i.isHot ? R.drawable.circle_red : R.drawable.circle_green);
+            infoCircle.setImageResource(i.isHot() ? R.drawable.circle_red : R.drawable.circle_green);
             imageCounter.setVisibility(View.VISIBLE);
-            imageCounter.setText(Integer.toString(i.counter));
+            imageCounter.setText(Integer.toString(i.getCounter()));
         }
         else {
             infoCircle.setVisibility(View.INVISIBLE);
