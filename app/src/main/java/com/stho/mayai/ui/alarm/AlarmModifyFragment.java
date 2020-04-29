@@ -1,9 +1,9 @@
 package com.stho.mayai.ui.alarm;
 
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -11,14 +11,17 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.stho.mayai.Alarm;
 import com.stho.mayai.Helpers;
 import com.stho.mayai.MayaiWorker;
 import com.stho.mayai.R;
+import com.stho.mayai.TextViewAnimation;
 import com.stho.mayai.Touch;
 import com.stho.mayai.databinding.FragmentAlarmModifyBinding;
 
@@ -28,11 +31,13 @@ public class AlarmModifyFragment extends Fragment {
     private FragmentAlarmModifyBinding binding;
     private Handler handler = new Handler();
     private Touch touch = new Touch(300);
+    private TextViewAnimation animation;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = AlarmViewModel.build(this);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -49,6 +54,14 @@ public class AlarmModifyFragment extends Fragment {
         viewModel.getAngleLD().observe(getViewLifecycleOwner(), this::setAngle);
         viewModel.setAlarm(Helpers.getAlarmFromFragmentArguments(this));
         return binding.getRoot();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menu_hint) {
+            animation.toggle();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void onUpdateAlarm(Alarm alarm) {
@@ -79,6 +92,7 @@ public class AlarmModifyFragment extends Fragment {
         super.onResume();
         update();
         prepareUpdateHandler();
+        animation = TextViewAnimation.build(binding.headline);
     }
 
     private void prepareUpdateHandler() {
@@ -95,6 +109,7 @@ public class AlarmModifyFragment extends Fragment {
     public void onPause() {
         super.onPause();
         handler.removeCallbacksAndMessages(null);
+        animation.removeCallbacks();
     }
 
     private void update() {
@@ -117,6 +132,16 @@ public class AlarmModifyFragment extends Fragment {
     private void stopAlarm() {
         Alarm alarm = viewModel.getAlarm();
         MayaiWorker.build(getContext()).cancel(alarm);
+        showCancelAlarmSnackBar();
         Navigation.findNavController(getActivity(), R.id.nav_host_fragment).popBackStack(R.id.navigation_home, false);
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    private void showCancelAlarmSnackBar() {
+        View container = getActivity().findViewById(R.id.container);
+        Snackbar snackbar = Snackbar.make(container, "Alarm was canceled.", Snackbar.LENGTH_SHORT);
+        snackbar.setBackgroundTint(ContextCompat.getColor(getContext(), R.color.secondaryDarkColor));
+        snackbar.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryTextColor));
+        snackbar.show();
     }
 }

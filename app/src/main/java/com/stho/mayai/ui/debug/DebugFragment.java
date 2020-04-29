@@ -2,6 +2,9 @@ package com.stho.mayai.ui.debug;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -17,6 +20,7 @@ import androidx.navigation.Navigation;
 import com.stho.mayai.MayaiNotificationManager;
 import com.stho.mayai.MayaiWorker;
 import com.stho.mayai.R;
+import com.stho.mayai.TextViewAnimation;
 import com.stho.mayai.databinding.FragmentDebugBinding;
 import com.stho.mayai.databinding.FragmentSettingsBinding;
 import com.stho.mayai.ui.settings.SettingsFragmentDirections;
@@ -26,11 +30,13 @@ public class DebugFragment extends Fragment {
 
     private DebugViewModel viewModel;
     private FragmentDebugBinding binding;
+    private TextViewAnimation animation;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = DebugViewModel.build(this);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -46,6 +52,26 @@ public class DebugFragment extends Fragment {
         viewModel.getInfoLD().observe(getViewLifecycleOwner(), info -> binding.nextAlarm.setText(info));
         viewModel.getVersionLD().observe(getViewLifecycleOwner(), this::updateActionBar);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        animation = TextViewAnimation.build(binding.headline);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        animation.removeCallbacks();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menu_hint) {
+            animation.toggle();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @SuppressWarnings("ConstantConditions")

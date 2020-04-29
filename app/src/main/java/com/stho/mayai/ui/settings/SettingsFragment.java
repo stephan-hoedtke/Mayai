@@ -1,15 +1,12 @@
 package com.stho.mayai.ui.settings;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,17 +24,20 @@ import com.google.android.material.snackbar.Snackbar;
 import com.stho.mayai.Alarm;
 import com.stho.mayai.R;
 import com.stho.mayai.Settings;
+import com.stho.mayai.TextViewAnimation;
 import com.stho.mayai.databinding.FragmentSettingsBinding;
 
 public class SettingsFragment extends Fragment {
 
     private SettingsViewModel viewModel;
     private FragmentSettingsBinding binding;
+    private TextViewAnimation animation;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = SettingsViewModel.build(this);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -53,6 +53,26 @@ public class SettingsFragment extends Fragment {
         viewModel.getVersionLD().observe(getViewLifecycleOwner(), this::updateActionBar);
         viewModel.getSettingsLD().observe(getViewLifecycleOwner(), this::updateSettings);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        animation = TextViewAnimation.build(binding.headline);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        animation.removeCallbacks();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menu_hint) {
+            animation.toggle();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void save() {
@@ -104,24 +124,6 @@ public class SettingsFragment extends Fragment {
         actionBar.setHomeButtonEnabled(true);
     }
 
-    private static class DialogInfo {
-        int type;
-        TextView view;
-
-        DialogInfo(int type, TextView view) {
-            this.type = type;
-            this.view = view;
-        }
-
-        int getStringId() {
-            return Alarm.getTypeStringId(type);
-        }
-
-        int getIconId() {
-            return Alarm.getIconId(type);
-        }
-    }
-
     private static double parseDouble(TextView view) {
         String str = view.getText().toString();
         double value = Double.parseDouble(str);
@@ -131,33 +133,22 @@ public class SettingsFragment extends Fragment {
         return value;
     }
 
-    @SuppressLint("SetTextI18n")
-    private void showEditDialog(int type, TextView view) {
-        final DialogInfo info = new DialogInfo(type, view);
-        showEditDialog(info);
-    }
-
     @SuppressWarnings("ConstantConditions")
     @SuppressLint("SetTextI18n")
-    private void showEditDialog(DialogInfo info) {
+    private void showEditDialog(final int type, final TextView view) {
         final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-        alertDialog.setTitle(info.getStringId());
-        final EditText input = new EditText(getContext());
-        FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-        final int margin = (int)getResources().getDimension(R.dimen.activity_vertical_margin);
-        input.setLayoutParams(lp);
-        input.setText(info.view.getText());
-        input.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        input.setPadding(margin, margin, margin, margin);
-        alertDialog.setView(input);
-        alertDialog.setIcon(info.getIconId());
-
+        alertDialog.setTitle(Alarm.getTypeStringId(type));
+        @SuppressLint("InflateParams") final View customLayout = getLayoutInflater().inflate(R.layout.edit_number_dialog, null);
+        alertDialog.setView(customLayout);
+        final EditText input = customLayout.findViewById(R.id.editView);
+        input.setText(view.getText());
+        alertDialog.setIcon(Alarm.getIconId(type));
         alertDialog.setPositiveButton("OK", (dialogInterface, i) -> {
             try {
                 String str = input.getText().toString();
                 double value = Double.parseDouble(str);
                 if (value > 0) {
-                    info.view.setText(str);
+                    view.setText(str);
                     dialogInterface.cancel();
                 }
             }
@@ -166,7 +157,6 @@ public class SettingsFragment extends Fragment {
             }
         });
         alertDialog.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
-
         alertDialog.show();
     }
 }

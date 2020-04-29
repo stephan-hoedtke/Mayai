@@ -3,8 +3,12 @@ package com.stho.mayai.ui.alarms;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,7 +24,10 @@ import com.stho.mayai.Alarm;
 import com.stho.mayai.Alarms;
 import com.stho.mayai.R;
 import com.stho.mayai.Summary;
+import com.stho.mayai.TextViewAnimation;
 import com.stho.mayai.databinding.FragmentAlarmsBinding;
+
+import org.w3c.dom.Text;
 
 
 public class AlarmsFragment extends Fragment {
@@ -28,11 +35,13 @@ public class AlarmsFragment extends Fragment {
     private AlarmsViewModel viewModel;
     private FragmentAlarmsBinding binding;
     private Handler handler = new Handler();
+    private TextViewAnimation animation;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = AlarmsViewModel.build(this);
+        setHasOptionsMenu(true);
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -56,6 +65,11 @@ public class AlarmsFragment extends Fragment {
     public void onResume() {
         super.onResume();
         update();
+        prepareUpdateHandler();
+        animation = TextViewAnimation.build(binding.headline);
+    }
+
+    private void prepareUpdateHandler() {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -69,6 +83,15 @@ public class AlarmsFragment extends Fragment {
     public void onPause() {
         super.onPause();
         handler.removeCallbacksAndMessages(null);
+        animation.removeCallbacks();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menu_hint) {
+            animation.toggle();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void updateAlarms(Alarms alarms) {
@@ -85,11 +108,11 @@ public class AlarmsFragment extends Fragment {
         binding.list.getAdapter().notifyDataSetChanged();
     }
 
-    @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings({"ConstantConditions"})
     private void updateActionBar(Summary summary) {
         ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
         int counter = summary.getPendingAlarmsCounter();
-        actionBar.setTitle(counter == 0 ? "Alarms" : ("Alarms: " + Integer.toString(counter)));
+        actionBar.setTitle(counter == 0 ? "Alarms" : ("Alarms: " + counter));
         actionBar.setSubtitle(null);
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);

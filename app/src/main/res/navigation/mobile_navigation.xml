@@ -14,15 +14,24 @@
         <action
             android:id="@+id/action_navigation_home_to_navigation_alarm_countdown"
             app:destination="@id/navigation_alarm_countdown"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            />
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_navigation_home_to_navigation_settings"
-            app:destination="@id/navigation_settings" />
+            app:destination="@id/navigation_settings"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_navigation_home_to_navigation_notifications"
-            app:destination="@id/navigation_alarms" />
+            app:destination="@id/navigation_alarms"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -36,7 +45,11 @@
             android:defaultValue="null" />
         <action
             android:id="@+id/action_navigation_alarm_countdown_to_navigation_alarm_modify"
-            app:destination="@id/navigation_alarm_modify" />
+            app:destination="@id/navigation_alarm_modify"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -56,10 +69,18 @@
         tools:layout="@layout/fragment_settings" >
         <action
             android:id="@+id/action_navigation_settings_to_navigation_debug"
-            app:destination="@id/navigation_debug" />
+            app:destination="@id/navigation_debug"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <action
             android:id="@+id/action_navigation_settings_to_navigation_show_log"
-            app:destination="@id/navigation_show_log" />
+            app:destination="@id/navigation_show_log"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -83,8 +104,12 @@
 
     <action
         android:id="@+id/action_global_navigation_alarm_countdown"
-        app:destination="@id/navigation_alarm_countdown">
-         <argument
+        app:destination="@id/navigation_alarm_countdown"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right">
+        <argument
             android:name="Alarm"
             app:argType="string"
             app:nullable="true"
@@ -93,7 +118,11 @@
 
     <action
         android:id="@+id/action_global_navigation_alarms"
-        app:destination="@id/navigation_alarms" />
+        app:destination="@id/navigation_alarms"
+        app:enterAnim="@anim/slide_in_right"
+        app:exitAnim="@anim/slide_out_left"
+        app:popEnterAnim="@anim/slide_in_left"
+        app:popExitAnim="@anim/slide_out_right"/>
 
 </navigation>
 

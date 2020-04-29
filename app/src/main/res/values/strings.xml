@@ -11,11 +11,12 @@
     <string name="label_stop_alarm">Stop alarm</string>
     <string name="label_start_alarm">Start alarm</string>
     <string name="label_save">Save</string>
-    <string name="label_headline_home">Tap image to start new alarm</string>
-    <string name="label_headline_countdown">Tap image to modify alarm</string>
-    <string name="label_headline_modify">Turn the wheel to set the time</string>
-    <string name="label_headline_settings">Specify minutes</string>
+    <string name="label_headline_home">Tap short to start new alarm, tap long to see the list</string>
+    <string name="label_headline_countdown">Tap image to modify, tap the bell to stop</string>
+    <string name="label_headline_modify">Turn the wheel to set duration, tap the bell to stop</string>
+    <string name="label_headline_settings">Specify default alarm duration in minutes</string>
     <string name="label_headline_debug">Debug</string>
+    <string name="label_headline_alarms">Swipe to delete alarm, tap long to edit it</string>
     <string name="default_next_alarm"><![CDATA[<NEXT ALARM>]]></string>
     <string name="title_expanded_notification">My Expanded Notification</string>
     <string name="label_notification_info">My Notification</string>
@@ -45,5 +46,6 @@
     <string name="title_bread">BREAD</string>
     <string name="title_potatoes">POTATOES</string>
     <string name="title_clock">CLOCK</string>
+    <string name="label_show_hint">Show Hint</string>
 
 </resources>

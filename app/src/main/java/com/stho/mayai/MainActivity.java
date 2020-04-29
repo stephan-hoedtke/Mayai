@@ -2,6 +2,8 @@ package com.stho.mayai;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,6 +39,14 @@ public class MainActivity extends AppCompatActivity {
 
     // https://abhiandroid.com/programming/retrofit
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -47,9 +57,6 @@ public class MainActivity extends AppCompatActivity {
                 findNavController().navigate(
                         MobileNavigationDirections.actionGlobalNavigationAlarmCountdown()
                                 .setAlarm(alarm.serialize()));
-            }
-            else if (Helpers.isAlarm(action)) {
-                // TODO: open alarm fragment...
             }
         }
         else {

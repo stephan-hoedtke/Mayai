@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -24,6 +25,7 @@ import com.stho.mayai.Alarm;
 import com.stho.mayai.MayaiWorker;
 import com.stho.mayai.R;
 import com.stho.mayai.Summary;
+import com.stho.mayai.TextViewAnimation;
 import com.stho.mayai.databinding.FragmentHomeBinding;
 
 import static com.stho.mayai.Alarm.TYPE_BREAD;
@@ -37,11 +39,13 @@ public class HomeFragment extends Fragment {
     private HomeViewModel viewModel;
     private FragmentHomeBinding binding;
     private Handler handler = new Handler();
+    private TextViewAnimation animation;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = HomeViewModel.build(this);
+        setHasOptionsMenu(true);
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -67,6 +71,11 @@ public class HomeFragment extends Fragment {
     public void onResume() {
         super.onResume();
         update();
+        prepareUpdateHandler();
+        animation = TextViewAnimation.build(binding.headline);
+    }
+
+    private void prepareUpdateHandler() {
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -80,6 +89,15 @@ public class HomeFragment extends Fragment {
     public void onPause() {
         super.onPause();
         handler.removeCallbacksAndMessages(null);
+        animation.removeCallbacks();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.menu_hint) {
+            animation.toggle();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void update() {
@@ -113,7 +131,7 @@ public class HomeFragment extends Fragment {
     private void showScheduleAlarmSnackBar() {
         View container = getActivity().findViewById(R.id.container);
         Snackbar snackbar = Snackbar.make(container, "Alarm scheduled.", Snackbar.LENGTH_LONG);
-        snackbar.setBackgroundTint(ContextCompat.getColor(getContext(), R.color.secondaryDarkColor));
+        snackbar.setBackgroundTint(ContextCompat.getColor(getContext(), R.color.secondaryColor));
         snackbar.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryTextColor));
         snackbar.show();
     }

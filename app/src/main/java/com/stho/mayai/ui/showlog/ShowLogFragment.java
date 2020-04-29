@@ -25,8 +25,10 @@ public class ShowLogFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = ShowLogViewModel.build(this);
+        setHasOptionsMenu(true);
     }
 
+    @SuppressWarnings("ConstantConditions")
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_show_log, container, false);
