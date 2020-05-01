@@ -24,14 +24,14 @@ import com.google.android.material.snackbar.Snackbar;
 import com.stho.mayai.Alarm;
 import com.stho.mayai.R;
 import com.stho.mayai.Settings;
-import com.stho.mayai.TextViewAnimation;
+import com.stho.mayai.ViewAnimation;
 import com.stho.mayai.databinding.FragmentSettingsBinding;
 
 public class SettingsFragment extends Fragment {
 
     private SettingsViewModel viewModel;
     private FragmentSettingsBinding binding;
-    private TextViewAnimation animation;
+    private ViewAnimation animation;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,7 +58,7 @@ public class SettingsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        animation = TextViewAnimation.build(binding.headline);
+        animation = ViewAnimation.build(binding.headlineFrame);
     }
 
     @Override
@@ -142,6 +142,7 @@ public class SettingsFragment extends Fragment {
         alertDialog.setView(customLayout);
         final EditText input = customLayout.findViewById(R.id.editView);
         input.setText(view.getText());
+        input.requestFocus();
         alertDialog.setIcon(Alarm.getIconId(type));
         alertDialog.setPositiveButton("OK", (dialogInterface, i) -> {
             try {

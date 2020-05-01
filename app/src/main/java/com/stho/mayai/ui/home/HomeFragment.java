@@ -25,7 +25,7 @@ import com.stho.mayai.Alarm;
 import com.stho.mayai.MayaiWorker;
 import com.stho.mayai.R;
 import com.stho.mayai.Summary;
-import com.stho.mayai.TextViewAnimation;
+import com.stho.mayai.ViewAnimation;
 import com.stho.mayai.databinding.FragmentHomeBinding;
 
 import static com.stho.mayai.Alarm.TYPE_BREAD;
@@ -39,7 +39,7 @@ public class HomeFragment extends Fragment {
     private HomeViewModel viewModel;
     private FragmentHomeBinding binding;
     private Handler handler = new Handler();
-    private TextViewAnimation animation;
+    private ViewAnimation animation;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -72,7 +72,7 @@ public class HomeFragment extends Fragment {
         super.onResume();
         update();
         prepareUpdateHandler();
-        animation = TextViewAnimation.build(binding.headline);
+        animation = ViewAnimation.build(binding.headlineFrame);
     }
 
     private void prepareUpdateHandler() {

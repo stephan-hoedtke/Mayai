@@ -208,7 +208,7 @@ public class Alarm {
     }
 
     public int getRemainingSeconds() {
-        long millis = triggerTime.getTimeInMillis() - Alarm.getCurrentTimeInMillis();
+        long millis = getRemainingMillis();
         return millis > 0 ? Alarm.toSeconds(millis) : 0;
     }
 
@@ -217,6 +217,9 @@ public class Alarm {
         return createCalendar(Alarm.getCurrentTimeInMillis() + millis);
     }
 
+    private long getRemainingMillis() {
+        return triggerTime.getTimeInMillis() - Alarm.getCurrentTimeInMillis();
+    }
 
     private static long getCurrentTimeInMillis() {
         return GregorianCalendar.getInstance().getTimeInMillis();

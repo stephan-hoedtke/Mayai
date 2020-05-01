@@ -21,7 +21,7 @@ import com.stho.mayai.Alarm;
 import com.stho.mayai.Helpers;
 import com.stho.mayai.MayaiWorker;
 import com.stho.mayai.R;
-import com.stho.mayai.TextViewAnimation;
+import com.stho.mayai.ViewAnimation;
 import com.stho.mayai.databinding.FragmentAlarmCountdownBinding;
 
 public class AlarmCountdownFragment extends Fragment {
@@ -29,7 +29,7 @@ public class AlarmCountdownFragment extends Fragment {
     private AlarmViewModel viewModel;
     private FragmentAlarmCountdownBinding binding;
     private Handler handler = new Handler();
-    private TextViewAnimation animation;
+    private ViewAnimation animation;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,7 +63,7 @@ public class AlarmCountdownFragment extends Fragment {
         super.onResume();
         update();
         prepareUpdateHandler();
-        animation = TextViewAnimation.build(binding.headline);
+        animation = ViewAnimation.build(binding.headlineFrame);
     }
 
     private void prepareUpdateHandler() {

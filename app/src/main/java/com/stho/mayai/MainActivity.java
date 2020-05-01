@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                         MobileNavigationDirections.actionGlobalNavigationAlarmCountdown()
                                 .setAlarm(alarm.serialize()));
             }
+            // The actual fired alarm intent is not routed to this main activity, but to the target activity
         }
         else {
             if (viewModel.hasUnfinishedAlarms()) {

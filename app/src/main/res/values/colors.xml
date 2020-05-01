@@ -13,4 +13,6 @@
     <color name="secondaryDarkColor">#c68400</color>
     <color name="secondaryTextColor">#001100</color>
     <color name="secondaryAccentTextColor">#ffe54c</color>
+    <color name="hintBackgroundColor">#fffac5</color>
+    <color name="hintTextColor">#003300</color>
 </resources>

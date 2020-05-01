@@ -21,7 +21,7 @@ import com.stho.mayai.Alarm;
 import com.stho.mayai.Helpers;
 import com.stho.mayai.MayaiWorker;
 import com.stho.mayai.R;
-import com.stho.mayai.TextViewAnimation;
+import com.stho.mayai.ViewAnimation;
 import com.stho.mayai.Touch;
 import com.stho.mayai.databinding.FragmentAlarmModifyBinding;
 
@@ -30,8 +30,8 @@ public class AlarmModifyFragment extends Fragment {
     private AlarmViewModel viewModel;
     private FragmentAlarmModifyBinding binding;
     private Handler handler = new Handler();
-    private Touch touch = new Touch(300);
-    private TextViewAnimation animation;
+    private Touch touch = new Touch(500);
+    private ViewAnimation animation;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -92,7 +92,7 @@ public class AlarmModifyFragment extends Fragment {
         super.onResume();
         update();
         prepareUpdateHandler();
-        animation = TextViewAnimation.build(binding.headline);
+        animation = ViewAnimation.build(binding.headlineFrame);
     }
 
     private void prepareUpdateHandler() {

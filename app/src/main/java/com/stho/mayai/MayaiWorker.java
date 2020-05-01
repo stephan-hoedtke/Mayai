@@ -66,10 +66,12 @@ public class MayaiWorker {
         }
     }
 
-    public void reschedule(Alarm alarm, double minutes) {
+    public void reschedule(Alarm alarm, double minutes, boolean scheduleNextPendingAlarm) {
         try {
             repository.getAlarm(alarm).reschedule(minutes).setStatus(STATUS_PENDING);
-            scheduleNextPendingAlarm();
+            if (scheduleNextPendingAlarm) {
+                scheduleNextPendingAlarm();
+            }
             repository.save(context);
         } catch (Exception ex) {
             onError(ex);

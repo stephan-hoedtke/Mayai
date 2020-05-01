@@ -3,12 +3,9 @@ package com.stho.mayai.ui.alarms;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,14 +17,11 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.stho.mayai.Alarm;
 import com.stho.mayai.Alarms;
 import com.stho.mayai.R;
 import com.stho.mayai.Summary;
-import com.stho.mayai.TextViewAnimation;
+import com.stho.mayai.ViewAnimation;
 import com.stho.mayai.databinding.FragmentAlarmsBinding;
-
-import org.w3c.dom.Text;
 
 
 public class AlarmsFragment extends Fragment {
@@ -35,7 +29,7 @@ public class AlarmsFragment extends Fragment {
     private AlarmsViewModel viewModel;
     private FragmentAlarmsBinding binding;
     private Handler handler = new Handler();
-    private TextViewAnimation animation;
+    private ViewAnimation animation;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,7 +60,7 @@ public class AlarmsFragment extends Fragment {
         super.onResume();
         update();
         prepareUpdateHandler();
-        animation = TextViewAnimation.build(binding.headline);
+        animation = ViewAnimation.build(binding.headlineFrame);
     }
 
     private void prepareUpdateHandler() {

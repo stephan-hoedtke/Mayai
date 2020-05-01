@@ -37,7 +37,7 @@ public class AlarmViewModel extends AndroidViewModel {
         repository = MayaiRepository.getRepository(application.getBaseContext());
         remainingSecondsLiveData.setValue(0);
         statusNameLiveData.setValue("");
-        secondsPerTurnLiveData.setValue(600.0);
+        secondsPerTurnLiveData.setValue(3600.0);
     }
 
     LiveData<String> getStatusNameLD() { return statusNameLiveData; }
@@ -91,7 +91,7 @@ public class AlarmViewModel extends AndroidViewModel {
             if (minutes < 0)
                 minutes = 0;
 
-            MayaiWorker.build(getApplication()).reschedule(alarm, minutes);
+            MayaiWorker.build(getApplication()).reschedule(alarm, minutes, false);
             touchAlarm();
         }
     }

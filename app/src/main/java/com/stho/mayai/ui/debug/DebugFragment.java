@@ -2,8 +2,6 @@ package com.stho.mayai.ui.debug;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,17 +18,14 @@ import androidx.navigation.Navigation;
 import com.stho.mayai.MayaiNotificationManager;
 import com.stho.mayai.MayaiWorker;
 import com.stho.mayai.R;
-import com.stho.mayai.TextViewAnimation;
+import com.stho.mayai.ViewAnimation;
 import com.stho.mayai.databinding.FragmentDebugBinding;
-import com.stho.mayai.databinding.FragmentSettingsBinding;
-import com.stho.mayai.ui.settings.SettingsFragmentDirections;
-import com.stho.mayai.ui.settings.SettingsViewModel;
 
 public class DebugFragment extends Fragment {
 
     private DebugViewModel viewModel;
     private FragmentDebugBinding binding;
-    private TextViewAnimation animation;
+    private ViewAnimation animation;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -57,7 +52,7 @@ public class DebugFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        animation = TextViewAnimation.build(binding.headline);
+        animation = ViewAnimation.build(binding.headlineFrame);
     }
 
     @Override
