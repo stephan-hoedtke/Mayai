@@ -21,8 +21,8 @@ import com.stho.mayai.Alarm;
 import com.stho.mayai.Helpers;
 import com.stho.mayai.MayaiWorker;
 import com.stho.mayai.R;
-import com.stho.mayai.ViewAnimation;
 import com.stho.mayai.Touch;
+import com.stho.mayai.ViewAnimation;
 import com.stho.mayai.databinding.FragmentAlarmModifyBinding;
 
 public class AlarmModifyFragment extends Fragment {
@@ -43,15 +43,16 @@ public class AlarmModifyFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alarm_modify, container, false);
-        binding.buttonStopPlaying.setOnClickListener(v -> stopAlarm());
-        binding.rotary.setOnAngleChangedListener(angle -> {
+        binding.buttonStopPlaying.setOnClickListener(view -> stopAlarm());
+        binding.rotary.setOnAngleChangedListener(delta -> {
             touch.touch();
-            viewModel.rotate(angle);
+            viewModel.rotate(delta);
         });
         viewModel.getAlarmLD().observe(getViewLifecycleOwner(), this::onUpdateAlarm);
         viewModel.getStatusNameLD().observe(getViewLifecycleOwner(), this::onUpdateStatusName);
         viewModel.getRemainingSecondsLD().observe(getViewLifecycleOwner(), this::onUpdateRemainingSeconds);
         viewModel.getAngleLD().observe(getViewLifecycleOwner(), this::setAngle);
+        viewModel.getSimpleRotaryLD().observe(getViewLifecycleOwner(), value -> binding.rotary.setSimpleRotary(value));
         viewModel.setAlarm(Helpers.getAlarmFromFragmentArguments(this));
         return binding.getRoot();
     }

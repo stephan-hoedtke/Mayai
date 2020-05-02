@@ -2,7 +2,9 @@ package com.stho.mayai.ui.alarms;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -28,6 +30,7 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
     private final FragmentActivity activity;
     private final Context context;
     private final IAlarms alarms;
+    private final GestureDetector gestureDetector;
 
     AlarmsRecyclerViewAdapter(FragmentActivity activity, IAlarms alarms) {
         this.activity = activity;
@@ -35,6 +38,7 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
         this.alarms = alarms;
         // to avoid flicker on update during swipe: See also getItemId
         this.setHasStableIds(true);
+        this.gestureDetector = new GestureDetector(activity.getApplicationContext(), new GestureDetector.SimpleOnGestureListener());
     }
 
     @Override
@@ -71,6 +75,29 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
         holder.itemView.setOnLongClickListener(view -> {
             editItem(position);
             return true;
+        });
+        holder.itemView.setOnTouchListener((view, motionEvent) -> {
+            gestureDetector.onTouchEvent(motionEvent);
+            view.performClick();
+            return false;
+        });
+        gestureDetector.setIsLongpressEnabled(true);
+        gestureDetector.setOnDoubleTapListener(new GestureDetector.OnDoubleTapListener() {
+            @Override
+            public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
+                return false;
+            }
+
+            @Override
+            public boolean onDoubleTap(MotionEvent motionEvent) {
+                editItem(position);
+                return false;
+            }
+
+            @Override
+            public boolean onDoubleTapEvent(MotionEvent motionEvent) {
+                return false;
+            }
         });
     }
 

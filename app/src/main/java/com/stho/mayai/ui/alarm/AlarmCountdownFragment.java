@@ -48,6 +48,7 @@ public class AlarmCountdownFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alarm_countdown, container, false);
         binding.image.setOnClickListener(view -> edit());
+        binding.textViewRemainingTime.setOnClickListener(view -> edit());
         binding.buttonStopPlaying.setOnClickListener(v -> cancelAlarm());
         viewModel.getAlarmLD().observe(getViewLifecycleOwner(), this::onUpdateAlarm);
         viewModel.getStatusNameLD().observe(getViewLifecycleOwner(), this::onUpdateStatusName);

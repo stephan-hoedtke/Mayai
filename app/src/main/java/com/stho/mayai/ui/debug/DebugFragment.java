@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -44,8 +45,10 @@ public class DebugFragment extends Fragment {
         binding.buttonOpenAlarm.setOnClickListener(view -> viewModel.openAlarmFromClockInfo(getContext()));
         binding.buttonOpenChannelSettings.setOnClickListener(view -> MayaiNotificationManager.openChannelSettings(getContext()));
         binding.buttonShowLog.setOnClickListener(view -> findNavController().navigate(DebugFragmentDirections.actionNavigationDebugToNavigationShowLog()));
+        binding.checkBoxSimpleRotary.setOnCheckedChangeListener((compoundButton, b) -> viewModel.setSimpleRotary(b));
         viewModel.getInfoLD().observe(getViewLifecycleOwner(), info -> binding.nextAlarm.setText(info));
         viewModel.getVersionLD().observe(getViewLifecycleOwner(), this::updateActionBar);
+        viewModel.getSimpleRotaryLD().observe(getViewLifecycleOwner(), value -> binding.checkBoxSimpleRotary.setChecked(value));
         return binding.getRoot();
     }
 

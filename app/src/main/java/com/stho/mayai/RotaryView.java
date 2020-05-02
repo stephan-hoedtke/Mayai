@@ -2,11 +2,8 @@ package com.stho.mayai;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 
 import androidx.annotation.Nullable;
@@ -15,13 +12,15 @@ import androidx.appcompat.widget.AppCompatImageView;
 public class RotaryView extends AppCompatImageView {
 
     public interface OnAngleChangedListener {
-        void onAngleChanged(double angle);
+        void onAngleChanged(double delta);
     }
 
     private OnAngleChangedListener listener;
+    private boolean simpleRotary;
 
     public RotaryView(Context context) {
         super(context);
+        simpleRotary = true;
     }
 
     public void addAngle(double delta) {
@@ -35,6 +34,14 @@ public class RotaryView extends AppCompatImageView {
 
     public void setAngle(float angle) {
         this.setRotation(angle);
+    }
+
+    public boolean getSimpleRotary() {
+        return this.simpleRotary;
+    }
+
+    public void setSimpleRotary(boolean value) {
+        this.simpleRotary = value;
     }
 
     public RotaryView(Context context, @Nullable AttributeSet attrs) {
@@ -51,23 +58,62 @@ public class RotaryView extends AppCompatImageView {
         // MotionEvent reports input details from the touch screen
         // and other input controls. In this case, you are only
         // interested in events where the touch position changed.
+        if (simpleRotary) {
+            return onTouchEventSimpleMode(event);
+        }
+        else {
+            return onTouchEventComplexMode(event);
+        }
+    }
 
+    public boolean onTouchEventSimpleMode(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
-
-            float cx = getWidth() >> 1;
-            float cy = getHeight() >> 1;
-            float x = event.getX();
-            float y = event.getY();
-            double delta = Math.atan2(y - cy, x - cx) * 180 / Math.PI + 90;
-
-            if (delta > 180)
-                delta -= 360;
-
-            if (delta < -180)
-                delta += 360;
-
+            final double delta = ensureAngleRange(getAngle(event.getX(), event.getY()));
             addAngle(delta);
         }
         return true;
     }
+
+    private double previousAngle = 0;
+
+    public boolean onTouchEventComplexMode(MotionEvent event) {
+        // MotionEvent reports input details from the touch screen
+        // and other input controls. In this case, you are only
+        // interested in events where the touch position changed.
+
+        switch (event.getAction()) {
+
+            case MotionEvent.ACTION_DOWN:
+            case MotionEvent.ACTION_POINTER_DOWN: {
+                previousAngle = getRotation() + getAngle(event.getX(), event.getY());
+            }
+            break;
+
+            case MotionEvent.ACTION_MOVE: {
+                final double alpha = getRotation() + getAngle(event.getX(), event.getY());
+                final double delta = ensureAngleRange(alpha - previousAngle);
+                previousAngle = alpha;
+                addAngle(delta);
+            }
+            break;
+        }
+        return true;
+    }
+
+    private double getAngle(float x, float y) {
+        float cx = getWidth() >> 1;
+        float cy = getHeight() >> 1;
+        return Math.atan2(y - cy, x - cx) * 180 / Math.PI + 90;
+    }
+
+    private static double ensureAngleRange(double delta) {
+        while (delta > 180) {
+            delta -= 360;
+        }
+        while (delta < -180) {
+            delta += 360;
+        }
+        return delta;
+    }
+
 }

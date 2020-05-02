@@ -88,6 +88,7 @@
             android:textColor="@color/primaryTextColor"
             android:textAlignment="center"
             android:text="@string/default_time"
+            android:background="@drawable/background_selector"
             />
 
         <TextView

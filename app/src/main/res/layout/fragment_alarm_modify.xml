@@ -84,8 +84,8 @@
             android:layout_height="match_parent"
             android:scaleType="fitCenter"
             android:src="@drawable/plate_bright"
-            android:alpha="0.7"
             android:contentDescription="@string/label_empty"
+            android:alpha="0.7"
             />
 
         <com.stho.mayai.RotaryView
@@ -109,6 +109,7 @@
             android:textColor="@color/primaryTextColor"
             android:textAlignment="center"
             android:text="@string/default_time"
+            android:background="@drawable/background_selector"
             />
 
         <TextView

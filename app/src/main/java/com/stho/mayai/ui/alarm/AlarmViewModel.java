@@ -16,6 +16,7 @@ import com.stho.mayai.Alarms;
 import com.stho.mayai.MainViewModel;
 import com.stho.mayai.MayaiRepository;
 import com.stho.mayai.MayaiWorker;
+import com.stho.mayai.Settings;
 
 public class AlarmViewModel extends AndroidViewModel {
 
@@ -43,6 +44,7 @@ public class AlarmViewModel extends AndroidViewModel {
     LiveData<String> getStatusNameLD() { return statusNameLiveData; }
     LiveData<Integer> getRemainingSecondsLD() { return remainingSecondsLiveData; }
     LiveData<Float> getAngleLD() { return Transformations.map(remainingSecondsLiveData, this::getAngle); }
+    LiveData<Boolean> getSimpleRotaryLD() { return Transformations.map(repository.getSettingsLD(), Settings::getSimpleRotary); }
     LiveData<Alarm> getAlarmLD() { return alarmLiveData; }
 
     Alarm getAlarm() { return alarmLiveData.getValue(); }
@@ -81,11 +83,11 @@ public class AlarmViewModel extends AndroidViewModel {
     }
 
     @SuppressWarnings("ConstantConditions")
-    void rotate(double angle) {
+    void rotate(double delta) {
         Alarm alarm = getAlarm();
         if (alarm != null) {
             double secondsPerTurn = secondsPerTurnLiveData.getValue();
-            double seconds = alarm.getRemainingSeconds() + ((angle / 360) * secondsPerTurn);
+            double seconds = alarm.getRemainingSeconds() + ((delta / 360) * secondsPerTurn);
             double minutes = seconds / 60;
 
             if (minutes < 0)
