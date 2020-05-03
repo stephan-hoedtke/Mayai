@@ -103,7 +103,7 @@ public class AlarmCountdownFragment extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
-    
+
     private void edit() {
         rotaryAppear();
     }
