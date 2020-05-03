@@ -43,24 +43,6 @@
             app:argType="string"
             app:nullable="true"
             android:defaultValue="null" />
-        <action
-            android:id="@+id/action_navigation_alarm_countdown_to_navigation_alarm_modify"
-            app:destination="@id/navigation_alarm_modify"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/navigation_alarm_modify"
-        android:name="com.stho.mayai.ui.alarm.AlarmModifyFragment"
-        tools:layout="@layout/fragment_alarm_modify" >
-        <argument
-            android:name="Alarm"
-            app:argType="string"
-            app:nullable="true"
-            android:defaultValue="null" />
     </fragment>
 
     <fragment
@@ -70,13 +52,6 @@
         <action
             android:id="@+id/action_navigation_settings_to_navigation_debug"
             app:destination="@id/navigation_debug"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-        <action
-            android:id="@+id/action_navigation_settings_to_navigation_show_log"
-            app:destination="@id/navigation_show_log"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"

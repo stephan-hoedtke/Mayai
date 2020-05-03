@@ -102,10 +102,10 @@ public class Alarm {
                 return "Finished";
 
             case STATUS_PENDING:
-                return "Pending";
+                return "Scheduled";
 
             case STATUS_SCHEDULED:
-                return "Alarm scheduled";
+                return "Scheduled (Next)";
 
             default:
                 return "";

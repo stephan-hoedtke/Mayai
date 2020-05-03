@@ -24,6 +24,7 @@ public class AlarmViewModel extends AndroidViewModel {
     private MutableLiveData<String> statusNameLiveData = new MutableLiveData<>();
     private MutableLiveData<Integer> remainingSecondsLiveData = new MutableLiveData<>();
     private MutableLiveData<Double> secondsPerTurnLiveData = new MutableLiveData<>();
+    private MutableLiveData<Boolean> permanentRotaryLiveData = new MutableLiveData<>();
     private MayaiRepository repository;
 
     @SuppressWarnings("ConstantConditions")
@@ -39,6 +40,7 @@ public class AlarmViewModel extends AndroidViewModel {
         remainingSecondsLiveData.setValue(0);
         statusNameLiveData.setValue("");
         secondsPerTurnLiveData.setValue(3600.0);
+        permanentRotaryLiveData.setValue(false);
     }
 
     LiveData<String> getStatusNameLD() { return statusNameLiveData; }
@@ -52,6 +54,14 @@ public class AlarmViewModel extends AndroidViewModel {
     void setAlarm(Alarm alarm) {
         Alarm reference = repository.getAlarm(alarm);
         alarmLiveData.setValue(reference);
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    boolean isPermanent() {
+        return permanentRotaryLiveData.getValue();
+    }
+    void setPermanent(boolean value) {
+        permanentRotaryLiveData.postValue(value);
     }
 
     @SuppressWarnings("ConstantConditions")

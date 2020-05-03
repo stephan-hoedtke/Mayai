@@ -21,6 +21,7 @@ import com.stho.mayai.Alarm;
 import com.stho.mayai.Helpers;
 import com.stho.mayai.MayaiWorker;
 import com.stho.mayai.R;
+import com.stho.mayai.Touch;
 import com.stho.mayai.ViewAnimation;
 import com.stho.mayai.databinding.FragmentAlarmCountdownBinding;
 
@@ -30,6 +31,8 @@ public class AlarmCountdownFragment extends Fragment {
     private FragmentAlarmCountdownBinding binding;
     private Handler handler = new Handler();
     private ViewAnimation animation;
+    private Touch touch = new Touch(500);
+    private Touch autoDisappearRotary = new Touch(5000);
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,11 +52,20 @@ public class AlarmCountdownFragment extends Fragment {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alarm_countdown, container, false);
         binding.image.setOnClickListener(view -> edit());
         binding.textViewRemainingTime.setOnClickListener(view -> edit());
-        binding.buttonStopPlaying.setOnClickListener(v -> cancelAlarm());
+        binding.buttonStopPlaying.setOnClickListener(view -> cancelAlarm());
+        binding.buttonShowRotary.setOnClickListener(view -> onShowRotary());
+        binding.rotary.setOnAngleChangedListener(delta -> {
+            touch.touch();
+            autoDisappearRotary.touch();
+            viewModel.rotate(delta);
+        });
         viewModel.getAlarmLD().observe(getViewLifecycleOwner(), this::onUpdateAlarm);
         viewModel.getStatusNameLD().observe(getViewLifecycleOwner(), this::onUpdateStatusName);
         viewModel.getRemainingSecondsLD().observe(getViewLifecycleOwner(), this::onUpdateRemainingSeconds);
         viewModel.setAlarm(Helpers.getAlarmFromFragmentArguments(this));
+        viewModel.getAngleLD().observe(getViewLifecycleOwner(), this::setAngle);
+        viewModel.getSimpleRotaryLD().observe(getViewLifecycleOwner(), value -> binding.rotary.setSimpleRotary(value));
+        rotaryHide();
         return binding.getRoot();
     }
 
@@ -91,16 +103,30 @@ public class AlarmCountdownFragment extends Fragment {
         }
         return super.onOptionsItemSelected(item);
     }
-
-    @SuppressWarnings("ConstantConditions")
+    
     private void edit() {
-        Navigation.findNavController(getActivity(), R.id.nav_host_fragment)
-                .navigate(AlarmCountdownFragmentDirections.actionNavigationAlarmCountdownToNavigationAlarmModify()
-                        .setAlarm(viewModel.getAlarm().serialize()));
+        rotaryAppear();
     }
 
     private void update() {
+        scheduleAlarmWhenReady();
+        rotaryAutoDisappearWhenReady();
         viewModel.update();
+    }
+
+    private void scheduleAlarmWhenReady() {
+        if (touch.isReady()) {
+            Alarm alarm = viewModel.getAlarm();
+            MayaiWorker.build(getContext()).scheduleAlarm(alarm);
+        }
+    }
+
+    private void rotaryAutoDisappearWhenReady() {
+        if (autoDisappearRotary.isReady()) {
+            if (!viewModel.isPermanent()) {
+                rotaryDisappear();
+            }
+        }
     }
 
     private void onUpdateAlarm(Alarm alarm) {
@@ -117,6 +143,10 @@ public class AlarmCountdownFragment extends Fragment {
 
     private void onUpdateRemainingSeconds(int remainingSeconds) {
         binding.textViewRemainingTime.setText(Helpers.getSecondsAsString(remainingSeconds));
+    }
+
+    private void setAngle(float angle) {
+        binding.rotary.setAngle(angle);
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -136,6 +166,21 @@ public class AlarmCountdownFragment extends Fragment {
         snackbar.show();
     }
 
+    private boolean isRotaryVisible() {
+        return (binding.rotaryFrame.getVisibility() == View.VISIBLE);
+    }
+
+    private void onShowRotary() {
+        if (isRotaryVisible()) {
+            viewModel.setPermanent(false);
+            rotaryDisappear();
+        }
+        else {
+            viewModel.setPermanent(true);
+            rotaryAppear();
+        }
+    }
+
     @SuppressWarnings("ConstantConditions")
     private void updateActionBar(Alarm alarm) {
         ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
@@ -143,5 +188,29 @@ public class AlarmCountdownFragment extends Fragment {
         actionBar.setSubtitle(alarm.getTriggerTimeAsString());
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
+    }
+
+    private void rotaryHide() {
+        binding.rotaryFrame.setVisibility(View.INVISIBLE);
+        binding.image.setAlpha(1f);
+    }
+
+    private void rotaryAppear() {
+        if (!isRotaryVisible()) {
+            final long duration = 333;
+            binding.rotaryFrame.setVisibility(View.VISIBLE);
+            autoDisappearRotary.touch();
+            binding.rotaryFrame.animate().alpha(1f).setDuration(duration);
+            binding.image.animate().alpha(0.7f).setDuration(duration);
+        }
+    }
+
+    private void rotaryDisappear() {
+        if (isRotaryVisible()) {
+            final long duration = 333;
+            binding.rotaryFrame.setVisibility(View.INVISIBLE);
+            binding.rotaryFrame.animate().alpha(0f).setDuration(duration);
+            binding.image.animate().alpha(1.0f).setDuration(duration);
+        }
     }
 }

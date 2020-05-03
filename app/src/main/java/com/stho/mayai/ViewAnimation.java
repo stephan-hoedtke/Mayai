@@ -29,12 +29,12 @@ public class ViewAnimation {
     private ViewAnimation(View view) {
         this.view = view;
         this.view.setVisibility(View.INVISIBLE);
-        this.view.setAlpha(0);
+        this.view.setAlpha(0f);
     }
 
     private void fadeIn() {
         final Animation animation = AnimationUtils.loadAnimation(view.getContext(), R.anim.fade_in);
-        this.view.setAlpha(1);
+        this.view.setAlpha(1f);
         view.setVisibility(View.VISIBLE);
         view.startAnimation(animation);
         handler.postDelayed(this::fadeOut, 7000);
@@ -43,7 +43,22 @@ public class ViewAnimation {
     private void fadeOut() {
         handler.removeCallbacksAndMessages(null);
         final Animation animation = AnimationUtils.loadAnimation(view.getContext(), R.anim.fade_out);
+        animation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                // ignore
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                view.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                // ignore
+            }
+        });
         view.startAnimation(animation);
-        view.setVisibility(View.INVISIBLE);
     }
 }
