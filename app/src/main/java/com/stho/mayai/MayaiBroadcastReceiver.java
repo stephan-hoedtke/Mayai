@@ -13,11 +13,6 @@ import androidx.annotation.RequiresApi;
 
 public class MayaiBroadcastReceiver extends BroadcastReceiver {
 
-    // see:
-    // https://medium.com/@sauge16/how-to-handle-alarm-in-all-android-version-e7aca16ae885
-    // https://stackoverflow.com/questions/36110812/difference-between-setexact-and-setalarmclock
-    // https://developer.android.com/training/scheduling/wakelock
-
     private PowerManager.WakeLock wakeLock;
 
     private static final String myWakeLockTag = "MAYAI:ALARM";
@@ -37,10 +32,10 @@ public class MayaiBroadcastReceiver extends BroadcastReceiver {
 
                 // Vibrate the mobile phone
                 Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-                vibrator.vibrate(VibrationEffect.createOneShot(130, 70));
+                vibrator.vibrate(VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE));
 
                 // TODO:
-                //  vibrator.vibrate(VibrationEffect.createWaveform(new long[] ?? times, 70, 3));
+                //  vibrator.vibrate(VibrationEffect.createWaveform(new long[] ...
 
                 // Start the notification service, which will send the heads up notification
                 // Start it as foreground service to avoid the IllegalStateException: "app in background" in Android.O

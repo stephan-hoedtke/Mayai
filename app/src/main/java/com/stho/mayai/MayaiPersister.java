@@ -69,13 +69,12 @@ public class MayaiPersister {
         SharedPreferences preferences = getSharedPreferences();
         if (preferences != null) {
             SharedPreferences.Editor editor = preferences.edit();
-            editor.putString(KEY_ALARMS, serializeAlarms(alarms.getCollection()));
-            editor.putString(KEY_LOG, serializeLog(log));
+            editor.putString(KEY_ALARMS, serializeAlarms(filterAlarms(alarms.getCollection())));
+            editor.putString(KEY_LOG, serializeLog(filterLog(log)));
             editor.putString(KEY_SETTINGS, settings.serialize());
             editor.apply();
         }
     }
-
 
     private SharedPreferences getSharedPreferences() {
         return context.getSharedPreferences(KEY_MAYAI, MODE_PRIVATE);

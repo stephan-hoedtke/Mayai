@@ -43,20 +43,10 @@ public class ViewAnimation {
     private void fadeOut() {
         handler.removeCallbacksAndMessages(null);
         final Animation animation = AnimationUtils.loadAnimation(view.getContext(), R.anim.fade_out);
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-                // ignore
-            }
-
+        animation.setAnimationListener(new AnimationOnAnimationEndListener() {
             @Override
             public void onAnimationEnd(Animation animation) {
                 view.setVisibility(View.INVISIBLE);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-                // ignore
             }
         });
         view.startAnimation(animation);

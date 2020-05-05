@@ -1,5 +1,6 @@
 package com.stho.mayai.ui.alarm;
 
+import android.animation.Animator;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import androidx.navigation.Navigation;
 
 import com.google.android.material.snackbar.Snackbar;
 import com.stho.mayai.Alarm;
+import com.stho.mayai.AnimatorOnAnimationEndListener;
 import com.stho.mayai.Helpers;
 import com.stho.mayai.MayaiWorker;
 import com.stho.mayai.R;
@@ -199,17 +201,26 @@ public class AlarmCountdownFragment extends Fragment {
         if (!isRotaryVisible()) {
             final long duration = 333;
             binding.rotaryFrame.setVisibility(View.VISIBLE);
-            autoDisappearRotary.touch();
-            binding.rotaryFrame.animate().alpha(1f).setDuration(duration);
+            binding.rotaryFrame.animate().alpha(1f).setDuration(duration).setListener(new AnimatorOnAnimationEndListener() {
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    binding.rotaryFrame.setAlpha(1f);
+                }
+            });
             binding.image.animate().alpha(0.7f).setDuration(duration);
+            autoDisappearRotary.touch();
         }
     }
 
     private void rotaryDisappear() {
         if (isRotaryVisible()) {
             final long duration = 333;
-            binding.rotaryFrame.setVisibility(View.INVISIBLE);
-            binding.rotaryFrame.animate().alpha(0f).setDuration(duration);
+            binding.rotaryFrame.animate().alpha(0f).setDuration(duration).setListener(new AnimatorOnAnimationEndListener() {
+                @Override
+                public void onAnimationEnd(Animator animator) {
+                    binding.rotaryFrame.setVisibility(View.INVISIBLE);
+                }
+            });
             binding.image.animate().alpha(1.0f).setDuration(duration);
         }
     }

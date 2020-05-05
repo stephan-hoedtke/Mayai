@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 
 import org.jetbrains.annotations.Nullable;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -26,12 +25,6 @@ public class Alarms implements IAlarms {
 
     Alarms() {
         // default
-    }
-
-    Alarms(Collection<Alarm> alarms) {
-        for (Alarm alarm : alarms) {
-            add(alarm);
-        }
     }
 
     public int size() {
@@ -90,16 +83,6 @@ public class Alarms implements IAlarms {
             }
         }
         return false;
-    }
-
-    public int getCount(int type) {
-        int count = 0;
-        for (Alarm alarm : map.values()) {
-            if (alarm.isPending() && alarm.getType() == type) {
-                count++;
-            }
-        }
-        return count;
     }
 }
 

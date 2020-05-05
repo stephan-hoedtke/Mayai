@@ -1,11 +1,9 @@
 package com.stho.mayai;
 
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Handler;
 
 public class MayaiPlayer {
     private final Context context;

@@ -1,17 +1,14 @@
 package com.stho.mayai;
 
-import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Locale;
 
+@SuppressWarnings("WeakerAccess")
 public class LogEntry {
     private final Calendar time;
     private String message;
@@ -48,6 +45,7 @@ public class LogEntry {
 
     private final static String DELIMITER = ";";
 
+    @SuppressWarnings("UnnecessaryCallToStringValueOf")
     public String serialize() {
         return Long.toString(this.time.getTimeInMillis())
                 + DELIMITER

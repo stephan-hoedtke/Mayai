@@ -22,14 +22,13 @@ public class MayaiAlarmManager {
 
     @SuppressWarnings("ConstantConditions")
     public void scheduleAlarm(@NonNull Alarm alarm) {
-        // read out here:
-        // https://medium.com/@igordias/android-scheduling-alarms-with-precise-delivery-time-using-alarmmanager-75c409f3bde0
         // Notes:
-        // using "setAlarmClock": alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, countDown.getTriggerTimeInMillis(), pendingIntent);
+        //
+        // using "setAlarmClock": alarmManager.setAlarmClock(new AlarmManager.AlarmClockInfo(countDown.getTriggerTimeInMillis(), pendingIntent), pendingIntent);
         //      - registers the alarm so that it wakes up the phone
         //      - makes it visible via "alarmManager.getNextAlarmClock()"
         //
-        // using "setAndAllowWhileIdle":  alarmManager.setAlarmClock(new AlarmManager.AlarmClockInfo(countDown.getTriggerTimeInMillis(), pendingIntent), pendingIntent);
+        // using "setAndAllowWhileIdle": alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, countDown.getTriggerTimeInMillis(), pendingIntent);
         //      - registers the alarm so that it wakes up the phone
         //      - the alarm will NOT be visible via "alarmManager.getNextAlarmClock()"
         //

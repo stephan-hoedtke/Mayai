@@ -11,30 +11,16 @@ public class Summary {
     private int counter;
 
     public static class AlarmInfo {
-        private int type;
         private int counter;
         private boolean isHot;
 
-        private AlarmInfo(int type) {
-            this.type = type;
+        private AlarmInfo() {
             this.counter = 0;
             this.isHot = false;
         }
 
-        public int getType() {
-            return type;
-        }
-
-        public void setType(int type) {
-            this.type = type;
-        }
-
         public int getCounter() {
             return counter;
-        }
-
-        public void setCounter(int counter) {
-            this.counter = counter;
         }
 
         public boolean isHot() {
@@ -51,7 +37,7 @@ public class Summary {
     public @NonNull AlarmInfo getAlarmInfo(int type) {
         AlarmInfo info = map.get(type);
         if (info == null) {
-            info = new AlarmInfo(type);
+            info = new AlarmInfo();
             map.put(type, info);
         }
         return info;

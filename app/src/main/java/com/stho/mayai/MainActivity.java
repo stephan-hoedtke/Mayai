@@ -37,9 +37,6 @@ public class MainActivity extends AppCompatActivity {
         onNewIntent(getIntent());
     }
 
-    // https://abhiandroid.com/programming/retrofit
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

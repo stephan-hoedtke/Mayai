@@ -19,8 +19,6 @@ import com.stho.mayai.ui.target.MayaiAlarmTargetActivity;
 import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 
 
-// for review:
-// https://www.journaldev.com/19421/android-notification-channel-dots
 @SuppressWarnings("WeakerAccess")
 public class MayaiNotificationManager {
 

@@ -1,6 +1,5 @@
 package com.stho.mayai;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -9,6 +8,7 @@ import androidx.fragment.app.Fragment;
 
 import java.util.Locale;
 
+@SuppressWarnings("WeakerAccess")
 public class Helpers {
 
     private static final String ACTION_SNOOZE = "Snooze";

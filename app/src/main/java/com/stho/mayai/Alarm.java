@@ -102,10 +102,10 @@ public class Alarm {
                 return "Finished";
 
             case STATUS_PENDING:
-                return "Scheduled";
+                return "Scheduled (Pending)";
 
             case STATUS_SCHEDULED:
-                return "Scheduled (Next)";
+                return "Scheduled";
 
             default:
                 return "";
@@ -156,10 +156,6 @@ public class Alarm {
             default:
                 return R.drawable.clock;
         }
-    }
-
-    public int getTypeStringId() {
-        return getIconId(getType());
     }
 
     public static int getTypeStringId(int type) {
