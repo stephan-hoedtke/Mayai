@@ -20,7 +20,7 @@ public class RotaryView extends AppCompatImageView {
 
     public RotaryView(Context context) {
         super(context);
-        simpleRotary = true;
+        simpleRotary = false;
     }
 
     public void addAngle(double delta) {

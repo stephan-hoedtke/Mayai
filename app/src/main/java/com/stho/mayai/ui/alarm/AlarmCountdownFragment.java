@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -151,12 +152,16 @@ public class AlarmCountdownFragment extends Fragment {
         binding.rotary.setAngle(angle);
     }
 
-    @SuppressWarnings("ConstantConditions")
     private void cancelAlarm() {
         Alarm alarm = viewModel.getAlarm();
         MayaiWorker.build(getContext()).cancel(alarm);
         showCancelAlarmSnackBar();
-        Navigation.findNavController(getActivity(), R.id.nav_host_fragment).navigateUp();
+        findNavController().navigateUp();
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    private NavController findNavController() {
+        return Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
     }
 
     @SuppressWarnings("ConstantConditions")
