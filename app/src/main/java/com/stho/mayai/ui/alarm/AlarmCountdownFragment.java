@@ -32,10 +32,10 @@ public class AlarmCountdownFragment extends Fragment {
 
     private AlarmViewModel viewModel;
     private FragmentAlarmCountdownBinding binding;
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler();
     private ViewAnimation animation;
-    private Touch touch = new Touch(500);
-    private Touch autoDisappearRotary = new Touch(5000);
+    private final Touch touch = new Touch(500);
+    private final Touch autoDisappearRotary = new Touch(5000);
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
