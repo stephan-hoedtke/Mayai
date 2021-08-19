@@ -7,7 +7,7 @@
         android:id="@+id/menu_hint"
         android:titleCondensed="Show Hint"
         android:title="@string/label_show_hint"
-        android:icon="@drawable/light512"
+        android:icon="@drawable/bulb_bold"
         app:showAsAction="ifRoom"
         >
     </item>

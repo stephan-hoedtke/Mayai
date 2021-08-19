@@ -13,12 +13,10 @@ import com.stho.mayai.BuildConfig;
 import com.stho.mayai.MayaiRepository;
 import com.stho.mayai.Settings;
 
-import java.util.Set;
-
 public class SettingsViewModel extends AndroidViewModel {
 
     private final MutableLiveData<String> versionLiveData = new MutableLiveData<>();
-    private MayaiRepository repository;
+    private final MayaiRepository repository;
 
     @SuppressWarnings("ConstantConditions")
     public static SettingsViewModel build(Fragment fragment) {

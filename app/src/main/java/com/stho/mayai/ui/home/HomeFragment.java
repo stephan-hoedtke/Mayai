@@ -1,8 +1,15 @@
 package com.stho.mayai.ui.home;
 
+import static com.stho.mayai.Alarm.TYPE_BREAD;
+import static com.stho.mayai.Alarm.TYPE_CHAMPAGNE;
+import static com.stho.mayai.Alarm.TYPE_CLOCK;
+import static com.stho.mayai.Alarm.TYPE_EGG;
+import static com.stho.mayai.Alarm.TYPE_POTATOES;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,7 +22,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -28,17 +34,11 @@ import com.stho.mayai.Summary;
 import com.stho.mayai.ViewAnimation;
 import com.stho.mayai.databinding.FragmentHomeBinding;
 
-import static com.stho.mayai.Alarm.TYPE_BREAD;
-import static com.stho.mayai.Alarm.TYPE_CHAMPAGNE;
-import static com.stho.mayai.Alarm.TYPE_CLOCK;
-import static com.stho.mayai.Alarm.TYPE_EGG;
-import static com.stho.mayai.Alarm.TYPE_POTATOES;
-
 public class HomeFragment extends Fragment {
 
     private HomeViewModel viewModel;
     private FragmentHomeBinding binding;
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler(Looper.getMainLooper());
     private ViewAnimation animation;
 
     @Override
@@ -49,7 +49,7 @@ public class HomeFragment extends Fragment {
     }
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false);
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
         binding.imageViewEgg.setOnClickListener(view -> startCounter(TYPE_EGG,  viewModel.getSettings().getMinutesEgg()));
         binding.imageViewChampagne.setOnClickListener(view -> startCounter(Alarm.TYPE_CHAMPAGNE, viewModel.getSettings().getMinutesChampagne()));
         binding.imageViewBread.setOnClickListener(view -> startCounter(Alarm.TYPE_BREAD, viewModel.getSettings().getMinutesBread()));

@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -52,7 +51,7 @@ public class AlarmCountdownFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alarm_countdown, container, false);
+        binding = FragmentAlarmCountdownBinding.inflate(inflater, container, false);
         binding.image.setOnClickListener(view -> edit());
         binding.textViewRemainingTime.setOnClickListener(view -> edit());
         binding.buttonStopPlaying.setOnClickListener(view -> cancelAlarm());

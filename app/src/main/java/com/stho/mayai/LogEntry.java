@@ -11,7 +11,7 @@ import java.util.Locale;
 @SuppressWarnings("WeakerAccess")
 public class LogEntry {
     private final Calendar time;
-    private String message;
+    private final String message;
     private final static SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss", Locale.ENGLISH);
 
     LogEntry(String message) {

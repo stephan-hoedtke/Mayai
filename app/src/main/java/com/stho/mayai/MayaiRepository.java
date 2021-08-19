@@ -9,7 +9,6 @@ import androidx.lifecycle.MutableLiveData;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
-import java.util.Set;
 
 public class MayaiRepository implements IRepository {
 
@@ -92,12 +91,8 @@ public class MayaiRepository implements IRepository {
             // the alarm was not in the list yet --> insert + update the live data
             reference = map.add(alarm);
             alarmsLiveData.postValue(map);
-            return reference;
         }
-        else {
-            // the alarm was in the list already, maybe it was update, anyway, use these values...
-            return reference;
-        }
+        return reference;
     }
 
     public LiveData<Alarms> getAlarmsLD() { return alarmsLiveData; }

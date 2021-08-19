@@ -13,32 +13,28 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.10"
-            />
+            app:layout_constraintGuide_percent="0.10" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/vertical_guideline2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.20"
-            />
+            app:layout_constraintGuide_percent="0.20" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/vertical_guideline3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.80"
-            />
+            app:layout_constraintGuide_percent="0.80" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/vertical_guideline4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.90"
-            />
+            app:layout_constraintGuide_percent="0.90" />
 
         <TextView
             android:id="@+id/next_alarm"
@@ -46,10 +42,9 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_margin="@dimen/activity_vertical_margin"
-            android:text="@string/default_next_alarm"
-            />
+            android:text="@string/default_next_alarm" />
 
-        <Switch
+        <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/checkBoxSimpleRotary"
             android:layout_width="0dp"
             android:layout_height="80dp"
@@ -63,12 +58,14 @@
             android:id="@+id/buttonShowLog"
             android:layout_width="0dp"
             android:layout_height="80sp"
-            android:src="@drawable/log_pressable"
             app:layout_constraintBottom_toTopOf="@id/buttonOpenChannelSettings"
             app:layout_constraintStart_toStartOf="@id/vertical_guideline1"
             app:layout_constraintEnd_toEndOf="@id/vertical_guideline2"
             android:contentDescription="@string/label_show_log"
-            />
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/log_pressable" />
 
         <ImageView
             android:id="@+id/buttonStopPlaying"
@@ -77,9 +74,11 @@
             app:layout_constraintBottom_toTopOf="@id/buttonOpenChannelSettings"
             app:layout_constraintStart_toEndOf="@id/vertical_guideline3"
             app:layout_constraintEnd_toStartOf="@id/vertical_guideline4"
-            android:src="@drawable/alarm_pressable"
             android:contentDescription="@string/label_start_alarm"
-            />
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/alarm_pressable" />
 
         <Button
             android:id="@+id/buttonOpenAlarm"
@@ -88,8 +87,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:textColor="@color/primaryTextColor"
             android:text="@string/label_open_alarm"
-            android:layout_margin="5dp"
-            />
+            android:layout_margin="5dp" />
 
         <Button
             android:id="@+id/buttonOpenChannelSettings"
@@ -98,8 +96,7 @@
             app:layout_constraintBottom_toTopOf="@id/buttonOpenAlarm"
             android:textColor="@color/primaryTextColor"
             android:text="@string/label_channel_settings"
-            android:layout_margin="5dp"
-            />
+            android:layout_margin="5dp" />
 
         <FrameLayout
             android:id="@+id/headlineFrame"
@@ -119,7 +116,6 @@
                 android:text="@string/label_headline_debug" />
 
         </FrameLayout>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

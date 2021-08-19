@@ -34,11 +34,6 @@ public class MayaiNotificationService extends Service {
     }
 
     @Override
-    public void onCreate() {
-        super.onCreate();
-    }
-
-    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         onHandleIntent(intent);
         return super.onStartCommand(intent, flags, startId);

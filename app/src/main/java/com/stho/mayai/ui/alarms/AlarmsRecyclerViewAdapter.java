@@ -1,7 +1,6 @@
 package com.stho.mayai.ui.alarms;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -12,7 +11,6 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.res.ComplexColorCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -73,7 +71,7 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
             holder.textViewRemainingTime.setText("");
         }
         holder.itemView.setOnLongClickListener(view -> {
-            editItem(position);
+            editItem(holder.getAdapterPosition());
             return true;
         });
         holder.itemView.setOnTouchListener((view, motionEvent) -> {
@@ -90,7 +88,7 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
 
             @Override
             public boolean onDoubleTap(MotionEvent motionEvent) {
-                editItem(position);
+                editItem(holder.getAdapterPosition());
                 return false;
             }
 
@@ -113,7 +111,7 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
         // to perform recycler view delete animations
         // NOTE: don't call notifyDataSetChanged()
         notifyItemRemoved(position);
-        notifyDataSetChanged();
+        //notifyDataSetChanged();
         showUndoSnackBar(position, alarm);
     }
 
@@ -130,7 +128,7 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
     private void undoDelete(final int position, final Alarm alarm) {
         MayaiWorker.build(context).undoDelete(position, alarm);
         notifyItemInserted(position);
-        notifyDataSetChanged();
+        //notifyDataSetChanged();
     }
 
     private void editItem(int position) {

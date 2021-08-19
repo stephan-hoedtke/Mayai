@@ -1,15 +1,13 @@
 package com.stho.mayai;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
 import android.content.SharedPreferences;
-
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
-
-import static android.content.Context.MODE_PRIVATE;
 
 public class MayaiPersister {
 

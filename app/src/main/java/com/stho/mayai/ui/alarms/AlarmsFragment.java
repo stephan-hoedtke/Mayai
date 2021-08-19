@@ -1,7 +1,9 @@
 package com.stho.mayai.ui.alarms;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,7 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -28,7 +29,7 @@ public class AlarmsFragment extends Fragment {
 
     private AlarmsViewModel viewModel;
     private FragmentAlarmsBinding binding;
-    private Handler handler = new Handler();
+    private final Handler handler = new Handler(Looper.getMainLooper());
     private ViewAnimation animation;
 
     @Override
@@ -40,7 +41,7 @@ public class AlarmsFragment extends Fragment {
 
     @SuppressWarnings("ConstantConditions")
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_alarms, container, false);
+        binding = FragmentAlarmsBinding.inflate(inflater, container, false);
         binding.list.setLayoutManager(new LinearLayoutManager(getContext()));
         final AlarmsRecyclerViewAdapter adapter = new AlarmsRecyclerViewAdapter(getActivity(), viewModel.getAlarms());
         binding.list.setAdapter(adapter);
@@ -96,6 +97,7 @@ public class AlarmsFragment extends Fragment {
         updateActionBar(summary);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @SuppressWarnings("ConstantConditions")
     private void update() {
         viewModel.updateSummary();

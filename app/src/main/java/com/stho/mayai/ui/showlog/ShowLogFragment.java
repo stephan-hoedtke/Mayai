@@ -1,5 +1,6 @@
 package com.stho.mayai.ui.showlog;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,11 +8,9 @@ import android.view.ViewGroup;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.stho.mayai.R;
 import com.stho.mayai.databinding.FragmentShowLogBinding;
 
 import org.jetbrains.annotations.NotNull;
@@ -28,10 +27,11 @@ public class ShowLogFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @SuppressWarnings("ConstantConditions")
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_show_log, container, false);
+        binding = FragmentShowLogBinding.inflate(inflater,container, false);
         binding.list.setLayoutManager(new LinearLayoutManager(getContext()));
         binding.list.setAdapter(new ShowLogRecyclerViewAdapter(viewModel.getLog()));
         binding.buttonDelete.setOnClickListener(view -> {

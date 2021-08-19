@@ -1,16 +1,14 @@
 package com.stho.mayai.ui.alarms;
 
+import static androidx.recyclerview.widget.ItemTouchHelper.LEFT;
+import static androidx.recyclerview.widget.ItemTouchHelper.RIGHT;
+
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.text.Layout;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,17 +16,12 @@ import com.stho.mayai.R;
 
 import org.jetbrains.annotations.NotNull;
 
-import static androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_DRAG;
-import static androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_IDLE;
-import static androidx.recyclerview.widget.ItemTouchHelper.ACTION_STATE_SWIPE;
-import static androidx.recyclerview.widget.ItemTouchHelper.LEFT;
-import static androidx.recyclerview.widget.ItemTouchHelper.RIGHT;
-
 /*
     See:
         https://medium.com/@zackcosborn/step-by-step-recyclerview-swipe-to-delete-and-undo-7bbae1fce27e
         https://www.androidhive.info/2017/09/android-recyclerview-swipe-delete-undo-using-itemtouchhelper/
  */
+@SuppressWarnings("SpellCheckingInspection")
 public class SwipeAlarmToDelete extends ItemTouchHelper.SimpleCallback {
 
     private final AlarmsRecyclerViewAdapter adapter;

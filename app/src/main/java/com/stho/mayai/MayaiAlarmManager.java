@@ -1,5 +1,8 @@
 package com.stho.mayai;
 
+import static android.app.PendingIntent.FLAG_IMMUTABLE;
+import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -20,7 +23,6 @@ public class MayaiAlarmManager {
         return new MayaiAlarmManager(context);
     }
 
-    @SuppressWarnings("ConstantConditions")
     public void scheduleAlarm(@NonNull Alarm alarm) {
         // Notes:
         //
@@ -44,7 +46,6 @@ public class MayaiAlarmManager {
         cancelAlarm(alarm.getRequestCode());
     }
 
-        @SuppressWarnings("ConstantConditions")
     public void cancelAlarm(int requestCode) {
         Logger.log("Cancel alarm");
         PendingIntent cancelIntent = getCancelIntentFor(requestCode);
@@ -63,7 +64,7 @@ public class MayaiAlarmManager {
     private @NonNull PendingIntent getCancelIntentFor(int requestCode) {
         Intent intent = new Intent(context, MayaiBroadcastReceiver.class);
         Helpers.putActionAlarmToIntent(intent);
-        return PendingIntent.getBroadcast(context, requestCode, intent, 0);
+        return PendingIntent.getBroadcast(context, requestCode, intent, FLAG_IMMUTABLE);
     }
 
     private @NonNull PendingIntent createAlarmIntentFor(Alarm alarm) {
@@ -74,13 +75,13 @@ public class MayaiAlarmManager {
         Intent intent = new Intent(context, MayaiBroadcastReceiver.class);
         Helpers.putAlarmToIntent(intent, alarm);
         Helpers.putActionAlarmToIntent(intent);
-        return PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(context, requestCode, intent, FLAG_IMMUTABLE|FLAG_UPDATE_CURRENT);
     }
 
     private @NonNull PendingIntent createShowAlarmDetailsIntentFor(Alarm alarm) {
         Intent intent = new Intent(context, MainActivity.class);
         Helpers.putAlarmToIntent(intent, alarm);
         Helpers.putActionDetailsToIntent(intent);
-        return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getActivity(context, 0, intent, FLAG_IMMUTABLE| FLAG_UPDATE_CURRENT);
     }
 }

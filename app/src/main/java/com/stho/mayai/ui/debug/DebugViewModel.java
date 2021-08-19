@@ -27,7 +27,7 @@ public class DebugViewModel extends AndroidViewModel {
 
     private final MutableLiveData<String> infoLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> versionLiveData = new MutableLiveData<>();
-    private MayaiRepository repository;
+    private final MayaiRepository repository;
 
     @SuppressWarnings("ConstantConditions")
     public static DebugViewModel build(Fragment fragment) {

@@ -3,7 +3,6 @@ package com.stho.mayai;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import androidx.annotation.Nullable;
@@ -59,25 +58,24 @@ public class RotaryView extends AppCompatImageView {
         // and other input controls. In this case, you are only
         // interested in events where the touch position changed.
         if (simpleRotary) {
-            return onTouchEventSimpleMode(event);
+            onTouchEventSimpleMode(event);
+        } else {
+            onTouchEventComplexMode(event);
         }
-        else {
-            return onTouchEventComplexMode(event);
-        }
+        return true;
     }
 
-    public boolean onTouchEventSimpleMode(MotionEvent event) {
+    public void onTouchEventSimpleMode(MotionEvent event) {
         // The rotation follows the finger position directly. Wherever you tap the pointer will point to.
         if (event.getAction() == MotionEvent.ACTION_MOVE) {
             final double delta = ensureAngleRange(getAngle(event.getX(), event.getY()));
             addAngle(delta);
         }
-        return true;
     }
 
     private double previousAngle = 0;
 
-    public boolean onTouchEventComplexMode(MotionEvent event) {
+    public void onTouchEventComplexMode(MotionEvent event) {
         // The rotations changes as the finger changes. You can move the pointer from other positions by swiping.
          switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
@@ -92,7 +90,6 @@ public class RotaryView extends AppCompatImageView {
                 addAngle(delta);
                 break;
         }
-        return true;
     }
 
     private double getAngle(float x, float y) {

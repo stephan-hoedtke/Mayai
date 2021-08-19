@@ -32,10 +32,6 @@ public class Alarm {
     private final static String DEFAULT_TIME = "--:--:--";
     private final static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
 
-    public static Alarm build() {
-        return new Alarm(TYPE_CLOCK, "?", 0.2);
-    }
-
     public Alarm(int type, String name, double durationInMinutes) {
         this.id = System.currentTimeMillis();
         this.type = type;
@@ -198,6 +194,7 @@ public class Alarm {
 
     public static final int REQUEST_CODE = 103840284;
 
+    @SuppressWarnings("SameReturnValue")
     public int getRequestCode() {
         return REQUEST_CODE;
     }
@@ -270,13 +267,6 @@ public class Alarm {
         catch (Exception ex) {
             return null; // ignore the parse error
         }
-    }
-
-    public boolean equals(@NonNull Alarm alarm) {
-        return this.id == alarm.id
-                && this.type == alarm.type
-                && this.triggerTime == alarm.triggerTime
-                && this.durationInMillis == alarm.durationInMillis;
     }
 
     @SuppressWarnings("UnnecessaryCallToStringValueOf")

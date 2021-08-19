@@ -17,7 +17,6 @@ public class MayaiBroadcastReceiver extends BroadcastReceiver {
 
     private static final String myWakeLockTag = "MAYAI:ALARM";
 
-    @SuppressWarnings("ConstantConditions")
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onReceive(Context context, Intent intent) {

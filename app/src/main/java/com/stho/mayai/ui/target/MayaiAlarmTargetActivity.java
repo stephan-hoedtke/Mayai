@@ -4,7 +4,6 @@ import android.app.KeyguardManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -61,10 +60,6 @@ public class MayaiAlarmTargetActivity extends AppCompatActivity {
         KeyguardManager keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
         if (keyguardManager != null) {
             keyguardManager.requestDismissKeyguard(this, new KeyguardManager.KeyguardDismissCallback() {
-                @Override
-                public void onDismissError() {
-                    super.onDismissError();
-                }
             });
         }
     }

@@ -16,6 +16,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.stho.mayai.ui.target.MayaiAlarmTargetActivity;
 
+import static android.app.PendingIntent.FLAG_IMMUTABLE;
 import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 
 
@@ -44,28 +45,9 @@ public class MayaiNotificationManager {
         return this;
     }
 
-    @SuppressWarnings("ConstantConditions")
     public void cancelNotification() {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancel(MY_NOTIFICATION_ID);
-    }
-
-    @SuppressWarnings("ConstantConditions")
-    public void sendNotification() {
-        try {
-            Notification notification = createNotification();
-            notification.flags = Notification.FLAG_ONLY_ALERT_ONCE
-                    | Notification.FLAG_INSISTENT
-                    | Notification.FLAG_FOREGROUND_SERVICE
-                    | Notification.BADGE_ICON_LARGE
-                    | NotificationManager.INTERRUPTION_FILTER_PRIORITY;
-            final NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(MY_NOTIFICATION_ID, notification);
-        }
-        catch(Exception ex) {
-            Logger.log("Error in MayaiNotificationManager: " + ex.toString());
-            Toast.makeText(context, ex.toString(), Toast.LENGTH_LONG).show();
-        }
     }
 
     public void sendForegroundNotificationFromService(Service service) {
@@ -105,7 +87,7 @@ public class MayaiNotificationManager {
         Intent targetActivityIntent = new Intent(context, MayaiAlarmTargetActivity.class);
         Helpers.putAlarmToIntent(targetActivityIntent, alarm);
         targetActivityIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        return PendingIntent.getActivity(context, MY_REQUEST_CODE, targetActivityIntent, FLAG_UPDATE_CURRENT);
+        return PendingIntent.getActivity(context, MY_REQUEST_CODE, targetActivityIntent, FLAG_IMMUTABLE|FLAG_UPDATE_CURRENT);
     }
 
     private NotificationCompat.Action getSnoozeAction() {
@@ -124,7 +106,6 @@ public class MayaiNotificationManager {
         return new NotificationCompat.Action.Builder(alarm.getIconId(), "Cancel", pendingIntent).build();
     }
 
-    @SuppressWarnings("ConstantConditions")
     void registerNotificationChannel() {
         try {
             NotificationChannel channel = new NotificationChannel(MY_CHANNEL_ID, "Mayai", NotificationManager.IMPORTANCE_HIGH);

@@ -13,7 +13,7 @@ import com.stho.mayai.Alarm;
 
 public class AlarmTargetViewModel extends AndroidViewModel {
 
-    private MutableLiveData<Alarm> alarmLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Alarm> alarmLiveData = new MutableLiveData<>();
 
     public static AlarmTargetViewModel build(AppCompatActivity activity) {
         return new ViewModelProvider(activity).get(AlarmTargetViewModel.class);

@@ -140,6 +140,9 @@
                 app:layout_constraintEnd_toEndOf="@id/vertical_inner_guideline6"
                 android:src="@drawable/pencil_pressable"
                 android:contentDescription="@string/label_empty"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
                  />
 
             <ImageView
@@ -175,6 +178,9 @@
                 app:layout_constraintEnd_toEndOf="@id/vertical_inner_guideline6"
                 android:src="@drawable/pencil_pressable"
                 android:contentDescription="@string/label_empty"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
                 />
 
             <ImageView
@@ -210,6 +216,9 @@
                 app:layout_constraintEnd_toEndOf="@id/vertical_inner_guideline6"
                 android:src="@drawable/pencil_pressable"
                 android:contentDescription="@string/label_empty"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
                 />
 
             <ImageView
@@ -246,7 +255,11 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@id/vertical_inner_guideline5"
                 app:layout_constraintTop_toTopOf="@id/imageViewPotatoes"
-                app:layout_constraintVertical_bias="0.498" />
+                app:layout_constraintVertical_bias="0.498"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                />
 
             <ImageView
                 android:id="@+id/imageViewClock"
@@ -281,6 +294,9 @@
                 app:layout_constraintEnd_toEndOf="@id/vertical_inner_guideline6"
                 android:src="@drawable/pencil_pressable"
                 android:contentDescription="@string/label_empty"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
                 />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -296,6 +312,9 @@
             app:layout_constraintEnd_toEndOf="@id/vertical_guideline4"
             app:layout_constraintBottom_toTopOf="@id/buttonSave"
             android:contentDescription="@string/label_headline_debug"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
             />
 
         <Button

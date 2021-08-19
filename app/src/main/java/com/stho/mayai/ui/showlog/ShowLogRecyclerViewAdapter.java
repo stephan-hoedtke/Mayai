@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.stho.mayai.LogEntry;
@@ -20,6 +21,7 @@ public class ShowLogRecyclerViewAdapter extends RecyclerView.Adapter<ShowLogRecy
         values = items;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_show_log_entry, parent, false);
@@ -38,13 +40,13 @@ public class ShowLogRecyclerViewAdapter extends RecyclerView.Adapter<ShowLogRecy
         return values.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder {
         public final View view;
         public final TextView timeView;
         public final TextView messageView;
         public LogEntry item;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             this.view = view;
             this.timeView = (TextView) view.findViewById(R.id.time);

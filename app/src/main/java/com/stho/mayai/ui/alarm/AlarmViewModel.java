@@ -8,24 +8,21 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Transformations;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.stho.mayai.Alarm;
-import com.stho.mayai.Alarms;
-import com.stho.mayai.MainViewModel;
 import com.stho.mayai.MayaiRepository;
 import com.stho.mayai.MayaiWorker;
 import com.stho.mayai.Settings;
 
 public class AlarmViewModel extends AndroidViewModel {
 
-    private MutableLiveData<Alarm> alarmLiveData = new MutableLiveData<>();
-    private MutableLiveData<String> statusNameLiveData = new MutableLiveData<>();
-    private MutableLiveData<Integer> remainingSecondsLiveData = new MutableLiveData<>();
-    private MutableLiveData<Double> secondsPerTurnLiveData = new MutableLiveData<>();
-    private MutableLiveData<Boolean> permanentRotaryLiveData = new MutableLiveData<>();
-    private MayaiRepository repository;
+    private final MutableLiveData<Alarm> alarmLiveData = new MutableLiveData<>();
+    private final MutableLiveData<String> statusNameLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Integer> remainingSecondsLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Double> secondsPerTurnLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Boolean> permanentRotaryLiveData = new MutableLiveData<>();
+    private final MayaiRepository repository;
 
     @SuppressWarnings("ConstantConditions")
     public static AlarmViewModel build(Fragment fragment) {

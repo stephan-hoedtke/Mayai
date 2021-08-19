@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
+import static android.app.PendingIntent.FLAG_IMMUTABLE;
 import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 import static com.stho.mayai.Alarm.STATUS_FINISHED;
 import static com.stho.mayai.Alarm.STATUS_NONE;
@@ -47,7 +48,7 @@ public class MayaiWorker {
             Helpers.putAlarmToIntent(intent, alarm);
             Helpers.putActionDetailsToIntent(intent);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, FLAG_UPDATE_CURRENT);
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, FLAG_IMMUTABLE|FLAG_UPDATE_CURRENT);
             pendingIntent.send(context, 0, null);
         } catch (Exception ex) {
             onError(ex);

@@ -22,48 +22,42 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.15"
-            />
+            app:layout_constraintGuide_percent="0.15" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/horizontal_guideline2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.85"
-            />
+            app:layout_constraintGuide_percent="0.85" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/vertical_guideline3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.10"
-            />
+            app:layout_constraintGuide_percent="0.10" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/vertical_guideline4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.20"
-            />
+            app:layout_constraintGuide_percent="0.20" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/vertical_guideline5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.80"
-            />
+            app:layout_constraintGuide_percent="0.80" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/vertical_guideline6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.90"
-            />
+            app:layout_constraintGuide_percent="0.90" />
 
         <ImageView
             android:id="@+id/image"
@@ -74,8 +68,7 @@
             android:src="@drawable/egg"
             android:contentDescription="@string/label_empty"
             android:background="@drawable/background_selector"
-            android:alpha="0.3"
-            />
+            android:alpha="0.3" />
 
         <FrameLayout
             android:id="@+id/rotaryFrame"
@@ -88,8 +81,7 @@
             android:layout_margin="@dimen/activity_horizontal_margin"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:alpha="0.5"
-            >
+            android:alpha="0.5">
 
             <ImageView
                 android:id="@+id/rotaryBackground"
@@ -98,32 +90,33 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/plate_bright"
                 android:contentDescription="@string/label_empty"
-                android:alpha="0.7"
-                />
+                android:alpha="0.7" />
 
             <com.stho.mayai.RotaryView
                 android:id="@+id/rotary"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:src="@drawable/plate_pointer"
-                android:rotation="60"
-                />
+                android:rotation="60" />
 
         </FrameLayout>
 
         <TextView
             android:id="@+id/textViewRemainingTime"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/horizontal_guideline2"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             android:layout_margin="@dimen/activity_vertical_margin"
             android:textSize="30sp"
             android:textColor="@color/primaryTextColor"
             android:textAlignment="center"
             android:text="@string/default_time"
-            android:background="@drawable/background_selector"
-            />
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackgroundBorderless" />
 
         <TextView
             android:id="@+id/textViewStatusName"
@@ -134,32 +127,35 @@
             android:textSize="27sp"
             android:textColor="@color/secondaryColor"
             android:textAlignment="center"
-            android:text="@string/default_status"
-            />
+            android:text="@string/default_status" />
 
         <ImageView
             android:id="@+id/buttonStopPlaying"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:src="@drawable/alarm_pressable"
             android:contentDescription="@string/label_stop_alarm"
             app:layout_constraintTop_toBottomOf="@id/horizontal_guideline2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/vertical_guideline5"
             app:layout_constraintEnd_toStartOf="@id/vertical_guideline6"
-            />
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/alarm_pressable" />
 
         <ImageView
             android:id="@+id/buttonShowRotary"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:src="@drawable/plate512"
             android:contentDescription="@string/label_empty"
             app:layout_constraintTop_toBottomOf="@id/horizontal_guideline2"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/vertical_guideline3"
             app:layout_constraintEnd_toStartOf="@id/vertical_guideline4"
-            />
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/plate512" />
 
         <FrameLayout
             android:id="@+id/headlineFrame"
