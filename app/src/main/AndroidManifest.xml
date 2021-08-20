@@ -19,13 +19,14 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.target.MayaiAlarmTargetActivity"
-            android:launchMode="singleTop" />
+            android:launchMode="singleTop"
+            android:exported="true" />
 
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:launchMode="singleTop"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -45,7 +46,7 @@
         <receiver
             android:name=".MayaiActionReceiver"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="true" />
 
     </application>
 
