@@ -8,7 +8,8 @@ import java.util.HashMap;
 
 public class Summary {
 
-    private int counter;
+    private int counter = 0;
+    private Calendar triggerTime = null;
 
     public static class AlarmInfo {
         private int counter;
@@ -47,7 +48,16 @@ public class Summary {
         return counter;
     }
 
+    public boolean hasAlarm() {
+        return counter > 0;
+    }
+
+    public Calendar getTriggerTime() {
+        return triggerTime;
+    }
+
     public void update(Collection<Alarm> alarms) {
+        triggerTime = null;
         counter = 0;
         map.clear();
         final Calendar soon = Alarm.createCalendarForMinutes(1.0);
@@ -62,6 +72,9 @@ public class Summary {
                 }
                 else {
                     alarm.setHot(false);
+                }
+                if (this.triggerTime == null || alarm.getTriggerTime().before(this.triggerTime)) {
+                    this.triggerTime = alarm.getTriggerTime();
                 }
             }
         }

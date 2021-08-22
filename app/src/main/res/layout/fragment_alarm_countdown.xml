@@ -70,6 +70,16 @@
             android:background="@drawable/background_selector"
             android:alpha="0.3" />
 
+        <com.stho.mayai.ClockView
+            android:id="@+id/clock"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="@id/horizontal_guideline1"
+            app:layout_constraintBottom_toBottomOf="@id/horizontal_guideline2"
+            android:contentDescription="@string/label_empty"
+            android:background="@drawable/background_selector"
+            android:alpha="0.2" />
+
         <FrameLayout
             android:id="@+id/rotaryFrame"
             android:layout_width="0dp"

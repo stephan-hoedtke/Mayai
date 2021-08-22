@@ -125,6 +125,12 @@ public class HomeFragment extends Fragment {
         updateUI(summary.getAlarmInfo(TYPE_BREAD), binding.infoCircleBread, binding.infoCounterBread);
         updateUI(summary.getAlarmInfo(TYPE_POTATOES), binding.infoCirclePotatoes, binding.infoCounterPotatoes);
         updateUI(summary.getAlarmInfo(TYPE_CLOCK), binding.infoCircleClock, binding.infoCounterClock);
+
+        if (summary.hasAlarm()) {
+            binding.imageViewClock.setAlarmTime(summary.getTriggerTime());
+        } else {
+            binding.imageViewClock.removeAlarm();
+        }
     }
 
     @SuppressWarnings("ConstantConditions")

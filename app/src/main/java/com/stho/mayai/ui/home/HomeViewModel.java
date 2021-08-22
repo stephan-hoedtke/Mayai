@@ -1,6 +1,8 @@
 package com.stho.mayai.ui.home;
 
 import android.app.Application;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

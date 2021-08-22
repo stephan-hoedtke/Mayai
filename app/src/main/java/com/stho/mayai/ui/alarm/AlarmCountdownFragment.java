@@ -53,6 +53,7 @@ public class AlarmCountdownFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentAlarmCountdownBinding.inflate(inflater, container, false);
         binding.image.setOnClickListener(view -> edit());
+        binding.clock.setOnClickListener(view -> edit());
         binding.textViewRemainingTime.setOnClickListener(view -> edit());
         binding.buttonStopPlaying.setOnClickListener(view -> cancelAlarm());
         binding.buttonShowRotary.setOnClickListener(view -> onShowRotary());
@@ -66,7 +67,6 @@ public class AlarmCountdownFragment extends Fragment {
         viewModel.getRemainingSecondsLD().observe(getViewLifecycleOwner(), this::onUpdateRemainingSeconds);
         viewModel.setAlarm(Helpers.getAlarmFromFragmentArguments(this));
         viewModel.getAngleLD().observe(getViewLifecycleOwner(), this::setAngle);
-        viewModel.getSimpleRotaryLD().observe(getViewLifecycleOwner(), value -> binding.rotary.setSimpleRotary(value));
         rotaryHide();
         return binding.getRoot();
     }
@@ -135,6 +135,17 @@ public class AlarmCountdownFragment extends Fragment {
         if (alarm != null) {
             binding.setAlarm(alarm);
             binding.image.setImageResource(alarm.getIconId());
+
+            if (alarm.getType() == Alarm.TYPE_CLOCK) {
+                binding.clock.setAlarmTime(alarm.getTriggerTime());
+                binding.clock.setVisibility(View.VISIBLE);
+                binding.image.setVisibility(View.GONE);
+            }
+            else {
+                binding.clock.setVisibility(View.GONE);
+                binding.image.setVisibility(View.VISIBLE);
+            }
+
             updateActionBar(alarm);
         }
     }
@@ -199,6 +210,7 @@ public class AlarmCountdownFragment extends Fragment {
     private void rotaryHide() {
         binding.rotaryFrame.setVisibility(View.INVISIBLE);
         binding.image.setAlpha(1f);
+        binding.clock.setAlpha(1f);
     }
 
     private void rotaryAppear() {
@@ -212,6 +224,7 @@ public class AlarmCountdownFragment extends Fragment {
                 }
             });
             binding.image.animate().alpha(0.7f).setDuration(duration);
+            binding.clock.animate().alpha(0.7f).setDuration(duration);
             autoDisappearRotary.touch();
         }
     }
@@ -225,7 +238,8 @@ public class AlarmCountdownFragment extends Fragment {
                     binding.rotaryFrame.setVisibility(View.INVISIBLE);
                 }
             });
-            binding.image.animate().alpha(1.0f).setDuration(duration);
+            binding.image.animate().alpha(1f).setDuration(duration);
+            binding.clock.animate().alpha(1f).setDuration(duration);
         }
     }
 }

@@ -136,7 +136,7 @@ public class Alarm {
 
     public static int getIconId(int type) {
 
-            switch (type) {
+        switch (type) {
             case TYPE_EGG:
                 return R.drawable.egg;
 
@@ -150,7 +150,7 @@ public class Alarm {
                 return R.drawable.bread;
 
             default:
-                return R.drawable.clock;
+                return R.drawable.clock_background;
         }
     }
 
