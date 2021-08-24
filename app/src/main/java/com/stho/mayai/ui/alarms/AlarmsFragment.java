@@ -49,6 +49,7 @@ public class AlarmsFragment extends Fragment {
         itemTouchHelper.attachToRecyclerView(binding.list);
         final DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
         binding.list.addItemDecoration(dividerItemDecoration);
+        binding.headlineFrame.setVisibility(View.INVISIBLE);
         viewModel.getAlarmsLD().observe(getViewLifecycleOwner(), this::updateAlarms);
         viewModel.getSummaryLD().observe(getViewLifecycleOwner(), this::updateSummary);
         return binding.getRoot();

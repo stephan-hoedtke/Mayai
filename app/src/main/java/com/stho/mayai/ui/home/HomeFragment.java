@@ -61,6 +61,7 @@ public class HomeFragment extends Fragment {
         binding.imageViewPotatoes.setOnLongClickListener(view -> { display(); return false; });
         binding.imageViewClock.setOnLongClickListener(view -> { display(); return false; });
         binding.imageViewClock.setIsClock();
+        binding.headlineFrame.setVisibility(View.INVISIBLE);
         viewModel.getSummaryLD().observe(getViewLifecycleOwner(), this::updateUI);
         updateActionBar();
         return binding.getRoot();

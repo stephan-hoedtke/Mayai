@@ -61,6 +61,7 @@ public class AlarmCountdownFragment extends Fragment {
             autoDisappearRotary.touch();
             viewModel.rotate(delta);
         });
+        binding.headlineFrame.setVisibility(View.INVISIBLE);
         viewModel.getAlarmLD().observe(getViewLifecycleOwner(), this::onUpdateAlarm);
         viewModel.getStatusNameLD().observe(getViewLifecycleOwner(), this::onUpdateStatusName);
         viewModel.getRemainingSecondsLD().observe(getViewLifecycleOwner(), this::onUpdateRemainingSeconds);

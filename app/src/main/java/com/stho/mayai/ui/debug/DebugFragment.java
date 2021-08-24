@@ -43,6 +43,7 @@ public class DebugFragment extends Fragment {
         binding.buttonOpenAlarm.setOnClickListener(view -> viewModel.openAlarmFromClockInfo(getContext()));
         binding.buttonOpenChannelSettings.setOnClickListener(view -> MayaiNotificationManager.openChannelSettings(getContext()));
         binding.buttonShowLog.setOnClickListener(view -> findNavController().navigate(DebugFragmentDirections.actionNavigationDebugToNavigationShowLog()));
+        binding.headlineFrame.setVisibility(View.INVISIBLE);
         viewModel.getInfoLD().observe(getViewLifecycleOwner(), info -> binding.nextAlarm.setText(info));
         viewModel.getVersionLD().observe(getViewLifecycleOwner(), this::updateActionBar);
         return binding.getRoot();

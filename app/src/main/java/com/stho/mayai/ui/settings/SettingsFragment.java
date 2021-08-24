@@ -49,6 +49,7 @@ public class SettingsFragment extends Fragment {
         binding.buttonModifyBread.setOnClickListener(view -> showEditDialog(Alarm.TYPE_BREAD, binding.minutesBread));
         binding.buttonModifyPotatoes.setOnClickListener(view -> showEditDialog(Alarm.TYPE_POTATOES, binding.minutesPotatoes));
         binding.buttonModifyClock.setOnClickListener(view -> showEditDialog(Alarm.TYPE_CLOCK, binding.minutesClock));
+        binding.headlineFrame.setVisibility(View.INVISIBLE);
         viewModel.getVersionLD().observe(getViewLifecycleOwner(), this::updateActionBar);
         viewModel.getSettingsLD().observe(getViewLifecycleOwner(), this::updateSettings);
         return binding.getRoot();
