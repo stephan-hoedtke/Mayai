@@ -47,27 +47,27 @@ public class SwipeAlarmToDelete extends ItemTouchHelper.SimpleCallback {
     @Override
     public void onSelectedChanged(@Nullable RecyclerView.ViewHolder viewHolder, int actionState) {
         if (viewHolder != null) {
-            final View foreground = ((AlarmsRecyclerViewAdapter.ViewHolder) viewHolder).foreground;
+            final View foreground = ((AlarmsRecyclerViewAdapter.ViewHolder) viewHolder).binding.foreground;
             getDefaultUIUtil().onSelected(foreground);
         }
     }
 
     @Override
     public void onChildDrawOver(@NonNull Canvas c, @NonNull RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-        final View foreground = ((AlarmsRecyclerViewAdapter.ViewHolder) viewHolder).foreground;
+        final View foreground = ((AlarmsRecyclerViewAdapter.ViewHolder) viewHolder).binding.foreground;
         foreground.setBackgroundColor(ContextCompat.getColor(foreground.getContext(), isCurrentlyActive ? R.color.colorSelection : R.color.colorBackground));
         getDefaultUIUtil().onDrawOver(c, recyclerView, foreground, dX, dY, actionState, isCurrentlyActive);
     }
 
     @Override
     public void clearView(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder) {
-        final View foreground = ((AlarmsRecyclerViewAdapter.ViewHolder) viewHolder).foreground;
+        final View foreground = ((AlarmsRecyclerViewAdapter.ViewHolder) viewHolder).binding.foreground;
         getDefaultUIUtil().clearView(foreground);
     }
 
     @Override
     public void onChildDraw(@NotNull Canvas c, @NotNull RecyclerView recyclerView, @NotNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
-        final View foreground = ((AlarmsRecyclerViewAdapter.ViewHolder) viewHolder).foreground;
+        final View foreground = ((AlarmsRecyclerViewAdapter.ViewHolder) viewHolder).binding.foreground;
         getDefaultUIUtil().onDraw(c, recyclerView, foreground, dX, dY, actionState, isCurrentlyActive);
     }
 }

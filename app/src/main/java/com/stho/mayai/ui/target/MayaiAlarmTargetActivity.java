@@ -51,6 +51,8 @@ public class MayaiAlarmTargetActivity extends AppCompatActivity {
     private void setAlarm(Alarm alarm) {
         binding.setAlarm(alarm);
         binding.image.setImageResource(alarm.getIconId());
+        binding.image.setAlarmTime(alarm.getTriggerTime());
+        binding.image.setIsClock(alarm.isClock());
         updateActionBar(alarm);
     }
 

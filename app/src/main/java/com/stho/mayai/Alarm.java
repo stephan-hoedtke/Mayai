@@ -88,6 +88,8 @@ public class Alarm {
 
     public boolean isHot() { return isHot; }
 
+    public boolean isClock() { return type == TYPE_CLOCK; }
+
     public void setHot(boolean isHot) {
         this.isHot = isHot;
     }

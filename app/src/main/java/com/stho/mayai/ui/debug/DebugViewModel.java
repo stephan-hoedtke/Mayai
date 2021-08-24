@@ -11,13 +11,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.stho.mayai.BuildConfig;
 import com.stho.mayai.Logger;
-import com.stho.mayai.MayaiRepository;
-import com.stho.mayai.Settings;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,7 +24,6 @@ public class DebugViewModel extends AndroidViewModel {
 
     private final MutableLiveData<String> infoLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> versionLiveData = new MutableLiveData<>();
-    private final MayaiRepository repository;
 
     @SuppressWarnings("ConstantConditions")
     public static DebugViewModel build(Fragment fragment) {
@@ -38,23 +34,17 @@ public class DebugViewModel extends AndroidViewModel {
 
     public DebugViewModel(@NonNull Application application) {
         super(application);
-        repository = MayaiRepository.getRepository(application.getBaseContext());
     }
 
 
     LiveData<String> getInfoLD() { return infoLiveData; }
     LiveData<String> getVersionLD() { return versionLiveData; }
-    LiveData<Boolean> getSimpleRotaryLD() { return Transformations.map(repository.getSettingsLD(), Settings::getSimpleRotary); }
 
     private final static String EOL = "\n";
 
     void update(Context context) {
         infoLiveData.setValue(getAlarmInfo(context));
         versionLiveData.setValue(BuildConfig.VERSION_NAME);
-    }
-
-    void setSimpleRotary(boolean value) {
-        repository.getSettings().setSimpleRotary(value);
     }
 
     private String getAlarmInfo(Context context) {

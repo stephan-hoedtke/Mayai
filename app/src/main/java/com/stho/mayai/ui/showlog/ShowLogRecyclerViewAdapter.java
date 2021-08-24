@@ -41,16 +41,14 @@ public class ShowLogRecyclerViewAdapter extends RecyclerView.Adapter<ShowLogRecy
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        public final View view;
         public final TextView timeView;
         public final TextView messageView;
         public LogEntry item;
 
         ViewHolder(View view) {
             super(view);
-            this.view = view;
-            this.timeView = (TextView) view.findViewById(R.id.time);
-            this.messageView = (TextView) view.findViewById(R.id.message);
+            this.timeView = view.findViewById(R.id.time);
+            this.messageView = view.findViewById(R.id.message);
         }
     }
 }

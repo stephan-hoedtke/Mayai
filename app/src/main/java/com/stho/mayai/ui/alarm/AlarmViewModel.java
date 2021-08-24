@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.stho.mayai.Alarm;
 import com.stho.mayai.MayaiRepository;
 import com.stho.mayai.MayaiWorker;
-import com.stho.mayai.Settings;
 
 public class AlarmViewModel extends AndroidViewModel {
 
@@ -43,7 +42,6 @@ public class AlarmViewModel extends AndroidViewModel {
     LiveData<String> getStatusNameLD() { return statusNameLiveData; }
     LiveData<Integer> getRemainingSecondsLD() { return remainingSecondsLiveData; }
     LiveData<Float> getAngleLD() { return Transformations.map(remainingSecondsLiveData, this::getAngle); }
-    LiveData<Boolean> getSimpleRotaryLD() { return Transformations.map(repository.getSettingsLD(), Settings::getSimpleRotary); }
     LiveData<Alarm> getAlarmLD() { return alarmLiveData; }
 
     Alarm getAlarm() { return alarmLiveData.getValue(); }

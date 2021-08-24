@@ -29,5 +29,12 @@
     <string name="title_potatoes">POTATOES</string>
     <string name="title_clock">CLOCK</string>
     <string name="label_show_hint">Show Hint</string>
-    <string name="label_simple_rotary">Simple Rotary</string>
+    <string name="label_swipe_and_rotate_the_scale">Swipe and rotate the scale to change the alarm time</string>
+    <string name="label_show_or_hide_the_scale">Show or hide the scale to change the alarm time</string>
+    <string name="label_set_alarm_for_champagne">Set alarm for champagne</string>
+    <string name="label_set_alarm_for_eggs">Set alarm for eggs</string>
+    <string name="label_set_alarm_for_potatoes">Set alarm for potatoes</string>
+    <string name="label_set_alarm_for_bread">Set alarm for bread</string>
+    <string name="label_set_alarm">Set alarm</string>
+    <string name="label_modify_default_alarm_time">Modify default alarm time</string>
 </resources>

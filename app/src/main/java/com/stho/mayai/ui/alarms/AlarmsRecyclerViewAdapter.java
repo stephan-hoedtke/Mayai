@@ -6,10 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +17,7 @@ import com.stho.mayai.Helpers;
 import com.stho.mayai.IAlarms;
 import com.stho.mayai.MayaiWorker;
 import com.stho.mayai.R;
+import com.stho.mayai.databinding.FragmentAlarmsEntryBinding;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -28,15 +26,12 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
     private final FragmentActivity activity;
     private final Context context;
     private final IAlarms alarms;
-    private final GestureDetector gestureDetector;
 
     AlarmsRecyclerViewAdapter(FragmentActivity activity, IAlarms alarms) {
         this.activity = activity;
         this.context = activity.getApplicationContext();
         this.alarms = alarms;
-        // to avoid flicker on update during swipe: See also getItemId
         this.setHasStableIds(true);
-        this.gestureDetector = new GestureDetector(activity.getApplicationContext(), new GestureDetector.SimpleOnGestureListener());
     }
 
     @Override
@@ -52,35 +47,39 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_alarms_entry, parent, false);
-        return new ViewHolder(view);
+        Context context = parent.getContext();
+        LayoutInflater inflater = LayoutInflater.from(context);
+        FragmentAlarmsEntryBinding binding = FragmentAlarmsEntryBinding.inflate(inflater, parent, false);
+        return new ViewHolder(context, binding);
     }
 
-    @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.alarm = alarms.get(position);
-        holder.imageView.setImageResource(holder.alarm.getNotificationIconId());
-        holder.timeView.setText(holder.alarm.getTriggerTimeAsString());
-        holder.statusView.setText(holder.alarm.getStatusName());
-        holder.nameView.setText(holder.alarm.getName());
-        if (holder.alarm.isPending()) {
-            holder.textViewRemainingTime.setText(Helpers.getSecondsAsString(holder.alarm.getRemainingSeconds()));
-            holder.textViewRemainingTime.setTextColor(ContextCompat.getColor(getContext(), holder.alarm.isHot() ? R.color.primaryAccentTextColor : R.color.primaryTextColor));
+
+        @Override
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        Alarm alarm = alarms.get(position);
+        holder.binding.image.setImageResource(alarm.getNotificationIconId());
+        holder.binding.image.setIsClock(alarm.isClock());
+        holder.binding.time.setText(alarm.getTriggerTimeAsString());
+        holder.binding.status.setText(alarm.getStatusName());
+        holder.binding.name.setText(alarm.getName());
+        if (alarm.isPending()) {
+            holder.binding.textViewRemainingTime.setText(Helpers.getSecondsAsString(alarm.getRemainingSeconds()));
+            holder.binding.textViewRemainingTime.setTextColor(ContextCompat.getColor(getContext(), alarm.isHot() ? R.color.primaryAccentTextColor : R.color.primaryTextColor));
         }
         else {
-            holder.textViewRemainingTime.setText("");
+            holder.binding.textViewRemainingTime.setText("");
         }
         holder.itemView.setOnLongClickListener(view -> {
             editItem(holder.getAdapterPosition());
             return true;
         });
         holder.itemView.setOnTouchListener((view, motionEvent) -> {
-            gestureDetector.onTouchEvent(motionEvent);
+            holder.gestureDetector.onTouchEvent(motionEvent);
             view.performClick();
             return false;
         });
-        gestureDetector.setIsLongpressEnabled(true);
-        gestureDetector.setOnDoubleTapListener(new GestureDetector.OnDoubleTapListener() {
+        holder.gestureDetector.setIsLongpressEnabled(true);
+        holder.gestureDetector.setOnDoubleTapListener(new GestureDetector.OnDoubleTapListener() {
             @Override
             public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
                 return false;
@@ -88,7 +87,8 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
 
             @Override
             public boolean onDoubleTap(MotionEvent motionEvent) {
-                editItem(holder.getAdapterPosition());
+                int currentPosition = holder.getAdapterPosition();
+                editItem(currentPosition);
                 return false;
             }
 
@@ -107,11 +107,7 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
     void deleteItem(int position) {
         Alarm alarm = alarms.get(position);
         MayaiWorker.build(context).delete(alarm);
-        // notify the item removed by position
-        // to perform recycler view delete animations
-        // NOTE: don't call notifyDataSetChanged()
         notifyItemRemoved(position);
-        //notifyDataSetChanged();
         showUndoSnackBar(position, alarm);
     }
 
@@ -128,7 +124,6 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
     private void undoDelete(final int position, final Alarm alarm) {
         MayaiWorker.build(context).undoDelete(position, alarm);
         notifyItemInserted(position);
-        //notifyDataSetChanged();
     }
 
     private void editItem(int position) {
@@ -137,26 +132,13 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        final View view;
-        final ImageView imageView;
-        final TextView timeView;
-        final TextView statusView;
-        final TextView nameView;
-        final TextView textViewRemainingTime;
-        final ConstraintLayout background;
-        final ConstraintLayout foreground;
-        Alarm alarm;
+        final FragmentAlarmsEntryBinding binding;
+        final GestureDetector gestureDetector;
 
-        ViewHolder(View view) {
-            super(view);
-            this.view = view;
-            this.imageView = view.findViewById(R.id.image);
-            this.timeView = view.findViewById(R.id.time);
-            this.statusView = view.findViewById(R.id.status);
-            this.nameView = view.findViewById(R.id.name);
-            this.textViewRemainingTime = view.findViewById(R.id.textViewRemainingTime);
-            this.background = view.findViewById(R.id.background);
-            this.foreground = view.findViewById(R.id.foreground);
+        ViewHolder(Context context, FragmentAlarmsEntryBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+            this.gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener());
         }
     }
 }

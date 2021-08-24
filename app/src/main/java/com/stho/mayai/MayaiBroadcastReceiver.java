@@ -33,9 +33,6 @@ public class MayaiBroadcastReceiver extends BroadcastReceiver {
                 Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
                 vibrator.vibrate(VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE));
 
-                // TODO:
-                //  vibrator.vibrate(VibrationEffect.createWaveform(new long[] ...
-
                 // Start the notification service, which will send the heads up notification
                 // Start it as foreground service to avoid the IllegalStateException: "app in background" in Android.O
                 MayaiNotificationService.startAsForegroundService(context, alarm);

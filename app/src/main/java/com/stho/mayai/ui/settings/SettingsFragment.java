@@ -106,7 +106,6 @@ public class SettingsFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void updateSettings(Settings settings) {
-        binding.setSettings(settings);
         binding.minutesEgg.setText(Double.toString(settings.getMinutesEgg()));
         binding.minutesChampagne.setText(Double.toString(settings.getMinutesChampagne()));
         binding.minutesBread.setText(Double.toString(settings.getMinutesBread()));

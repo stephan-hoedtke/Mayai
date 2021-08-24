@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorSelection">#002010</color>
-    <color name="colorActionBar">#60000000</color>
     <color name="colorBackground">#000000</color>
     <color name="primaryColor">#1b5e20</color>
-    <color name="primaryLightColor">#1b5e20</color>
     <color name="primaryDarkColor">#003300</color>
     <color name="primaryTextColor">#fffac5</color>
     <color name="primaryAccentTextColor">#f4511e</color>
