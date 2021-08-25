@@ -1,6 +1,8 @@
 package com.stho.mayai;
 
+import org.jetbrains.annotations.Nullable;
+
 public interface IAlarms {
     int size();
-    Alarm get(int position);
+    @Nullable Alarm get(int position);
 }

@@ -15,7 +15,7 @@ public class MayaiNotificationService extends Service {
     private Handler handler;
     private long startTime;
 
-    public static void startAsForegroundService(Context context, Alarm alarm) {
+    public static void startAsForegroundService(final @Nullable Context context, Alarm alarm) {
         if (context != null) {
             Intent intent = new Intent(context, MayaiNotificationService.class);
             Helpers.putAlarmToIntent(intent, alarm);
@@ -23,7 +23,7 @@ public class MayaiNotificationService extends Service {
         }
     }
 
-    public static void stop(Context context) {
+    public static void stop(final @Nullable Context context) {
         if (context != null) {
             Intent intent = new Intent(context, MayaiNotificationService.class);
             context.stopService(intent);
@@ -34,16 +34,16 @@ public class MayaiNotificationService extends Service {
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    public int onStartCommand(final @Nullable Intent intent, final int flags, final int startId) {
         onHandleIntent(intent);
         return super.onStartCommand(intent, flags, startId);
     }
 
     private void onHandleIntent(@Nullable Intent intent) {
         try {
-            Alarm alarm = Helpers.getAlarmFromIntent(intent);
+            final Alarm alarm = Helpers.getAlarmFromIntent(intent);
             if (alarm != null) {
-                 startPlaying();
+                startPlaying();
                 startAutoStopHandler();
                 // Send a foreground notification as the service was started as foreground service:
                 MayaiNotificationManager

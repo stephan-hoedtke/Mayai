@@ -23,16 +23,16 @@ public class ShowLogRecyclerViewAdapter extends RecyclerView.Adapter<ShowLogRecy
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_show_log_entry, parent, false);
+    public ViewHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
+        final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_show_log_entry, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.item = values.get(position);
-        holder.timeView.setText(holder.item.getTimeAsString());
-        holder.messageView.setText(holder.item.getMessage());
+        final LogEntry entry = values.get(position);
+        holder.timeView.setText(entry.getTimeAsString());
+        holder.messageView.setText(entry.getMessage());
     }
 
     @Override
@@ -41,9 +41,8 @@ public class ShowLogRecyclerViewAdapter extends RecyclerView.Adapter<ShowLogRecy
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        public final TextView timeView;
-        public final TextView messageView;
-        public LogEntry item;
+        final TextView timeView;
+        final TextView messageView;
 
         ViewHolder(View view) {
             super(view);

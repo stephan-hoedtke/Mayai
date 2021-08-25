@@ -7,6 +7,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +21,8 @@ import com.stho.mayai.R;
 import com.stho.mayai.databinding.FragmentAlarmsEntryBinding;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
 
 public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecyclerViewAdapter.ViewHolder> {
 
@@ -36,37 +39,34 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
 
     @Override
     public long getItemId(int position) {
-        Alarm alarm = alarms.get(position);
+        final Alarm alarm = getAlarm(position);
         return alarm.getId();
     }
 
-    public Context getContext() {
-        return context;
+    private @NonNull Alarm getAlarm(final int position) {
+        return Objects.requireNonNull(alarms.get(position));
     }
 
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
-        FragmentAlarmsEntryBinding binding = FragmentAlarmsEntryBinding.inflate(inflater, parent, false);
+        final Context context = parent.getContext();
+        final LayoutInflater inflater = LayoutInflater.from(context);
+        final FragmentAlarmsEntryBinding binding = FragmentAlarmsEntryBinding.inflate(inflater, parent, false);
         return new ViewHolder(context, binding);
     }
 
-
-        @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
-        Alarm alarm = alarms.get(position);
-        holder.binding.image.setImageResource(alarm.getNotificationIconId());
-        holder.binding.image.setIsClock(alarm.isClock());
+    @Override
+    public void onBindViewHolder(final @NonNull ViewHolder holder, final int position) {
+        final Alarm alarm = getAlarm(position);
+        holder.binding.image.setAlarm(alarm);
         holder.binding.time.setText(alarm.getTriggerTimeAsString());
         holder.binding.status.setText(alarm.getStatusName());
         holder.binding.name.setText(alarm.getName());
         if (alarm.isPending()) {
             holder.binding.textViewRemainingTime.setText(Helpers.getSecondsAsString(alarm.getRemainingSeconds()));
-            holder.binding.textViewRemainingTime.setTextColor(ContextCompat.getColor(getContext(), alarm.isHot() ? R.color.primaryAccentTextColor : R.color.primaryTextColor));
-        }
-        else {
+            holder.binding.textViewRemainingTime.setTextColor(ContextCompat.getColor(context, alarm.isHot() ? R.color.primaryAccentTextColor : R.color.primaryTextColor));
+        } else {
             holder.binding.textViewRemainingTime.setText("");
         }
         holder.itemView.setOnLongClickListener(view -> {
@@ -87,7 +87,7 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
 
             @Override
             public boolean onDoubleTap(MotionEvent motionEvent) {
-                int currentPosition = holder.getAdapterPosition();
+                final int currentPosition = holder.getAdapterPosition();
                 editItem(currentPosition);
                 return false;
             }
@@ -105,19 +105,21 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
     }
 
     void deleteItem(int position) {
-        Alarm alarm = alarms.get(position);
+        final Alarm alarm = getAlarm(position);
         MayaiWorker.build(context).delete(alarm);
         notifyItemRemoved(position);
         showUndoSnackBar(position, alarm);
     }
 
     private void showUndoSnackBar(final int position, final Alarm alarm) {
-        View container = activity.findViewById(R.id.container);
-        Snackbar snackbar = Snackbar.make(container, "Alarm was deleted", Snackbar.LENGTH_LONG);
-        snackbar.setAction("Undo", view -> undoDelete(position, alarm));
-        snackbar.setActionTextColor(ContextCompat.getColor(getContext(), R.color.secondaryAccentTextColor));
-        snackbar.setBackgroundTint(ContextCompat.getColor(getContext(), R.color.secondaryDarkColor));
-        snackbar.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryTextColor));
+        final View container = activity.findViewById(R.id.container);
+        final String text = activity.getString(R.string.text_alarm_deleted);
+        final Snackbar snackbar = Snackbar.make(container, text, Snackbar.LENGTH_LONG);
+        final String labelUndo = activity.getString(R.string.label_undo);
+        snackbar.setAction(labelUndo, view -> undoDelete(position, alarm));
+        snackbar.setActionTextColor(ContextCompat.getColor(context, R.color.secondaryAccentTextColor));
+        snackbar.setBackgroundTint(ContextCompat.getColor(context, R.color.secondaryDarkColor));
+        snackbar.setTextColor(ContextCompat.getColor(context, R.color.secondaryTextColor));
         snackbar.show();
     }
 
@@ -127,7 +129,7 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
     }
 
     private void editItem(int position) {
-        Alarm alarm = alarms.get(position);
+        final Alarm alarm = getAlarm(position);
         MayaiWorker.build(context).open(alarm);
     }
 

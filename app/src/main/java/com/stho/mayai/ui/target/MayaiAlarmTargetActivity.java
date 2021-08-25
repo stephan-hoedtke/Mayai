@@ -48,21 +48,19 @@ public class MayaiAlarmTargetActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setAlarm(Alarm alarm) {
-        binding.setAlarm(alarm);
-        binding.image.setImageResource(alarm.getIconId());
-        binding.image.setAlarmTime(alarm.getTriggerTime());
-        binding.image.setIsClock(alarm.isClock());
+    private void setAlarm(final @NonNull Alarm alarm) {
+        binding.image.setAlarm(alarm);
+        binding.textViewDuration.setText(alarm.getDurationAsString());
         updateActionBar(alarm);
     }
 
     private void turnScreenOnAndKeyguardOff() {
         setShowWhenLocked(true);
         setTurnScreenOn(true);
-        KeyguardManager keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
+        final KeyguardManager keyguardManager = (KeyguardManager) getSystemService(KEYGUARD_SERVICE);
         if (keyguardManager != null) {
             keyguardManager.requestDismissKeyguard(this, new KeyguardManager.KeyguardDismissCallback() {
-            });
+                });
         }
     }
 
@@ -81,13 +79,16 @@ public class MayaiAlarmTargetActivity extends AppCompatActivity {
         finish();
     }
 
-    @SuppressWarnings("ConstantConditions")
-    private void updateActionBar(Alarm alarm) {
+    private void updateActionBar(final @NonNull Alarm alarm) {
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(alarm.getName());
-        actionBar.setSubtitle(alarm.getTriggerTimeAsString());
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
+        if (actionBar != null) {
+            actionBar.setTitle(alarm.getName());
+            actionBar.setSubtitle(alarm.getTriggerTimeAsString());
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+        }
     }
 }
+
+
 

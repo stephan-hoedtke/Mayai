@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:app="http://schemas.android.com/apk/res-auto">
-    <data>
-        <import type="com.stho.mayai.Alarm" />
-        <import type="com.stho.mayai.Helpers" />
-        <variable
-            name="alarm"
-            type="com.stho.mayai.Alarm" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"

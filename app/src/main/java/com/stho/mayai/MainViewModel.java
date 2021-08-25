@@ -11,11 +11,11 @@ public class MainViewModel extends AndroidViewModel {
 
     private final MayaiRepository repository;
 
-    public static MainViewModel build(FragmentActivity activity) {
+    public static MainViewModel build(final @NonNull FragmentActivity activity) {
         return new ViewModelProvider(activity).get(MainViewModel.class);
     }
 
-    public MainViewModel(@NonNull Application application) {
+    public MainViewModel(final @NonNull Application application) {
         super(application);
         repository = MayaiRepository.getRepository(application);
 

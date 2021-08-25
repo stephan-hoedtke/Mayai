@@ -20,48 +20,46 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/**
+ * In Debug hard coded English texts are acceptable
+ */
 public class DebugViewModel extends AndroidViewModel {
 
     private final MutableLiveData<String> infoLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> versionLiveData = new MutableLiveData<>();
 
-    @SuppressWarnings("ConstantConditions")
-    public static DebugViewModel build(Fragment fragment) {
-        DebugViewModel debugViewModel = new ViewModelProvider(fragment.getActivity()).get(DebugViewModel.class);
-        debugViewModel.update(fragment.getContext());
+    public static DebugViewModel build(final @NonNull Fragment fragment) {
+        final DebugViewModel debugViewModel = new ViewModelProvider(fragment.requireActivity()).get(DebugViewModel.class);
+        debugViewModel.update(fragment.requireContext());
         return debugViewModel;
     }
 
-    public DebugViewModel(@NonNull Application application) {
+    public DebugViewModel(final @NonNull Application application) {
         super(application);
     }
-
 
     LiveData<String> getInfoLD() { return infoLiveData; }
     LiveData<String> getVersionLD() { return versionLiveData; }
 
-    private final static String EOL = "\n";
-
-    void update(Context context) {
+    void update(final @NonNull Context context) {
         infoLiveData.setValue(getAlarmInfo(context));
         versionLiveData.setValue(BuildConfig.VERSION_NAME);
     }
 
     private String getAlarmInfo(Context context) {
-        StringBuilder sb = new StringBuilder();
-
+        final StringBuilder sb = new StringBuilder();
         try {
-            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
             if (alarmManager != null) {
-                AlarmManager.AlarmClockInfo clockInfo = alarmManager.getNextAlarmClock();
+                final AlarmManager.AlarmClockInfo clockInfo = alarmManager.getNextAlarmClock();
                 if (clockInfo != null) {
-                    long nextAlarmTime = clockInfo.getTriggerTime();
-                    Date nextAlarmDate = new Date(nextAlarmTime);
+                    final long nextAlarmTime = clockInfo.getTriggerTime();
+                    final Date nextAlarmDate = new Date(nextAlarmTime);
                     sb.append("Time: ");
                     sb.append(new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH).format(nextAlarmDate));
                     sb.append(EOL);
 
-                    PendingIntent intent = clockInfo.getShowIntent();
+                    final PendingIntent intent = clockInfo.getShowIntent();
                     if (intent != null) {
                         sb.append("Package: ");
                         sb.append(intent.getCreatorPackage());
@@ -76,17 +74,16 @@ public class DebugViewModel extends AndroidViewModel {
             sb.append(ex.toString());
             sb.append(EOL);
         }
-
         return sb.toString();
     }
 
-    void openAlarmFromClockInfo(Context context) {
+    void openAlarmFromClockInfo(final @NonNull Context context) {
         try {
-            AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+            final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
             if (alarmManager != null) {
-                AlarmManager.AlarmClockInfo clockInfo = alarmManager.getNextAlarmClock();
+                final AlarmManager.AlarmClockInfo clockInfo = alarmManager.getNextAlarmClock();
                 if (clockInfo != null) {
-                    PendingIntent intent = clockInfo.getShowIntent();
+                    final PendingIntent intent = clockInfo.getShowIntent();
                     intent.send(context, 0, null);
                 }
             }
@@ -95,4 +92,6 @@ public class DebugViewModel extends AndroidViewModel {
             Toast.makeText(context, ex.toString(), Toast.LENGTH_LONG).show();
         }
     }
+
+    private final static String EOL = "\n";
 }

@@ -15,11 +15,11 @@ public class MayaiAlarmManager {
 
     private final Context context;
 
-    private MayaiAlarmManager(Context context) {
+    private MayaiAlarmManager(final @NonNull Context context) {
         this.context = context.getApplicationContext();
     }
 
-    public static MayaiAlarmManager build(Context context) {
+    public static MayaiAlarmManager build(final @NonNull Context context) {
         return new MayaiAlarmManager(context);
     }
 
@@ -34,22 +34,21 @@ public class MayaiAlarmManager {
         //      - registers the alarm so that it wakes up the phone
         //      - the alarm will NOT be visible via "alarmManager.getNextAlarmClock()"
         //
-        PendingIntent alarmIntent = createAlarmIntentFor(alarm);
-        PendingIntent showIntent = createShowAlarmDetailsIntentFor(alarm);
-
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        final PendingIntent alarmIntent = createAlarmIntentFor(alarm);
+        final PendingIntent showIntent = createShowAlarmDetailsIntentFor(alarm);
+        final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.setAlarmClock(new AlarmManager.AlarmClockInfo(alarm.getTriggerTimeInMillis(), showIntent), alarmIntent);
         Logger.log("Alarm for " + alarm.getName() + " set: " + alarm.getTriggerTimeAsString());
     }
 
-    public void cancelAlarm(Alarm alarm) {
+    public void cancelAlarm(final @NonNull Alarm alarm) {
         cancelAlarm(alarm.getRequestCode());
     }
 
-    public void cancelAlarm(int requestCode) {
+    public void cancelAlarm(final int requestCode) {
         Logger.log("Cancel alarm");
-        PendingIntent cancelIntent = getCancelIntentFor(requestCode);
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        final PendingIntent cancelIntent = getCancelIntentFor(requestCode);
+        final AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(cancelIntent);
     }
 
@@ -61,25 +60,25 @@ public class MayaiAlarmManager {
         as the alarm intent it shall cancel. The Context and the flags don't matter.
         See als: Intent.filterEquals(Intent)
      */
-    private @NonNull PendingIntent getCancelIntentFor(int requestCode) {
-        Intent intent = new Intent(context, MayaiBroadcastReceiver.class);
+    private @NonNull PendingIntent getCancelIntentFor(final int requestCode) {
+        final Intent intent = new Intent(context, MayaiBroadcastReceiver.class);
         Helpers.putActionAlarmToIntent(intent);
         return PendingIntent.getBroadcast(context, requestCode, intent, FLAG_IMMUTABLE);
     }
 
-    private @NonNull PendingIntent createAlarmIntentFor(Alarm alarm) {
+    private @NonNull PendingIntent createAlarmIntentFor(final @NonNull Alarm alarm) {
         return createAlarmIntentFor(alarm, alarm.getRequestCode());
     }
 
-    private @NonNull PendingIntent createAlarmIntentFor(Alarm alarm, int requestCode) {
-        Intent intent = new Intent(context, MayaiBroadcastReceiver.class);
+    private @NonNull PendingIntent createAlarmIntentFor(final @NonNull Alarm alarm, final int requestCode) {
+        final Intent intent = new Intent(context, MayaiBroadcastReceiver.class);
         Helpers.putAlarmToIntent(intent, alarm);
         Helpers.putActionAlarmToIntent(intent);
         return PendingIntent.getBroadcast(context, requestCode, intent, FLAG_IMMUTABLE|FLAG_UPDATE_CURRENT);
     }
 
-    private @NonNull PendingIntent createShowAlarmDetailsIntentFor(Alarm alarm) {
-        Intent intent = new Intent(context, MainActivity.class);
+    private @NonNull PendingIntent createShowAlarmDetailsIntentFor(final @NonNull Alarm alarm) {
+        final Intent intent = new Intent(context, MainActivity.class);
         Helpers.putAlarmToIntent(intent, alarm);
         Helpers.putActionDetailsToIntent(intent);
         return PendingIntent.getActivity(context, 0, intent, FLAG_IMMUTABLE| FLAG_UPDATE_CURRENT);

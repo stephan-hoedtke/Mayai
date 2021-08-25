@@ -18,17 +18,15 @@ public class SettingsViewModel extends AndroidViewModel {
     private final MutableLiveData<String> versionLiveData = new MutableLiveData<>();
     private final MayaiRepository repository;
 
-    @SuppressWarnings("ConstantConditions")
-    public static SettingsViewModel build(Fragment fragment) {
-        return new ViewModelProvider(fragment.getActivity()).get(SettingsViewModel.class);
+    public static SettingsViewModel build(final @NonNull Fragment fragment) {
+        return new ViewModelProvider(fragment.requireActivity()).get(SettingsViewModel.class);
     }
 
-    public SettingsViewModel(@NonNull Application application) {
+    public SettingsViewModel(final @NonNull Application application) {
         super(application);
         repository = MayaiRepository.getRepository(application.getBaseContext());
         versionLiveData.setValue(BuildConfig.VERSION_NAME);
     }
-
 
     LiveData<String> getVersionLD() { return versionLiveData; }
     LiveData<Settings> getSettingsLD() { return repository.getSettingsLD(); }

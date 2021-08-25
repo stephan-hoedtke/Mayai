@@ -11,19 +11,19 @@ public class Touch {
     private final long delayInMillis;
     private long millis = 0;
 
-    public Touch(long delayInMillis) {
+    public Touch(final long delayInMillis) {
         this.delayInMillis = delayInMillis;
     }
 
     public void touch() {
-        long newValue = System.currentTimeMillis() + delayInMillis;
+        final long newValue = System.currentTimeMillis() + delayInMillis;
         synchronized (mutex) {
             millis = newValue;
         }
     }
 
     public boolean isReady() {
-        long currentTimeMillis = System.currentTimeMillis();
+        final long currentTimeMillis = System.currentTimeMillis();
         synchronized (mutex) {
             if (millis > 0 && millis < currentTimeMillis) {
                 millis = 0;

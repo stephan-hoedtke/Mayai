@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -22,14 +23,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration
+        final BottomNavigationView navView = findViewById(R.id.nav_view);
+        final AppBarConfiguration appBarConfiguration = new AppBarConfiguration
                 .Builder(
                     R.id.navigation_home,
                     R.id.navigation_alarms,
                     R.id.navigation_settings)
                 .build();
-        NavController navController = findNavController();
+        final NavController navController = findNavController();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
         viewModel = MainViewModel.build(this);
@@ -47,23 +48,30 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        Alarm alarm = Helpers.getAlarmFromIntent(intent);
+        final Alarm alarm = Helpers.getAlarmFromIntent(intent);
         if (alarm != null) {
-            String action = intent.getAction();
+            final String action = intent.getAction();
             if (Helpers.isDetails(action)) {
-                findNavController().navigate(
-                        MobileNavigationDirections.actionGlobalNavigationAlarmCountdown()
-                                .setAlarm(alarm.serialize()));
+                navigateToCountdown(alarm);
             }
-            // The actual fired alarm intent is not routed to this main activity, but to the target activity
-        }
-        else {
+            // Mind, the actual fired alarm intent is not routed to this main activity, but to the target activity
+        } else {
             if (viewModel.hasUnfinishedAlarms()) {
                 MayaiWorker.build(this).initialize();
-                findNavController().navigate(
-                        MobileNavigationDirections.actionGlobalNavigationAlarms());
+                navigateToAlarms();
             }
         }
+    }
+
+    private void navigateToCountdown(final @NonNull Alarm alarm ) {
+        findNavController().navigate(
+                MobileNavigationDirections.actionGlobalNavigationAlarmCountdown()
+                        .setAlarm(alarm.serialize()));
+    }
+
+    private void navigateToAlarms() {
+        findNavController().navigate(
+                MobileNavigationDirections.actionGlobalNavigationAlarms());
     }
 
     @Override
@@ -75,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private NavController findNavController() {
+    private @NonNull NavController findNavController() {
         return Navigation.findNavController(this, R.id.nav_host_fragment);
     }
 }

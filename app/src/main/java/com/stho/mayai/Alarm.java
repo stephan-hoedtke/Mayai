@@ -1,6 +1,7 @@
 package com.stho.mayai;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -32,7 +33,7 @@ public class Alarm {
     private final static String DEFAULT_TIME = "--:--:--";
     private final static SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
 
-    public Alarm(int type, String name, double durationInMinutes) {
+    public Alarm(final int type, final String name, final double durationInMinutes) {
         this.id = System.currentTimeMillis();
         this.type = type;
         this.name = name;
@@ -41,19 +42,19 @@ public class Alarm {
         this.status = STATUS_NONE;
     }
 
-    public Alarm reschedule(double durationInMinutes) {
+    public Alarm reschedule(final double durationInMinutes) {
         durationInMillis = (long) (durationInMinutes * 60000);
         triggerTime = Alarm.createCalendar(Alarm.getCurrentTimeInMillis() + durationInMillis);
         status = STATUS_NONE;
         return this;
     }
 
-    public Alarm setStatus(int status) {
+    public Alarm setStatus(final int status) {
         this.status = status;
         return this;
     }
 
-    private Alarm(long id, int type, String name, long durationInMillis, long endTimeInMillis, int status) {
+    private Alarm(final long id, final int type, final String name, final long durationInMillis, final long endTimeInMillis, final int status) {
         this.id = id;
         this.type = type;
         this.name = name;
@@ -90,11 +91,13 @@ public class Alarm {
 
     public boolean isClock() { return type == TYPE_CLOCK; }
 
-    public void setHot(boolean isHot) {
+    public void setHot(final boolean isHot) {
         this.isHot = isHot;
     }
 
-    public String getStatusName() {
+    // TODO: replace strings with resources
+
+    public @NonNull String getStatusName() {
         switch (status) {
             case STATUS_FINISHED:
                 return "Finished";
@@ -110,15 +113,15 @@ public class Alarm {
         }
     }
 
-    public String getNotificationTitle() {
+    public @NonNull String getNotificationTitle() {
         return name;
     }
 
-    public String getNotificationText() {
+    public @NonNull String getNotificationText() {
         return "Ready: " + getDurationAsString();
     }
 
-    public Calendar getTriggerTime() { return triggerTime; }
+    public @NonNull Calendar getTriggerTime() { return triggerTime; }
 
     public long getTriggerTimeInMillis() {
         return triggerTime.getTimeInMillis();
@@ -126,17 +129,17 @@ public class Alarm {
 
     public int getDurationInSeconds() { return Alarm.toSeconds(durationInMillis); }
 
-    public String getTriggerTimeAsString() {
+    public @NonNull String getTriggerTimeAsString() {
         return Alarm.toTimeString(triggerTime);
     }
 
-    public String getDurationAsString() { return Helpers.getSecondsAsString(getDurationInSeconds()); }
+    public @NonNull String getDurationAsString() { return Helpers.getSecondsAsString(getDurationInSeconds()); }
 
     public int getIconId() {
         return getIconId(getType());
     }
 
-    public static int getIconId(int type) {
+    public static int getIconId(final int type) {
 
         switch (type) {
             case TYPE_EGG:
@@ -156,7 +159,7 @@ public class Alarm {
         }
     }
 
-    public static int getTypeStringId(int type) {
+    public static int getTypeStringId(final int type) {
         switch (type) {
             case TYPE_EGG:
                 return R.string.title_egg;
@@ -206,7 +209,7 @@ public class Alarm {
         return millis > 0 ? Alarm.toSeconds(millis) : 0;
     }
 
-    public static Calendar createCalendarForMinutes(double minutes) {
+    public static Calendar createCalendarForMinutes(final double minutes) {
         long millis = (long) (minutes * 60000);
         return createCalendar(Alarm.getCurrentTimeInMillis() + millis);
     }
@@ -219,21 +222,19 @@ public class Alarm {
         return GregorianCalendar.getInstance().getTimeInMillis();
     }
 
-    private static Calendar createCalendar(long timeInMillis) {
+    private static Calendar createCalendar(final long timeInMillis) {
         Calendar time = GregorianCalendar.getInstance();
         time.setTimeInMillis(timeInMillis);
         return time;
     }
 
-    private static String toTimeString(Calendar calendar) {
+    private static String toTimeString(final @Nullable Calendar calendar) {
         return (calendar == null) ? DEFAULT_TIME : timeFormat.format(calendar.getTime());
     }
 
-    private static int toSeconds(long millis) {
+    private static int toSeconds(final long millis) {
         return (int)((500 + millis) / 1000);
     }
-
-    private static final String DELIMITER = ":";
 
     @SuppressWarnings("UnnecessaryCallToStringValueOf")
     public String serialize() {
@@ -283,6 +284,8 @@ public class Alarm {
                 " until " +
                 this.getTriggerTimeAsString();
     }
+
+    private static final String DELIMITER = ":";
 }
 
 

@@ -49,15 +49,14 @@ public class SettingsFragment extends Fragment {
         binding.buttonModifyBread.setOnClickListener(view -> showEditDialog(Alarm.TYPE_BREAD, binding.minutesBread));
         binding.buttonModifyPotatoes.setOnClickListener(view -> showEditDialog(Alarm.TYPE_POTATOES, binding.minutesPotatoes));
         binding.buttonModifyClock.setOnClickListener(view -> showEditDialog(Alarm.TYPE_CLOCK, binding.minutesClock));
-        binding.headlineFrame.setVisibility(View.INVISIBLE);
-        viewModel.getVersionLD().observe(getViewLifecycleOwner(), this::updateActionBar);
-        viewModel.getSettingsLD().observe(getViewLifecycleOwner(), this::updateSettings);
         return binding.getRoot();
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        viewModel.getVersionLD().observe(getViewLifecycleOwner(), this::updateActionBar);
+        viewModel.getSettingsLD().observe(getViewLifecycleOwner(), this::updateSettings);
         animation = ViewAnimation.build(binding.headlineFrame);
     }
 
@@ -77,7 +76,7 @@ public class SettingsFragment extends Fragment {
 
     private void save() {
         try {
-            Settings settings = viewModel.getSettings();
+            final Settings settings = viewModel.getSettings();
             settings.setMinutesEgg(parseDouble(binding.minutesEgg));
             settings.setMinutesChampagne(parseDouble(binding.minutesChampagne));
             settings.setMinutesBread(parseDouble(binding.minutesBread));
@@ -93,8 +92,8 @@ public class SettingsFragment extends Fragment {
 
     @SuppressWarnings("ConstantConditions")
     private void showExceptionSnackBar(final String exception) {
-        View container = getActivity().findViewById(R.id.container);
-        Snackbar snackbar = Snackbar.make(container, exception, Snackbar.LENGTH_LONG);
+        final View container = getActivity().findViewById(R.id.container);
+        final Snackbar snackbar = Snackbar.make(container, exception, Snackbar.LENGTH_LONG);
         snackbar.setBackgroundTint(ContextCompat.getColor(getContext(), R.color.secondaryDarkColor));
         snackbar.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryTextColor));
         snackbar.show();
@@ -116,37 +115,44 @@ public class SettingsFragment extends Fragment {
 
     @SuppressWarnings("ConstantConditions")
     private void updateActionBar(String version) {
-        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        final ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Settings");
+        actionBar.setTitle(getTitleString());
         actionBar.setSubtitle(version);
         actionBar.setHomeButtonEnabled(true);
     }
 
+    private @NonNull String getTitleString() {
+        return getString(R.string.title_settings);
+    }
+
     private static double parseDouble(TextView view) {
-        String str = view.getText().toString();
-        double value = Double.parseDouble(str);
+        final String str = view.getText().toString();
+        final double value = Double.parseDouble(str);
         if (value == 0) {
             throw new IllegalArgumentException("Invalid double: " + str);
         }
         return value;
     }
 
-    @SuppressWarnings("ConstantConditions")
-    @SuppressLint("SetTextI18n")
     private void showEditDialog(final int type, final TextView view) {
-        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(requireContext());
         alertDialog.setTitle(Alarm.getTypeStringId(type));
-        @SuppressLint("InflateParams") final View customLayout = getLayoutInflater().inflate(R.layout.edit_number_dialog, null);
+
+        final View customLayout = getLayoutInflater().inflate(R.layout.edit_number_dialog, null);
         alertDialog.setView(customLayout);
+
         final EditText input = customLayout.findViewById(R.id.editView);
         input.setText(view.getText());
         input.requestFocus();
+
+        final String labelOk = getString(R.string.label_ok);
+        final String labelCancel = getString(R.string.label_cancel);
         alertDialog.setIcon(Alarm.getIconId(type));
-        alertDialog.setPositiveButton("OK", (dialogInterface, i) -> {
+        alertDialog.setPositiveButton(labelOk, (dialogInterface, i) -> {
             try {
-                String str = input.getText().toString();
-                double value = Double.parseDouble(str);
+                final String str = input.getText().toString();
+                final double value = Double.parseDouble(str);
                 if (value > 0) {
                     view.setText(str);
                     dialogInterface.cancel();
@@ -156,7 +162,8 @@ public class SettingsFragment extends Fragment {
                 // ignore, but don't close.
             }
         });
-        alertDialog.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
+        alertDialog.setNegativeButton(labelCancel, (dialog, which) -> dialog.cancel());
         alertDialog.show();
     }
 }
+

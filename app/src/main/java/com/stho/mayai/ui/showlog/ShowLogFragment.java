@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.stho.mayai.R;
 import com.stho.mayai.databinding.FragmentShowLogBinding;
 
 import org.jetbrains.annotations.NotNull;
@@ -28,27 +29,34 @@ public class ShowLogFragment extends Fragment {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    @SuppressWarnings("ConstantConditions")
     @Override
     public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentShowLogBinding.inflate(inflater,container, false);
         binding.list.setLayoutManager(new LinearLayoutManager(getContext()));
-        binding.list.setAdapter(new ShowLogRecyclerViewAdapter(viewModel.getLog()));
+
+        final ShowLogRecyclerViewAdapter adapter = new ShowLogRecyclerViewAdapter(viewModel.getLog());
+        binding.list.setAdapter(adapter);
         binding.buttonDelete.setOnClickListener(view -> {
             viewModel.clearLog();
-            binding.list.getAdapter().notifyDataSetChanged();
+            adapter.notifyDataSetChanged();
         });
+
         updateActionBar();
         return binding.getRoot();
     }
 
-    @SuppressWarnings("ConstantConditions")
     private void updateActionBar() {
-        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setTitle("Activity Log");
-        actionBar.setSubtitle(null);
-        actionBar.setHomeButtonEnabled(true);
+        final ActionBar actionBar = ((AppCompatActivity)requireActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(getTitleString());
+            actionBar.setSubtitle(null);
+            actionBar.setHomeButtonEnabled(true);
+        }
     }
 
+    private @NotNull String getTitleString() {
+        return getString(R.string.title_log);
+    }
 }
+

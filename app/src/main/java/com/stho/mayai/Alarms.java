@@ -12,14 +12,14 @@ public class Alarms implements IAlarms {
     private final HashMap<Long, Alarm> map = new HashMap<>();
     private final ArrayList<Long> keys = new ArrayList<>();
 
-    @NonNull Alarm add(@NonNull Alarm alarm) {
+    @NonNull Alarm add(final @NonNull Alarm alarm) {
         long id = alarm.getId();
         map.put(id, alarm);
         keys.add(id);
         return alarm;
     }
 
-    @Nullable Alarm getReference(@NonNull Alarm alarm) {
+    @Nullable Alarm getReference(final @NonNull Alarm alarm) {
         return map.get(alarm.getId());
     }
 
@@ -31,7 +31,7 @@ public class Alarms implements IAlarms {
         return keys.size();
     }
 
-    public Alarm get(int position) {
+    public @Nullable Alarm get(final int position) {
         if (0 <= position && position < keys.size()) {
             long id = keys.get(position);
             return map.get(id);
@@ -39,13 +39,13 @@ public class Alarms implements IAlarms {
         return null;
     }
 
-    void delete(Alarm alarm) {
+    void delete(final @NonNull Alarm alarm) {
         long id = alarm.getId();
         map.remove(id);
         keys.remove(id);
     }
 
-    void undoDelete(int position, Alarm alarm) {
+    void undoDelete(final int position, final @NonNull Alarm alarm) {
         long id = alarm.getId();
         keys.add(position, id);
         map.put(id, alarm);
@@ -66,11 +66,11 @@ public class Alarms implements IAlarms {
         return nextAlarm;
     }
 
-    public Collection<Alarm> getCollection() {
+    public @NonNull Collection<Alarm> getCollection() {
         return map.values();
     }
 
-    void addRange(Collection<Alarm> alarms) {
+    void addRange(final @NonNull Collection<Alarm> alarms) {
         for (Alarm alarm : alarms) {
             add(alarm);
         }

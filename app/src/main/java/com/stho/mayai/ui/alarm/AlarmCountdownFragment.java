@@ -1,6 +1,7 @@
 package com.stho.mayai.ui.alarm;
 
 import android.animation.Animator;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -29,10 +30,10 @@ import com.stho.mayai.databinding.FragmentAlarmCountdownBinding;
 
 public class AlarmCountdownFragment extends Fragment {
 
+    private ViewAnimation animation;
     private AlarmViewModel viewModel;
     private FragmentAlarmCountdownBinding binding;
     private final Handler handler = new Handler();
-    private ViewAnimation animation;
     private final Touch touch = new Touch(500);
     private final Touch autoDisappearRotary = new Touch(5000);
 
@@ -41,12 +42,6 @@ public class AlarmCountdownFragment extends Fragment {
         super.onCreate(savedInstanceState);
         viewModel = AlarmViewModel.build(this);
         setHasOptionsMenu(true);
-
-        // see here to set the alarm again after reboot
-        // https://developer.android.com/training/scheduling/alarms
-
-        // see here:
-        // the windows is kept active via the layout file
     }
 
     @Override
@@ -61,24 +56,25 @@ public class AlarmCountdownFragment extends Fragment {
             autoDisappearRotary.touch();
             viewModel.rotate(delta);
         });
-        binding.headlineFrame.setVisibility(View.INVISIBLE);
+        rotaryHide();
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         viewModel.getAlarmLD().observe(getViewLifecycleOwner(), this::onUpdateAlarm);
         viewModel.getStatusNameLD().observe(getViewLifecycleOwner(), this::onUpdateStatusName);
         viewModel.getRemainingSecondsLD().observe(getViewLifecycleOwner(), this::onUpdateRemainingSeconds);
         viewModel.setAlarm(Helpers.getAlarmFromFragmentArguments(this));
         viewModel.getAngleLD().observe(getViewLifecycleOwner(), this::setAngle);
-        rotaryHide();
-        return binding.getRoot();
+        animation = ViewAnimation.build(binding.headlineFrame);
     }
-
-    private static final int DELAY_MILLIS = 200;
 
     @Override
     public void onResume() {
         super.onResume();
-        update();
         prepareUpdateHandler();
-        animation = ViewAnimation.build(binding.headlineFrame);
     }
 
     private void prepareUpdateHandler() {
@@ -86,9 +82,9 @@ public class AlarmCountdownFragment extends Fragment {
             @Override
             public void run() {
                 update();
-                handler.postDelayed(this, DELAY_MILLIS);
+                handler.postDelayed(this, FAST_DELAY_MILLIS);
             }
-        }, DELAY_MILLIS);
+        }, INITIAL_DELAY_MILLIS);
     }
 
     @Override
@@ -118,8 +114,8 @@ public class AlarmCountdownFragment extends Fragment {
 
     private void scheduleAlarmWhenReady() {
         if (touch.isReady()) {
-            Alarm alarm = viewModel.getAlarm();
-            MayaiWorker.build(getContext()).scheduleAlarm(alarm);
+            final Alarm alarm = viewModel.getAlarm();
+            MayaiWorker.build(requireContext()).scheduleAlarm(alarm);
         }
     }
 
@@ -133,17 +129,7 @@ public class AlarmCountdownFragment extends Fragment {
 
     private void onUpdateAlarm(Alarm alarm) {
         if (alarm != null) {
-            binding.setAlarm(alarm);
-            binding.image.setImageResource(alarm.getIconId());
-
-            if (alarm.getType() == Alarm.TYPE_CLOCK) {
-                binding.image.setIsClock();
-                binding.image.setAlarmTime(alarm.getTriggerTime());
-            }
-            else {
-                binding.image.setIsClock(false);
-            }
-
+            binding.image.setAlarm(alarm);
             updateActionBar(alarm);
         }
     }
@@ -161,23 +147,23 @@ public class AlarmCountdownFragment extends Fragment {
     }
 
     private void cancelAlarm() {
-        Alarm alarm = viewModel.getAlarm();
-        MayaiWorker.build(getContext()).cancel(alarm);
+        final Alarm alarm = viewModel.getAlarm();
+        MayaiWorker.build(requireContext()).cancel(alarm);
         showCancelAlarmSnackBar();
         findNavController().navigateUp();
     }
 
-    @SuppressWarnings("ConstantConditions")
-    private NavController findNavController() {
-        return Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+    private @NonNull NavController findNavController() {
+        return Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
     }
 
-    @SuppressWarnings("ConstantConditions")
     private void showCancelAlarmSnackBar() {
-        View container = getActivity().findViewById(R.id.container);
-        Snackbar snackbar = Snackbar.make(container, "Alarm was canceled.", Snackbar.LENGTH_SHORT);
-        snackbar.setBackgroundTint(ContextCompat.getColor(getContext(), R.color.secondaryDarkColor));
-        snackbar.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryTextColor));
+        final View container = requireActivity().findViewById(R.id.container);
+        final Context context = requireContext();
+        final String text = getString(R.string.text_alarm_canceled);
+        Snackbar snackbar = Snackbar.make(container, text, Snackbar.LENGTH_SHORT);
+        snackbar.setBackgroundTint(ContextCompat.getColor(context, R.color.secondaryDarkColor));
+        snackbar.setTextColor(ContextCompat.getColor(context, R.color.secondaryTextColor));
         snackbar.show();
     }
 
@@ -196,13 +182,14 @@ public class AlarmCountdownFragment extends Fragment {
         }
     }
 
-    @SuppressWarnings("ConstantConditions")
     private void updateActionBar(Alarm alarm) {
-        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        actionBar.setTitle(alarm.getName());
-        actionBar.setSubtitle(alarm.getTriggerTimeAsString());
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
+        final ActionBar actionBar = ((AppCompatActivity)requireActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(alarm.getName());
+            actionBar.setSubtitle(alarm.getTriggerTimeAsString());
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+        }
     }
 
     private void rotaryHide() {
@@ -212,30 +199,32 @@ public class AlarmCountdownFragment extends Fragment {
 
     private void rotaryAppear() {
         if (!isRotaryVisible()) {
-            final long duration = 333;
             binding.rotaryFrame.setVisibility(View.VISIBLE);
-            binding.rotaryFrame.animate().alpha(1f).setDuration(duration).setListener(new AnimatorOnAnimationEndListener() {
+            binding.rotaryFrame.animate().alpha(1f).setDuration(DURATION).setListener(new AnimatorOnAnimationEndListener() {
                 @Override
                 public void onAnimationEnd(Animator animator) {
                     binding.rotaryFrame.setAlpha(1f);
                 }
             });
-            binding.image.animate().alpha(0.7f).setDuration(duration);
+            binding.image.animate().alpha(0.7f).setDuration(DURATION);
             autoDisappearRotary.touch();
         }
     }
 
     private void rotaryDisappear() {
         if (isRotaryVisible()) {
-            final long duration = 333;
-            binding.rotaryFrame.animate().alpha(0f).setDuration(duration).setListener(new AnimatorOnAnimationEndListener() {
+            binding.rotaryFrame.animate().alpha(0f).setDuration(DURATION).setListener(new AnimatorOnAnimationEndListener() {
                 @Override
                 public void onAnimationEnd(Animator animator) {
                     binding.rotaryFrame.setVisibility(View.INVISIBLE);
                 }
             });
-            binding.image.animate().alpha(1f).setDuration(duration);
+            binding.image.animate().alpha(1f).setDuration(DURATION);
         }
     }
+
+    private static final int DURATION = 333;
+    private static final int FAST_DELAY_MILLIS = 200;
+    private static final int INITIAL_DELAY_MILLIS = 100;
 }
 

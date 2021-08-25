@@ -1,6 +1,7 @@
 package com.stho.mayai;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
@@ -14,26 +15,26 @@ public class LogEntry {
     private final String message;
     private final static SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss", Locale.ENGLISH);
 
-    LogEntry(String message) {
+    LogEntry(final @NonNull String message) {
         this.time = Calendar.getInstance();
         this.message = message;
     }
 
-    private LogEntry(long millis, String message) {
+    private LogEntry(final long millis, final @NonNull String message) {
         this.time = Calendar.getInstance();
         this.time.setTimeInMillis(millis);
         this.message = message;
     }
 
-    public Calendar getTime() {
+    public @NonNull Calendar getTime() {
         return time;
     }
 
-    public String getTimeAsString() {
+    public @NonNull String getTimeAsString() {
         return formatter.format(time.getTime());
     }
 
-    public String getMessage() {
+    public @NonNull String getMessage() {
         return message;
     }
 
@@ -46,13 +47,13 @@ public class LogEntry {
     private final static String DELIMITER = ";";
 
     @SuppressWarnings("UnnecessaryCallToStringValueOf")
-    public String serialize() {
+    public @NonNull String serialize() {
         return Long.toString(this.time.getTimeInMillis())
                 + DELIMITER
                 + EncodeBase64(getMessage());
     }
 
-    public static LogEntry parseLogEntry(String value) {
+    public static @Nullable LogEntry parseLogEntry(String value) {
         try {
             if (value != null && value.length() > 0) {
                 String[] token = value.split(DELIMITER);
@@ -69,12 +70,12 @@ public class LogEntry {
         }
     }
 
-    private static String EncodeBase64(String value) {
+    private static @NonNull String EncodeBase64(String value) {
         byte[] bytes = value.getBytes(StandardCharsets.UTF_8);
         return Base64.getEncoder().encodeToString(bytes);
     }
 
-    private static String DecodeBase64(String value) {
+    private static @NonNull String DecodeBase64(String value) {
         byte[] bytes = Base64.getDecoder().decode(value);
         return new String(bytes, StandardCharsets.UTF_8);
     }

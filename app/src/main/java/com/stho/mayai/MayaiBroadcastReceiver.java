@@ -9,6 +9,7 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 public class MayaiBroadcastReceiver extends BroadcastReceiver {
@@ -19,18 +20,18 @@ public class MayaiBroadcastReceiver extends BroadcastReceiver {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final @NonNull Context context, final @NonNull Intent intent) {
         try {
-            PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
+            final PowerManager powerManager = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
 
             wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, myWakeLockTag);
             wakeLock.acquire(1000);
 
-            Alarm alarm = Helpers.getAlarmFromIntent(intent);
+            final Alarm alarm = Helpers.getAlarmFromIntent(intent);
             if (alarm != null) {
 
                 // Vibrate the mobile phone
-                Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                final Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
                 vibrator.vibrate(VibrationEffect.createOneShot(300, VibrationEffect.DEFAULT_AMPLITUDE));
 
                 // Start the notification service, which will send the heads up notification

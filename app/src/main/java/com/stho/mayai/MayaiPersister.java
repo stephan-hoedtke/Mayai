@@ -5,6 +5,9 @@ import static android.content.Context.MODE_PRIVATE;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -14,11 +17,11 @@ public class MayaiPersister {
     private final Context context;
     private final IRepository repository;
 
-    public static MayaiPersister build(Context context, IRepository repository) {
+    public static MayaiPersister build(final @NonNull Context context, final @NonNull IRepository repository) {
         return new MayaiPersister(context, repository);
     }
 
-    private MayaiPersister(Context context, IRepository repository) {
+    private MayaiPersister(final @NonNull Context context, final @NonNull IRepository repository) {
         this.context = context.getApplicationContext();
         this.repository = repository;
     }
@@ -29,26 +32,26 @@ public class MayaiPersister {
     private final static String KEY_SETTINGS = "Settings";
 
     void load() {
-        SharedPreferences preferences = getSharedPreferences();
+        final SharedPreferences preferences = getSharedPreferences();
         if (preferences != null) {
             String value;
             value = preferences.getString(KEY_ALARMS, null);
             if (value != null) {
-                Collection<Alarm> alarms = parseAlarms(value);
+                final Collection<Alarm> alarms = parseAlarms(value);
                 if (alarms != null) {
                     repository.setAlarms(filterAlarms(alarms));
                 }
             }
             value = preferences.getString(KEY_LOG, null);
             if (value != null) {
-                Collection<LogEntry> log = parseLog(value);
+                final Collection<LogEntry> log = parseLog(value);
                 if (log != null) {
                     Logger.setLog(filterLog(log));
                 }
             }
             value = preferences.getString(KEY_SETTINGS, null);
             if (value != null) {
-                Settings settings = Settings.parseSettings(value);
+                final Settings settings = Settings.parseSettings(value);
                 if (settings != null) {
                     repository.setSettings(settings);
                 }
@@ -63,10 +66,10 @@ public class MayaiPersister {
                 Logger.getLog());
     }
 
-    private void save(Alarms alarms, Settings settings, Collection<LogEntry> log) {
-        SharedPreferences preferences = getSharedPreferences();
+    private void save(final @NonNull Alarms alarms, final @NonNull Settings settings, final @NonNull Collection<LogEntry> log) {
+        final SharedPreferences preferences = getSharedPreferences();
         if (preferences != null) {
-            SharedPreferences.Editor editor = preferences.edit();
+            final SharedPreferences.Editor editor = preferences.edit();
             editor.putString(KEY_ALARMS, serializeAlarms(filterAlarms(alarms.getCollection())));
             editor.putString(KEY_LOG, serializeLog(filterLog(log)));
             editor.putString(KEY_SETTINGS, settings.serialize());
@@ -74,16 +77,16 @@ public class MayaiPersister {
         }
     }
 
-    private SharedPreferences getSharedPreferences() {
+    private @Nullable SharedPreferences getSharedPreferences() {
         return context.getSharedPreferences(KEY_MAYAI, MODE_PRIVATE);
     }
 
     private final static String COLLECTION_DELIMITER = "§";
 
-    private static String serializeAlarms(Collection<Alarm> alarms) {
-        StringBuilder sb = new StringBuilder();
+    private static @NonNull String serializeAlarms(final @NonNull Collection<Alarm> alarms) {
+        final StringBuilder sb = new StringBuilder();
         boolean first = true;
-        for (Alarm alarm : alarms) {
+        for (final Alarm alarm : alarms) {
             if (first) {
                 first = false;
             }
@@ -95,10 +98,10 @@ public class MayaiPersister {
         return sb.toString();
     }
 
-    private static String serializeLog(Collection<LogEntry> log) {
-        StringBuilder sb = new StringBuilder();
+    private static @NonNull String serializeLog(final @NonNull Collection<LogEntry> log) {
+        final StringBuilder sb = new StringBuilder();
         boolean first = true;
-        for (LogEntry entry : log) {
+        for (final LogEntry entry : log) {
             if (first) {
                 first = false;
             }
@@ -110,14 +113,14 @@ public class MayaiPersister {
         return sb.toString();
     }
 
-    private static Collection<Alarm> parseAlarms(String value) {
+    private static @Nullable Collection<Alarm> parseAlarms(final @Nullable String value) {
         try {
             if (value != null && value.length() > 0) {
-                ArrayList<Alarm> alarms = new ArrayList<>();
-                String[] token = value.split(COLLECTION_DELIMITER);
+                final ArrayList<Alarm> alarms = new ArrayList<>();
+                final String[] token = value.split(COLLECTION_DELIMITER);
                 if (token.length > 0) {
-                    for (String str : token) {
-                        Alarm alarm = Alarm.parseAlarm(str);
+                    for (final String str : token) {
+                        final Alarm alarm = Alarm.parseAlarm(str);
                         if (alarm != null) {
                             alarms.add(alarm);
                         }
@@ -132,14 +135,14 @@ public class MayaiPersister {
         }
     }
 
-    private static Collection<LogEntry> parseLog(String value) {
+    private static @Nullable Collection<LogEntry> parseLog(final @Nullable String value) {
         try {
             if (value != null && value.length() > 0) {
-                ArrayList<LogEntry> log = new ArrayList<>();
-                String[] token = value.split(COLLECTION_DELIMITER);
+                final ArrayList<LogEntry> log = new ArrayList<>();
+                final String[] token = value.split(COLLECTION_DELIMITER);
                 if (token.length > 0) {
-                    for (String str : token) {
-                        LogEntry entry = LogEntry.parseLogEntry(str);
+                    for (final String str : token) {
+                        final LogEntry entry = LogEntry.parseLogEntry(str);
                         if (entry != null) {
                             log.add(entry);
                         }
@@ -154,10 +157,10 @@ public class MayaiPersister {
         }
     }
 
-    private Collection<LogEntry> filterLog(Collection<LogEntry> log) {
-        ArrayList<LogEntry> list = new ArrayList<>();
-        Calendar now = Calendar.getInstance();
-        for (LogEntry entry : log) {
+    private @NonNull Collection<LogEntry> filterLog(final @NonNull Collection<LogEntry> log) {
+        final ArrayList<LogEntry> list = new ArrayList<>();
+        final Calendar now = Calendar.getInstance();
+        for (final LogEntry entry : log) {
             if (!isOutdated(entry.getTime(), now)) {
                 list.add(entry);
             }
@@ -165,10 +168,10 @@ public class MayaiPersister {
         return list;
     }
 
-    private Collection<Alarm> filterAlarms(Collection<Alarm> alarms) {
-        ArrayList<Alarm> list = new ArrayList<>();
-        Calendar now = Calendar.getInstance();
-        for (Alarm alarm : alarms) {
+    private @NonNull Collection<Alarm> filterAlarms(final @NonNull Collection<Alarm> alarms) {
+        final ArrayList<Alarm> list = new ArrayList<>();
+        final Calendar now = Calendar.getInstance();
+        for (final Alarm alarm : alarms) {
             if (!isOutdated(alarm, now)) {
                 list.add(alarm);
             }
@@ -176,12 +179,12 @@ public class MayaiPersister {
         return list;
     }
 
-    private static boolean isOutdated(Alarm alarm, Calendar now) {
+    private static boolean isOutdated(final @NonNull Alarm alarm, final @NonNull Calendar now) {
         return (alarm.isFinished() && isOutdated(alarm.getTriggerTime(), now));
     }
 
-    private static boolean isOutdated(Calendar triggerTime, Calendar now) {
-        long difference = now.getTimeInMillis() - triggerTime.getTimeInMillis();
+    private static boolean isOutdated(final @NonNull Calendar triggerTime, final @NonNull Calendar now) {
+        final long difference = now.getTimeInMillis() - triggerTime.getTimeInMillis();
         return (difference > TWO_MINUTES_IN_MILLIS);
     }
 

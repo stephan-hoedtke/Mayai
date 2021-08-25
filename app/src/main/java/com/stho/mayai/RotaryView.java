@@ -5,6 +5,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 
@@ -16,15 +17,15 @@ public class RotaryView extends AppCompatImageView {
 
     private OnAngleChangedListener listener;
 
-    public RotaryView(Context context) {
+    public RotaryView(final @NonNull Context context) {
         super(context);
     }
 
-    public RotaryView(Context context, @Nullable AttributeSet attrs) {
+    public RotaryView(final @NonNull Context context, final @Nullable AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public void addAngle(double delta) {
+    public void addAngle(final double delta) {
         float angle = getRotation();
         angle += delta;
         setRotation(angle);
@@ -33,7 +34,7 @@ public class RotaryView extends AppCompatImageView {
             listener.onAngleChanged(delta);
     }
 
-    public void setAngle(float angle) {
+    public void setAngle(final float angle) {
         this.setRotation(angle);
     }
 
@@ -66,8 +67,8 @@ public class RotaryView extends AppCompatImageView {
     private double previousAngle = 0;
 
     private double getAngle(float x, float y) {
-        float cx = getWidth() >> 1;
-        float cy = getHeight() >> 1;
+        final float cx = getWidth() >> 1;
+        final float cy = getHeight() >> 1;
         return Math.atan2(y - cy, x - cx) * 180 / Math.PI + 90;
     }
 

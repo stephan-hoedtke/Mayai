@@ -16,23 +16,23 @@ public class Settings {
         minutesClock = 3;
     }
 
-    public void setMinutesEgg(double value) {
+    public void setMinutesEgg(final double value) {
         minutesEgg = value;
     }
 
-    public void setMinutesChampagne(double value) {
+    public void setMinutesChampagne(final double value) {
         minutesChampagne = value;
     }
 
-    public void setMinutesBread(double value) {
+    public void setMinutesBread(final double value) {
         this.minutesBread = value;
     }
 
-    public void setMinutesPotatoes(double value) {
+    public void setMinutesPotatoes(final double value) {
         this.minutesPotatoes = value;
     }
 
-    public void setMinutesClock(double value) {
+    public void setMinutesClock(final double value) {
         this.minutesClock = value;
     }
 

@@ -27,10 +27,10 @@ import com.stho.mayai.databinding.FragmentAlarmsBinding;
 
 public class AlarmsFragment extends Fragment {
 
+    private ViewAnimation animation;
     private AlarmsViewModel viewModel;
     private FragmentAlarmsBinding binding;
     private final Handler handler = new Handler(Looper.getMainLooper());
-    private ViewAnimation animation;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,30 +39,34 @@ public class AlarmsFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
-    @SuppressWarnings("ConstantConditions")
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentAlarmsBinding.inflate(inflater, container, false);
         binding.list.setLayoutManager(new LinearLayoutManager(getContext()));
-        final AlarmsRecyclerViewAdapter adapter = new AlarmsRecyclerViewAdapter(getActivity(), viewModel.getAlarms());
+
+        final AlarmsRecyclerViewAdapter adapter = new AlarmsRecyclerViewAdapter(requireActivity(), viewModel.getAlarms());
         binding.list.setAdapter(adapter);
+
         final ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new SwipeAlarmToDelete(adapter));
         itemTouchHelper.attachToRecyclerView(binding.list);
-        final DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL);
+
+        final DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(requireContext(), LinearLayoutManager.VERTICAL);
         binding.list.addItemDecoration(dividerItemDecoration);
-        binding.headlineFrame.setVisibility(View.INVISIBLE);
-        viewModel.getAlarmsLD().observe(getViewLifecycleOwner(), this::updateAlarms);
-        viewModel.getSummaryLD().observe(getViewLifecycleOwner(), this::updateSummary);
+
         return binding.getRoot();
     }
 
-    private static final int DELAY_MILLIS = 1000;
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        viewModel.getAlarmsLD().observe(getViewLifecycleOwner(), this::updateAlarms);
+        viewModel.getSummaryLD().observe(getViewLifecycleOwner(), this::updateSummary);
+        animation = ViewAnimation.build(binding.headlineFrame);
+    }
 
     @Override
     public void onResume() {
         super.onResume();
-        update();
         prepareUpdateHandler();
-        animation = ViewAnimation.build(binding.headlineFrame);
     }
 
     private void prepareUpdateHandler() {
@@ -72,7 +76,7 @@ public class AlarmsFragment extends Fragment {
                 update();
                 handler.postDelayed(this, DELAY_MILLIS);
             }
-        }, DELAY_MILLIS);
+        }, INITIAL_DELAY_MILLIS);
     }
 
     @Override
@@ -90,11 +94,11 @@ public class AlarmsFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private void updateAlarms(Alarms alarms) {
+    private void updateAlarms(final @NonNull Alarms alarms) {
         update();
     }
 
-    private void updateSummary(Summary summary) {
+    private void updateSummary(final @NonNull Summary summary) {
         updateActionBar(summary);
     }
 
@@ -105,14 +109,26 @@ public class AlarmsFragment extends Fragment {
         binding.list.getAdapter().notifyDataSetChanged();
     }
 
-    @SuppressWarnings({"ConstantConditions"})
-    private void updateActionBar(Summary summary) {
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        int counter = summary.getPendingAlarmsCounter();
-        actionBar.setTitle(counter == 0 ? "Alarms" : ("Alarms: " + counter));
-        actionBar.setSubtitle(null);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
+    private void updateActionBar(final @NonNull Summary summary) {
+        final ActionBar actionBar = ((AppCompatActivity) requireActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            final int counter = summary.getPendingAlarmsCounter();
+            actionBar.setTitle(getTitleString(counter));
+            actionBar.setSubtitle(null);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setHomeButtonEnabled(true);
+        }
     }
+
+    private @NonNull String getTitleString(final int counter) {
+        if (counter == 0) {
+            return getString(R.string.title_alarms);
+        } else {
+            return getString(R.string.title_alarms_param, counter);
+        }
+    }
+
+    private static final int DELAY_MILLIS = 1000;
+    private static final int INITIAL_DELAY_MILLIS = 100;
 }
 

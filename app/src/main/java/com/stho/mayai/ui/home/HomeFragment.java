@@ -6,7 +6,7 @@ import static com.stho.mayai.Alarm.TYPE_CLOCK;
 import static com.stho.mayai.Alarm.TYPE_EGG;
 import static com.stho.mayai.Alarm.TYPE_POTATOES;
 
-import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -60,21 +60,21 @@ public class HomeFragment extends Fragment {
         binding.imageViewBread.setOnLongClickListener(view -> { display(); return false; });
         binding.imageViewPotatoes.setOnLongClickListener(view -> { display(); return false; });
         binding.imageViewClock.setOnLongClickListener(view -> { display(); return false; });
-        binding.imageViewClock.setIsClock();
-        binding.headlineFrame.setVisibility(View.INVISIBLE);
-        viewModel.getSummaryLD().observe(getViewLifecycleOwner(), this::updateUI);
-        updateActionBar();
         return binding.getRoot();
     }
 
-    private static final int DELAY_MILLIS = 200;
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        viewModel.getSummaryLD().observe(getViewLifecycleOwner(), this::updateUI);
+        animation = ViewAnimation.build(binding.headlineFrame);
+        updateActionBar();
+    }
 
     @Override
     public void onResume() {
         super.onResume();
-        update();
         prepareUpdateHandler();
-        animation = ViewAnimation.build(binding.headlineFrame);
     }
 
     private void prepareUpdateHandler() {
@@ -84,7 +84,7 @@ public class HomeFragment extends Fragment {
                 update();
                 handler.postDelayed(this, DELAY_MILLIS);
             }
-        }, DELAY_MILLIS);
+        }, INITIAL_DELAY_MILLIS);
     }
 
     @Override
@@ -110,18 +110,20 @@ public class HomeFragment extends Fragment {
         findNavController().navigate(HomeFragmentDirections.actionGlobalNavigationAlarms());
     }
 
-    private void startCounter(int type, double durationInMinutes) {
-        Alarm alarm = new Alarm(type, getString(Alarm.getTypeStringId(type)), durationInMinutes);
-        MayaiWorker.build(getContext()).scheduleAlarm(alarm);
-
-        findNavController().navigate(
-                HomeFragmentDirections.actionNavigationHomeToNavigationAlarmCountdown()
-                        .setAlarm(alarm.serialize()));
-
+    private void startCounter(final int type, final double durationInMinutes) {
+        final Alarm alarm = new Alarm(type, getString(Alarm.getTypeStringId(type)), durationInMinutes);
+        MayaiWorker.build(requireContext()).scheduleAlarm(alarm);
+        navigateToCountdownFragment(alarm);
         showScheduleAlarmSnackBar();
     }
 
-    private void updateUI(Summary summary) {
+    private void navigateToCountdownFragment(final @NonNull Alarm alarm) {
+        findNavController().navigate(
+                HomeFragmentDirections.actionNavigationHomeToNavigationAlarmCountdown()
+                        .setAlarm(alarm.serialize()));
+    }
+
+    private void updateUI(final @NonNull Summary summary) {
         updateUI(summary.getAlarmInfo(TYPE_EGG), binding.infoCircleEgg, binding.infoCounterEgg);
         updateUI(summary.getAlarmInfo(TYPE_CHAMPAGNE), binding.infoCircleChampagne, binding.infoCounterChampagne);
         updateUI(summary.getAlarmInfo(TYPE_BREAD), binding.infoCircleBread, binding.infoCounterBread);
@@ -135,40 +137,50 @@ public class HomeFragment extends Fragment {
         }
     }
 
-    @SuppressWarnings("ConstantConditions")
     private void showScheduleAlarmSnackBar() {
-        View container = getActivity().findViewById(R.id.container);
-        Snackbar snackbar = Snackbar.make(container, "Alarm scheduled.", Snackbar.LENGTH_LONG);
-        snackbar.setBackgroundTint(ContextCompat.getColor(getContext(), R.color.secondaryColor));
-        snackbar.setTextColor(ContextCompat.getColor(getContext(), R.color.secondaryTextColor));
+        final View container = requireActivity().findViewById(R.id.container);
+        final Context context = requireContext();
+        final String text = getString(R.string.text_alarm_scheduled);
+        final Snackbar snackbar = Snackbar.make(container, text, Snackbar.LENGTH_LONG);
+        snackbar.setBackgroundTint(ContextCompat.getColor(context, R.color.secondaryColor));
+        snackbar.setTextColor(ContextCompat.getColor(context, R.color.secondaryTextColor));
         snackbar.show();
     }
 
-    @SuppressLint("SetTextI18n")
-    private void updateUI(Summary.AlarmInfo i, ImageView infoCircle, TextView imageCounter) {
-        if (i.getCounter() > 0) {
+    private void updateUI(final @NonNull Summary.AlarmInfo info, final @NonNull ImageView infoCircle, final @NonNull TextView imageCounter) {
+        if (info.getCounter() > 0) {
             infoCircle.setVisibility(View.VISIBLE);
-            infoCircle.setImageResource(i.isHot() ? R.drawable.circle_red : R.drawable.circle_green);
+            infoCircle.setImageResource(info.isHot() ? R.drawable.circle_red : R.drawable.circle_green);
             imageCounter.setVisibility(View.VISIBLE);
-            imageCounter.setText(Integer.toString(i.getCounter()));
-        }
-        else {
+            imageCounter.setText(getCounterString(info.getCounter()));
+        } else {
             infoCircle.setVisibility(View.INVISIBLE);
             imageCounter.setVisibility(View.INVISIBLE);
         }
     }
 
-    @SuppressWarnings("ConstantConditions")
     private void updateActionBar() {
-        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        actionBar.setTitle(getActivity().getTitle());
-        actionBar.setSubtitle(null);
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setHomeButtonEnabled(false);
+        final ActionBar actionBar = ((AppCompatActivity)requireActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setTitle(getTitleString());
+            actionBar.setSubtitle(null);
+            actionBar.setDisplayHomeAsUpEnabled(false);
+            actionBar.setHomeButtonEnabled(false);
+        }
     }
 
-    @SuppressWarnings("ConstantConditions")
-    private NavController findNavController() {
-        return Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+    private @NonNull String getCounterString(final int counter) {
+        return Integer.toString(counter);
     }
+
+    private @NonNull String getTitleString() {
+        return getString(R.string.title_mayai);
+    }
+
+    private @NonNull NavController findNavController() {
+        return Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
+    }
+
+    private static final int DELAY_MILLIS = 500;
+    private static final int INITIAL_DELAY_MILLIS = 100;
 }

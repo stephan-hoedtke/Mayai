@@ -1,6 +1,7 @@
 package com.stho.mayai;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.Calendar;
 import java.util.Collection;
@@ -35,7 +36,7 @@ public class Summary {
 
     final private HashMap<Integer, AlarmInfo> map = new HashMap<>();
 
-    public @NonNull AlarmInfo getAlarmInfo(int type) {
+    public @NonNull AlarmInfo getAlarmInfo(final int type) {
         AlarmInfo info = map.get(type);
         if (info == null) {
             info = new AlarmInfo();
@@ -52,18 +53,18 @@ public class Summary {
         return counter > 0;
     }
 
-    public Calendar getTriggerTime() {
+    public @Nullable Calendar getTriggerTime() {
         return triggerTime;
     }
 
-    public void update(Collection<Alarm> alarms) {
+    public void update(final @NonNull Collection<Alarm> alarms) {
         triggerTime = null;
         counter = 0;
         map.clear();
         final Calendar soon = Alarm.createCalendarForMinutes(1.0);
-        for (Alarm alarm : alarms) {
+        for (final Alarm alarm : alarms) {
             if (alarm.isPending()) {
-                AlarmInfo info = getAlarmInfo(alarm.getType());
+                final AlarmInfo info = getAlarmInfo(alarm.getType());
                 info.counter++;
                 counter++;
                 if (alarm.getTriggerTime().before(soon)) {

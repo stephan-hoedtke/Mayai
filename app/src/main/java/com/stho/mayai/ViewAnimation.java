@@ -5,11 +5,13 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
+import androidx.annotation.NonNull;
+
 public class ViewAnimation {
     private final View view;
     private final Handler handler = new Handler();
 
-    public static ViewAnimation build(View view) {
+    public static ViewAnimation build(final @NonNull View view) {
         return new ViewAnimation(view);
     }
 
@@ -26,7 +28,7 @@ public class ViewAnimation {
         handler.removeCallbacksAndMessages(null);
     }
 
-    private ViewAnimation(View view) {
+    private ViewAnimation(final @NonNull View view) {
         this.view = view;
         this.view.setVisibility(View.INVISIBLE);
         this.view.setAlpha(0f);
@@ -34,7 +36,7 @@ public class ViewAnimation {
 
     private void fadeIn() {
         final Animation animation = AnimationUtils.loadAnimation(view.getContext(), R.anim.fade_in);
-        this.view.setAlpha(1f);
+        view.setAlpha(1f);
         view.setVisibility(View.VISIBLE);
         view.startAnimation(animation);
         handler.postDelayed(this::fadeOut, 7000);

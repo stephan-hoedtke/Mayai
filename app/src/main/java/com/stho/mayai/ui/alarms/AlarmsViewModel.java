@@ -19,12 +19,11 @@ public class AlarmsViewModel extends AndroidViewModel {
     private final MayaiRepository repository;
     private final MutableLiveData<Summary> summaryLiveData = new MutableLiveData<>();
 
-    @SuppressWarnings("ConstantConditions")
-    public static AlarmsViewModel build(Fragment fragment) {
-        return new ViewModelProvider(fragment.getActivity()).get(AlarmsViewModel.class);
+    public static AlarmsViewModel build(final @NonNull Fragment fragment) {
+        return new ViewModelProvider(fragment.requireActivity()).get(AlarmsViewModel.class);
     }
 
-    public AlarmsViewModel(@NonNull Application application) {
+    public AlarmsViewModel(final @NonNull Application application) {
         super(application);
         repository = MayaiRepository.getRepository(application.getBaseContext());
         summaryLiveData.setValue(new Summary());
@@ -36,12 +35,12 @@ public class AlarmsViewModel extends AndroidViewModel {
     IAlarms getAlarms() {
         return repository.getAlarms();
     }
-    Summary getSummary() { return summaryLiveData.getValue(); }
 
-    @SuppressWarnings("ConstantConditions")
     void updateSummary() {
-        Summary summary = summaryLiveData.getValue();
-        summary.update(repository.getAlarms().getCollection());
-        summaryLiveData.postValue(summary);
+        final Summary summary = summaryLiveData.getValue();
+        if (summary != null) {
+            summary.update(repository.getAlarms().getCollection());
+            summaryLiveData.postValue(summary);
+        }
     }
 }

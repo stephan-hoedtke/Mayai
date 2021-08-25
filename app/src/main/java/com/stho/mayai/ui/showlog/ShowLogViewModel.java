@@ -14,9 +14,8 @@ import java.util.ArrayList;
 
 public class ShowLogViewModel extends AndroidViewModel {
 
-    @SuppressWarnings("ConstantConditions")
-    public static ShowLogViewModel build(Fragment fragment) {
-        return new ViewModelProvider(fragment.getActivity()).get(ShowLogViewModel.class);
+    public static ShowLogViewModel build(final @NonNull Fragment fragment) {
+        return new ViewModelProvider(fragment.requireActivity()).get(ShowLogViewModel.class);
     }
 
     public ShowLogViewModel(@NonNull Application application) {

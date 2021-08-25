@@ -15,11 +15,11 @@ public class AlarmTargetViewModel extends AndroidViewModel {
 
     private final MutableLiveData<Alarm> alarmLiveData = new MutableLiveData<>();
 
-    public static AlarmTargetViewModel build(AppCompatActivity activity) {
+    public static AlarmTargetViewModel build(final @NonNull AppCompatActivity activity) {
         return new ViewModelProvider(activity).get(AlarmTargetViewModel.class);
     }
 
-    public AlarmTargetViewModel(@NonNull Application application) {
+    public AlarmTargetViewModel(final @NonNull Application application) {
         super(application);
     }
 
@@ -27,7 +27,7 @@ public class AlarmTargetViewModel extends AndroidViewModel {
 
     public Alarm getAlarm() { return alarmLiveData.getValue(); }
 
-    public void setAlarm(Alarm alarm) {
+    public void setAlarm(final Alarm alarm) {
         alarmLiveData.setValue(alarm);
     }
 }

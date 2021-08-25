@@ -3,6 +3,7 @@ package com.stho.mayai.ui.alarm;
 import android.app.Application;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
@@ -19,23 +20,20 @@ public class AlarmViewModel extends AndroidViewModel {
     private final MutableLiveData<Alarm> alarmLiveData = new MutableLiveData<>();
     private final MutableLiveData<String> statusNameLiveData = new MutableLiveData<>();
     private final MutableLiveData<Integer> remainingSecondsLiveData = new MutableLiveData<>();
-    private final MutableLiveData<Double> secondsPerTurnLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> permanentRotaryLiveData = new MutableLiveData<>();
     private final MayaiRepository repository;
 
-    @SuppressWarnings("ConstantConditions")
-    public static AlarmViewModel build(Fragment fragment) {
+    public static AlarmViewModel build(final @NonNull Fragment fragment) {
         // This view model is shared between two fragments: CountdownFragment + CountdownModifyFragment.
         // Therefore is shall depend on the activity, not on the fragment.
-        return new ViewModelProvider(fragment.getActivity()).get(AlarmViewModel.class);
+        return new ViewModelProvider(fragment.requireActivity()).get(AlarmViewModel.class);
     }
 
-    public AlarmViewModel(@NonNull Application application) {
+    public AlarmViewModel(final @NonNull Application application) {
         super(application);
         repository = MayaiRepository.getRepository(application.getBaseContext());
         remainingSecondsLiveData.setValue(0);
         statusNameLiveData.setValue("");
-        secondsPerTurnLiveData.setValue(3600.0);
         permanentRotaryLiveData.setValue(false);
     }
 
@@ -46,37 +44,37 @@ public class AlarmViewModel extends AndroidViewModel {
 
     Alarm getAlarm() { return alarmLiveData.getValue(); }
 
-    void setAlarm(Alarm alarm) {
-        Alarm reference = repository.getAlarm(alarm);
+    void setAlarm(final @Nullable Alarm alarm) {
+        final Alarm reference = (alarm == null) ? null : repository.getAlarm(alarm);
         alarmLiveData.setValue(reference);
     }
 
-    @SuppressWarnings("ConstantConditions")
     boolean isPermanent() {
-        return permanentRotaryLiveData.getValue();
+        Boolean value = permanentRotaryLiveData.getValue();
+        return value != null && value;
     }
     void setPermanent(boolean value) {
         permanentRotaryLiveData.postValue(value);
     }
 
-    @SuppressWarnings("ConstantConditions")
     void update() {
-        Alarm alarm = alarmLiveData.getValue();
+        final Alarm alarm = alarmLiveData.getValue();
         if (alarm != null) {
-            int seconds = alarm.getRemainingSeconds();
-            if (remainingSecondsLiveData.getValue() != seconds) {
-                remainingSecondsLiveData.postValue(seconds);
+            final int newRemainingSeconds = alarm.getRemainingSeconds();
+            final Integer remainingSeconds = remainingSecondsLiveData.getValue();
+            if (remainingSeconds == null || remainingSeconds != newRemainingSeconds) {
+                remainingSecondsLiveData.postValue(newRemainingSeconds);
             }
-            if (!statusNameLiveData.getValue().equals(alarm.getStatusName())) {
-                statusNameLiveData.postValue(alarm.getStatusName());
+            final String newStatusName = alarm.getStatusName();
+            final String statusName = statusNameLiveData.getValue();
+            if (statusName == null || !statusNameLiveData.getValue().equals(newStatusName)) {
+                statusNameLiveData.postValue(newStatusName);
             }
         }
     }
 
-    @SuppressWarnings("ConstantConditions")
-    private float getAngle(int seconds) {
-        double secondsPerTurn = secondsPerTurnLiveData.getValue();
-        double angle = 360 * seconds / secondsPerTurn;
+    private float getAngle(final int seconds) {
+        double angle = seconds / SECONDS_PER_DEGREE;
 
         while (angle > 360)
             angle -= 360;
@@ -87,12 +85,10 @@ public class AlarmViewModel extends AndroidViewModel {
         return (float)angle;
     }
 
-    @SuppressWarnings("ConstantConditions")
-    void rotate(double delta) {
-        Alarm alarm = getAlarm();
+    void rotate(final double delta) {
+        final Alarm alarm = getAlarm();
         if (alarm != null) {
-            double secondsPerTurn = secondsPerTurnLiveData.getValue();
-            double seconds = alarm.getRemainingSeconds() + ((delta / 360) * secondsPerTurn);
+            double seconds = alarm.getRemainingSeconds() + (delta * SECONDS_PER_DEGREE);
             double minutes = seconds / 60;
 
             if (minutes < 0)
@@ -106,5 +102,7 @@ public class AlarmViewModel extends AndroidViewModel {
     private void touchAlarm() {
         alarmLiveData.postValue(alarmLiveData.getValue());
     }
+
+    private final static double SECONDS_PER_DEGREE = 10f; // 1 minute = 6 degrees
 }
 

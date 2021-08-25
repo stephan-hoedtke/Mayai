@@ -18,12 +18,11 @@ public class HomeViewModel extends AndroidViewModel {
     private final MayaiRepository repository;
     private final MutableLiveData<Summary> summaryLiveData = new MutableLiveData<>();
 
-    @SuppressWarnings("ConstantConditions")
-    public static HomeViewModel build(Fragment fragment) {
-        return new ViewModelProvider(fragment.getActivity()).get(HomeViewModel.class);
+    public static HomeViewModel build(final @NonNull Fragment fragment) {
+        return new ViewModelProvider(fragment.requireActivity()).get(HomeViewModel.class);
     }
 
-    public HomeViewModel(@NonNull Application application) {
+    public HomeViewModel(final @NonNull Application application) {
         super(application);
         repository = MayaiRepository.getRepository(application.getBaseContext());
         summaryLiveData.setValue(new Summary());
@@ -34,10 +33,11 @@ public class HomeViewModel extends AndroidViewModel {
 
     LiveData<Summary> getSummaryLD() { return summaryLiveData; }
 
-    @SuppressWarnings("ConstantConditions")
     void updateSummary() {
-        Summary summary = summaryLiveData.getValue();
-        summary.update(repository.getAlarms().getCollection());
-        summaryLiveData.postValue(summary);
+        final Summary summary = summaryLiveData.getValue();
+        if (summary != null) {
+            summary.update(repository.getAlarms().getCollection());
+            summaryLiveData.postValue(summary);
+        }
     }
 }

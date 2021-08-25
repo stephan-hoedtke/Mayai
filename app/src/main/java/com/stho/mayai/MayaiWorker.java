@@ -12,6 +12,8 @@ import static com.stho.mayai.Alarm.STATUS_NONE;
 import static com.stho.mayai.Alarm.STATUS_PENDING;
 import static com.stho.mayai.Alarm.STATUS_SCHEDULED;
 
+import androidx.annotation.NonNull;
+
 @SuppressWarnings("WeakerAccess")
 public class MayaiWorker {
 
@@ -19,13 +21,13 @@ public class MayaiWorker {
     private final MayaiRepository repository;
     private final MayaiAlarmManager alarmManager;
 
-    private MayaiWorker(Context context) {
+    private MayaiWorker(final @NonNull Context context) {
         this.context = context.getApplicationContext();
         this.repository = MayaiRepository.getRepository(context);
         this.alarmManager = MayaiAlarmManager.build(context);
     }
 
-    public static MayaiWorker build(Context context) {
+    public static MayaiWorker build(final @NonNull Context context) {
         return new MayaiWorker(context);
     }
 
@@ -42,7 +44,7 @@ public class MayaiWorker {
         scheduleNextPendingAlarm();
     }
 
-    public void open(Alarm alarm) {
+    public void open(final @NonNull Alarm alarm) {
         try {
             Intent intent = new Intent(context, MainActivity.class);
             Helpers.putAlarmToIntent(intent, alarm);
@@ -55,7 +57,7 @@ public class MayaiWorker {
         }
     }
 
-    public void snooze(Alarm alarm) {
+    public void snooze(final @NonNull Alarm alarm) {
         try {
             Logger.log("Snooze alarm " + alarm.getName());
             cancelNotification();
@@ -67,7 +69,7 @@ public class MayaiWorker {
         }
     }
 
-    public void reschedule(Alarm alarm, double minutes, boolean scheduleNextPendingAlarm) {
+    public void reschedule(final @NonNull Alarm alarm, final double minutes, final boolean scheduleNextPendingAlarm) {
         try {
             repository.getAlarm(alarm).reschedule(minutes).setStatus(STATUS_PENDING);
             if (scheduleNextPendingAlarm) {
@@ -79,12 +81,12 @@ public class MayaiWorker {
         }
     }
 
-    public void cancel(Alarm alarm) {
+    public void cancel(final @NonNull Alarm alarm) {
         try {
             Logger.log("Cancel alarm " + alarm.getName());
             cancelNotification();
-            alarm = repository.getAlarm(alarm).setStatus(STATUS_FINISHED);
-            alarmManager.cancelAlarm(alarm);
+            final Alarm reference = repository.getAlarm(alarm).setStatus(STATUS_FINISHED);
+            alarmManager.cancelAlarm(reference);
             scheduleNextPendingAlarm();
             repository.save(context);
         } catch (Exception ex) {
@@ -92,7 +94,7 @@ public class MayaiWorker {
         }
     }
 
-    public void scheduleAlarm(Alarm alarm) {
+    public void scheduleAlarm(final @NonNull Alarm alarm) {
         try {
             repository.getAlarm(alarm).setStatus(STATUS_PENDING);
             scheduleNextPendingAlarm();
@@ -102,16 +104,16 @@ public class MayaiWorker {
         }
     }
 
-    public void delete(Alarm alarm) {
+    public void delete(final @NonNull Alarm alarm) {
         try {
-            alarm = repository.getAlarm(alarm);
-            switch (alarm.getStatus()) {
+            final Alarm reference = repository.getAlarm(alarm);
+            switch (reference.getStatus()) {
                 case STATUS_SCHEDULED:
                 case STATUS_PENDING:
-                    alarmManager.cancelAlarm(alarm);
+                    alarmManager.cancelAlarm(reference);
                     break;
             }
-            repository.getAlarms().delete(alarm);
+            repository.getAlarms().delete(reference);
             scheduleNextPendingAlarm();
             repository.save(context);
         } catch (Exception ex) {
@@ -119,7 +121,7 @@ public class MayaiWorker {
         }
     }
 
-    public void undoDelete(int position, Alarm alarm) {
+    public void undoDelete(final int position, final @NonNull Alarm alarm) {
         try {
             if (alarm.getRemainingSeconds() > 0) {
                 alarm.setStatus(STATUS_PENDING);
@@ -136,8 +138,8 @@ public class MayaiWorker {
         try {
             cancelNotification();
             alarmManager.cancelAlarm(Alarm.REQUEST_CODE);
-            Alarms alarms = repository.getAlarms();
-            for (Alarm alarm : alarms.getCollection()) {
+            final Alarms alarms = repository.getAlarms();
+            for (final Alarm alarm : alarms.getCollection()) {
                 if (alarm.isPending()) {
                     alarm.setStatus(STATUS_NONE);
                 }
@@ -155,13 +157,13 @@ public class MayaiWorker {
 
     private void scheduleNextPendingAlarm() {
         long id = -1;
-        Alarm nextAlarm = repository.getAlarms().getNextPendingAlarm();
+        final Alarm nextAlarm = repository.getAlarms().getNextPendingAlarm();
         if (nextAlarm != null) {
             nextAlarm.setStatus(STATUS_SCHEDULED);
             alarmManager.scheduleAlarm(nextAlarm);
             id = nextAlarm.getId();
         }
-        for (Alarm alarm : repository.getAlarms().getCollection()) {
+        for (final Alarm alarm : repository.getAlarms().getCollection()) {
             if (alarm.isPending()) {
                 if (alarm.getId() != id) {
                     alarm.setStatus(STATUS_PENDING);
