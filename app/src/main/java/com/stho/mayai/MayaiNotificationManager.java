@@ -95,7 +95,7 @@ public class MayaiNotificationManager {
         final Intent action = new Intent(context, MayaiActionReceiver.class);
         Helpers.putActionSnoozeToIntent(action);
         Helpers.putAlarmToIntent(action, alarm);
-        final PendingIntent pendingIntent = PendingIntent.getBroadcast(context, MY_REQUEST_CODE_SNOOZE, action, FLAG_UPDATE_CURRENT);
+        final PendingIntent pendingIntent = PendingIntent.getBroadcast(context, MY_REQUEST_CODE_SNOOZE, action, FLAG_IMMUTABLE|FLAG_UPDATE_CURRENT);
         return new NotificationCompat.Action.Builder(alarm.getIconId(), "Snooze", pendingIntent).build();
     }
 
@@ -103,7 +103,7 @@ public class MayaiNotificationManager {
         final Intent action = new Intent(context, MayaiActionReceiver.class);
         Helpers.putActionCancelToIntent(action);
         Helpers.putAlarmToIntent(action, alarm);
-        final PendingIntent pendingIntent = PendingIntent.getBroadcast(context, MY_REQUEST_CODE_CANCEL, action, FLAG_UPDATE_CURRENT);
+        final PendingIntent pendingIntent = PendingIntent.getBroadcast(context, MY_REQUEST_CODE_CANCEL, action, FLAG_IMMUTABLE|FLAG_UPDATE_CURRENT);
         return new NotificationCompat.Action.Builder(alarm.getIconId(), "Cancel", pendingIntent).build();
     }
 

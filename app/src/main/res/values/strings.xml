@@ -3,6 +3,7 @@
     <string name="title_mayai">Mayai</string>
     <string name="title_home">New</string>
     <string name="title_settings">Settings</string>
+    <string name="title_settings_params">Settings: %s</string>
     <string name="title_alarms">Alarms</string>
     <string name="title_alarms_param">Alarms: %d</string>
     <string name="title_egg">EGG</string>
@@ -10,15 +11,16 @@
     <string name="title_bread">BREAD</string>
     <string name="title_potatoes">POTATOES</string>
     <string name="title_clock">CLOCK</string>
+    <string name="title_debug">Trouble Shooting</string>
     <string name="title_log">Activity Log</string>
     <string name="label_stop_alarm">Stop alarm</string>
     <string name="label_start_alarm">Start alarm</string>
-    <string name="label_save">Save</string>
     <string name="label_headline_home">Tap short to start a new alarm,\n tap long to see all alarms</string>
     <string name="label_headline_countdown">Tap image to modify the alarm, \n tap the bell to cancel it</string>
     <string name="label_headline_settings">Specify default alarm duration\n in minutes</string>
     <string name="label_headline_debug">Open system notification settings,\n open next scheduled alarm,\n tap the bell to cancel it,\n display the log</string>
     <string name="label_headline_alarms">Swipe to delete alarm,\n tap long or double tap to edit it</string>
+    <string name="label_headline_settings_details">Swipe and rotate the scale\n to specify the default alarm time</string>
     <string name="label_image">image</string>
     <string name="label_channel_settings">Open Channel Settings</string>
     <string name="label_open_alarm">Open Alarm</string>
@@ -36,9 +38,9 @@
     <string name="label_set_alarm_for_bread">Set alarm for bread</string>
     <string name="label_set_alarm">Set alarm</string>
     <string name="label_modify_default_alarm_time">Modify default alarm time</string>
-    <string name="label_ok">OK</string>
-    <string name="label_cancel">Cancel</string>
+    <string name="label_reset_default_settings">Reset default durations</string>
     <string name="label_undo">Undo</string>
+    <string name="label_version_params">Version: %s</string>
     <string name="text_alarm_canceled">Alarm was canceled.</string>
     <string name="text_alarm_scheduled">Alarm scheduled.</string>
     <string name="text_alarm_deleted">Alarm was deleted</string>
@@ -46,4 +48,5 @@
     <string name="default_log_entry">log entry test sample</string>
     <string name="default_status">Pending…</string>
     <string name="default_time">06:14</string>
+    <string name="default_version">1.2.3</string>
 </resources>

@@ -31,9 +31,9 @@ public class SettingsViewModel extends AndroidViewModel {
     LiveData<String> getVersionLD() { return versionLiveData; }
     LiveData<Settings> getSettingsLD() { return repository.getSettingsLD(); }
 
-    Settings getSettings() { return repository.getSettings(); }
-
-    void save() {
+    void reset() {
+        repository.getSettings().reset();
         repository.save(getApplication().getApplicationContext());
+        repository.touch();
     }
 }

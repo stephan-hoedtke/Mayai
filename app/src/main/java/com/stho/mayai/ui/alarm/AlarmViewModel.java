@@ -12,6 +12,7 @@ import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.stho.mayai.Alarm;
+import com.stho.mayai.Helpers;
 import com.stho.mayai.MayaiRepository;
 import com.stho.mayai.MayaiWorker;
 
@@ -74,14 +75,7 @@ public class AlarmViewModel extends AndroidViewModel {
     }
 
     private float getAngle(final int seconds) {
-        double angle = seconds / SECONDS_PER_DEGREE;
-
-        while (angle > 360)
-            angle -= 360;
-
-        while (angle < 0)
-            angle += 360;
-
+        double angle = Helpers.normalizeAngle360(seconds / SECONDS_PER_DEGREE);
         return (float)angle;
     }
 
@@ -89,10 +83,7 @@ public class AlarmViewModel extends AndroidViewModel {
         final Alarm alarm = getAlarm();
         if (alarm != null) {
             double seconds = alarm.getRemainingSeconds() + (delta * SECONDS_PER_DEGREE);
-            double minutes = seconds / 60;
-
-            if (minutes < 0)
-                minutes = 0;
+            double minutes = Helpers.toMinutes(seconds);
 
             MayaiWorker.build(getApplication()).reschedule(alarm, minutes, false);
             touchAlarm();

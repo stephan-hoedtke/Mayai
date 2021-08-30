@@ -1,0 +1,5 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/reset_dark" android:state_enabled="true" android:state_pressed="true" />
+    <item android:drawable="@drawable/reset_gray" android:state_enabled="false" />
+    <item android:drawable="@drawable/reset" android:state_enabled="true" />
+</selector>

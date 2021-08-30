@@ -16,6 +16,14 @@ public class Settings {
         minutesClock = 3;
     }
 
+    public void reset() {
+        minutesEgg = 7.2;
+        minutesChampagne = 26;
+        minutesBread = 10.5;
+        minutesPotatoes = 22;
+        minutesClock = 3;
+    }
+
     public void setMinutesEgg(final double value) {
         minutesEgg = value;
     }
@@ -55,6 +63,56 @@ public class Settings {
     public double getMinutesClock() {
         return minutesClock;
     }
+
+    public double getMinutes(int type) {
+        switch (type) {
+            case Alarm.TYPE_EGG:
+                return minutesEgg;
+
+            case Alarm.TYPE_CHAMPAGNE:
+                return minutesChampagne;
+
+            case Alarm.TYPE_BREAD:
+                return minutesBread;
+
+            case Alarm.TYPE_POTATOES:
+                return minutesPotatoes;
+
+            case Alarm.TYPE_CLOCK:
+                return minutesClock;
+
+            default:
+                throw new IllegalArgumentException("Invalid alarm type");
+        }
+    }
+
+    public void setMinutes(int type, double minutes) {
+        switch (type) {
+            case Alarm.TYPE_EGG:
+                minutesEgg = minutes;
+                break;
+
+            case Alarm.TYPE_CHAMPAGNE:
+                minutesChampagne = minutes;
+                break;
+
+            case Alarm.TYPE_BREAD:
+                minutesBread = minutes;
+                break;
+
+            case Alarm.TYPE_POTATOES:
+                minutesPotatoes = minutes;
+                break;
+
+            case Alarm.TYPE_CLOCK:
+                minutesClock = minutes;
+                break;
+
+            default:
+                throw new IllegalArgumentException("Invalid alarm type");
+        }
+    }
+
 
     private static final String DELIMITER = ":";
 

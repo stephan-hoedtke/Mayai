@@ -24,6 +24,12 @@ public class ViewAnimation {
         }
     }
 
+    public void hide() {
+        if (view.getVisibility() == View.VISIBLE) {
+            fadeOut();
+        }
+    }
+
     public void removeCallbacks() {
         handler.removeCallbacksAndMessages(null);
     }

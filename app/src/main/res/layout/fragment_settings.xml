@@ -67,7 +67,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="226dp" />
+                app:layout_constraintGuide_percent="0.25" />
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/vertical_inner_guideline4"
@@ -102,7 +102,7 @@
 
             <TextView
                 android:id="@+id/minutesEgg"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="@id/imageEgg"
                 app:layout_constraintBottom_toBottomOf="@id/imageEgg"
@@ -137,7 +137,7 @@
 
             <TextView
                 android:id="@+id/minutesChampagne"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="@id/imageChampagne"
                 app:layout_constraintBottom_toBottomOf="@id/imageChampagne"
@@ -172,7 +172,7 @@
 
             <TextView
                 android:id="@+id/minutesBread"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="@id/imageBread"
                 app:layout_constraintBottom_toBottomOf="@id/imageBread"
@@ -209,7 +209,7 @@
 
             <TextView
                 android:id="@+id/minutesPotatoes"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="@id/imageViewPotatoes"
                 app:layout_constraintBottom_toBottomOf="@id/imageViewPotatoes"
@@ -246,7 +246,7 @@
 
             <TextView
                 android:id="@+id/minutesClock"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="@id/imageViewClock"
                 app:layout_constraintBottom_toBottomOf="@id/imageViewClock"
@@ -280,19 +280,19 @@
             android:src="@drawable/debug_pressable"
             app:layout_constraintStart_toStartOf="@id/vertical_guideline3"
             app:layout_constraintEnd_toEndOf="@id/vertical_guideline4"
-            app:layout_constraintBottom_toTopOf="@id/buttonSave"
+            app:layout_constraintBottom_toTopOf="@id/buttonReset"
             android:contentDescription="@string/label_headline_debug"
             android:clickable="true"
             android:focusable="true"
             android:background="?android:attr/selectableItemBackgroundBorderless" />
 
         <Button
-            android:id="@+id/buttonSave"
+            android:id="@+id/buttonReset"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             android:textColor="@color/primaryTextColor"
-            android:text="@string/label_save"
+            android:text="@string/label_reset_default_settings"
             android:layout_margin="5dp" />
 
         <FrameLayout

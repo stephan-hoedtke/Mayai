@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +34,7 @@ public class AlarmCountdownFragment extends Fragment {
     private ViewAnimation animation;
     private AlarmViewModel viewModel;
     private FragmentAlarmCountdownBinding binding;
-    private final Handler handler = new Handler();
+    private final Handler handler = new Handler(Looper.getMainLooper());
     private final Touch touch = new Touch(500);
     private final Touch autoDisappearRotary = new Touch(5000);
 
@@ -49,6 +50,7 @@ public class AlarmCountdownFragment extends Fragment {
         binding = FragmentAlarmCountdownBinding.inflate(inflater, container, false);
         binding.image.setOnClickListener(view -> edit());
         binding.textViewRemainingTime.setOnClickListener(view -> edit());
+        binding.headlineFrame.setOnClickListener(view -> animation.hide());
         binding.buttonStopPlaying.setOnClickListener(view -> cancelAlarm());
         binding.buttonShowRotary.setOnClickListener(view -> onShowRotary());
         binding.rotary.setOnAngleChangedListener(delta -> {

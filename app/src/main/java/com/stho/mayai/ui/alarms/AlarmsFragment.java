@@ -24,6 +24,8 @@ import com.stho.mayai.Summary;
 import com.stho.mayai.ViewAnimation;
 import com.stho.mayai.databinding.FragmentAlarmsBinding;
 
+import java.util.Objects;
+
 
 public class AlarmsFragment extends Fragment {
 
@@ -42,6 +44,7 @@ public class AlarmsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentAlarmsBinding.inflate(inflater, container, false);
         binding.list.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.headlineFrame.setOnClickListener(view -> animation.hide());
 
         final AlarmsRecyclerViewAdapter adapter = new AlarmsRecyclerViewAdapter(requireActivity(), viewModel.getAlarms());
         binding.list.setAdapter(adapter);
@@ -103,10 +106,9 @@ public class AlarmsFragment extends Fragment {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    @SuppressWarnings("ConstantConditions")
     private void update() {
         viewModel.updateSummary();
-        binding.list.getAdapter().notifyDataSetChanged();
+        Objects.requireNonNull(binding.list.getAdapter()).notifyDataSetChanged();
     }
 
     private void updateActionBar(final @NonNull Summary summary) {

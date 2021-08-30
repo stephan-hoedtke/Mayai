@@ -56,7 +56,7 @@ public class RotaryView extends AppCompatImageView {
 
             case MotionEvent.ACTION_MOVE:
                 final double alpha = getRotation() + getAngle(event.getX(), event.getY());
-                final double delta = ensureAngleRange(alpha - previousAngle);
+                final double delta = ensureAngleRange180(alpha - previousAngle);
                 previousAngle = alpha;
                 addAngle(delta);
                 break;
@@ -72,7 +72,7 @@ public class RotaryView extends AppCompatImageView {
         return Math.atan2(y - cy, x - cx) * 180 / Math.PI + 90;
     }
 
-    private static double ensureAngleRange(double delta) {
+    private static double ensureAngleRange180(double delta) {
         while (delta > 180) {
             delta -= 360;
         }

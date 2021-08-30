@@ -17,6 +17,7 @@ public class Helpers {
     private static final String ACTION_DETAILS = "Details";
     private static final String ACTION_ALARM = "Alarm";
     private static final String KEY_ALARM = "Alarm"; // Mind the spelling, it must match exactly the parameter name in Navigation
+    private static final String KEY_TYPE = "Type"; // Mind the spelling, ...
 
     public static boolean isSnooze(final @Nullable String action) {
         return ACTION_SNOOZE.equalsIgnoreCase(action);
@@ -63,12 +64,58 @@ public class Helpers {
         return null;
     }
 
+    public static int getTypeFromFragmentArguments(final @NonNull Fragment fragment) {
+        final Bundle bundle = fragment.getArguments();
+        if (bundle != null) {
+            return bundle.getInt(KEY_TYPE, Alarm.TYPE_EGG);
+        }
+        return Alarm.TYPE_EGG;
+    }
+
     public static @NonNull String getSecondsAsString(final int seconds) {
         final int hours = seconds / 3600;
         final int seconds2 = seconds - hours * 3600;
         final int minutes = seconds2 / 60;
         final int seconds3 = seconds2 - minutes * 60;
         return getSecondsAsString(hours, minutes, seconds3);
+    }
+
+    public static @NonNull String getMinutesAsString(final double minutes) {
+        return getSecondsAsString(toSeconds(minutes));
+    }
+
+    public static int toSeconds(double minutes) {
+        if (minutes > 0f) {
+            return (int) (minutes * 60f);
+        } else {
+            return 0;
+        }
+    }
+
+    public static double toMinutes(int seconds) {
+        if (seconds > 0) {
+            return seconds / 60f;
+        } else {
+            return 0f;
+        }
+    }
+
+    public static double toMinutes(double seconds) {
+        if (seconds > 0f) {
+            return seconds / 60f;
+        } else {
+            return 0f;
+        }
+    }
+
+    public static double normalizeAngle360(double angle) {
+        while (angle > 360) {
+            angle -= 360;
+        }
+        while (angle < 0) {
+            angle += 360;
+        }
+        return angle;
     }
 
     private static @NonNull String getSecondsAsString(final int hours, final int minutes, final int seconds) {

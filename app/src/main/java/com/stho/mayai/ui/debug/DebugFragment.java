@@ -45,15 +45,17 @@ public class DebugFragment extends Fragment {
         binding.buttonOpenAlarm.setOnClickListener(view -> viewModel.openAlarmFromClockInfo(context));
         binding.buttonOpenChannelSettings.setOnClickListener(view -> MayaiNotificationManager.openChannelSettings(context));
         binding.buttonShowLog.setOnClickListener(view -> findNavController().navigate(DebugFragmentDirections.actionNavigationDebugToNavigationShowLog()));
+        binding.headlineFrame.setOnClickListener(view -> animation.hide());
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewModel.getInfoLD().observe(getViewLifecycleOwner(), info -> binding.nextAlarm.setText(info));
-        viewModel.getVersionLD().observe(getViewLifecycleOwner(), this::updateActionBar);
+        viewModel.getInfoLD().observe(getViewLifecycleOwner(), this::onObserveInfo);
+        viewModel.getVersionLD().observe(getViewLifecycleOwner(), this::onObserveVersion);
         animation = ViewAnimation.build(binding.headlineFrame);
+        updateActionBar();
     }
 
     @Override
@@ -70,22 +72,30 @@ public class DebugFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("ConstantConditions")
     private NavController findNavController() {
-        return Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+        return Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
     }
 
-    private void updateActionBar(final @NonNull String version) {
+    private void onObserveInfo(final @NonNull String info) {
+        binding.nextAlarm.setText(info);
+    }
+
+    private void onObserveVersion(final @NonNull String version) {
+        final String versionInfo = getString(R.string.label_version_params, version);
+        binding.version.setText(versionInfo);
+    }
+
+    private void updateActionBar() {
         final ActionBar actionBar = ((AppCompatActivity)requireActivity()).getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
             actionBar.setTitle(getTitleString());
-            actionBar.setSubtitle(version);
+            actionBar.setSubtitle(null);
             actionBar.setHomeButtonEnabled(true);
         }
     }
 
     private String getTitleString() {
-        return getString(R.string.title_settings);
+        return getString(R.string.title_debug);
     }
 }

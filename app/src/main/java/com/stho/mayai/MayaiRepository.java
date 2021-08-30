@@ -6,8 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import org.jetbrains.annotations.Nullable;
-
 import java.util.Collection;
 import java.util.Objects;
 
@@ -21,8 +19,8 @@ public class MayaiRepository implements IRepository {
     /*
         List of all Alarms
      */
-    private final MutableLiveData<Alarms> alarmsLiveData = new MutableLiveData<>();
-    private final MutableLiveData<Settings> settingsLiveData = new MutableLiveData<>();
+    private final @NonNull MutableLiveData<Alarms> alarmsLiveData = new MutableLiveData<>();
+    private final @NonNull MutableLiveData<Settings> settingsLiveData = new MutableLiveData<>();
 
     private MayaiRepository(final @NonNull Context context) {
         alarmsLiveData.setValue(new Alarms());
@@ -33,7 +31,7 @@ public class MayaiRepository implements IRepository {
     /*
         Get the single instance of the repository, if it exists already, otherwise create it and load the data using the context.
      */
-    public static synchronized MayaiRepository getRepository(final @NonNull Context context) {
+    public static synchronized @NonNull MayaiRepository getRepository(final @NonNull Context context) {
         if (singleton == null) {
             singleton = new MayaiRepository(context);
         }
@@ -52,7 +50,7 @@ public class MayaiRepository implements IRepository {
         touch();
     }
 
-    private void touch() {
+    public void touch() {
         alarmsLiveData.postValue(alarmsLiveData.getValue());
         settingsLiveData.postValue(settingsLiveData.getValue());
     }
@@ -66,7 +64,7 @@ public class MayaiRepository implements IRepository {
     public Settings getSettings() {
         return Objects.requireNonNull(settingsLiveData.getValue()); }
 
-    boolean hasUnfinishedAlarms() {
+    public boolean hasUnfinishedAlarms() {
        return getAlarms().hasUnfinishedAlarms();
     }
 
@@ -77,13 +75,6 @@ public class MayaiRepository implements IRepository {
 
     public void setSettings(final @NonNull Settings settings) {
         settingsLiveData.postValue(settings);
-    }
-
-    public @Nullable Alarm getAlarmOrDefault(final @Nullable Alarm alarm) {
-        if (alarm == null) {
-            return null;
-        }
-        return getAlarm(alarm);
     }
 
     public @NonNull Alarm getAlarm(@NonNull Alarm alarm) {

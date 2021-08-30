@@ -1,10 +1,5 @@
 package com.stho.mayai.ui.home;
 
-import static com.stho.mayai.Alarm.TYPE_BREAD;
-import static com.stho.mayai.Alarm.TYPE_CHAMPAGNE;
-import static com.stho.mayai.Alarm.TYPE_CLOCK;
-import static com.stho.mayai.Alarm.TYPE_EGG;
-import static com.stho.mayai.Alarm.TYPE_POTATOES;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -50,7 +45,7 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
-        binding.imageViewEgg.setOnClickListener(view -> startCounter(TYPE_EGG,  viewModel.getSettings().getMinutesEgg()));
+        binding.imageViewEgg.setOnClickListener(view -> startCounter(Alarm.TYPE_EGG,  viewModel.getSettings().getMinutesEgg()));
         binding.imageViewChampagne.setOnClickListener(view -> startCounter(Alarm.TYPE_CHAMPAGNE, viewModel.getSettings().getMinutesChampagne()));
         binding.imageViewBread.setOnClickListener(view -> startCounter(Alarm.TYPE_BREAD, viewModel.getSettings().getMinutesBread()));
         binding.imageViewPotatoes.setOnClickListener(view -> startCounter(Alarm.TYPE_POTATOES, viewModel.getSettings().getMinutesPotatoes()));
@@ -60,6 +55,7 @@ public class HomeFragment extends Fragment {
         binding.imageViewBread.setOnLongClickListener(view -> { display(); return false; });
         binding.imageViewPotatoes.setOnLongClickListener(view -> { display(); return false; });
         binding.imageViewClock.setOnLongClickListener(view -> { display(); return false; });
+        binding.headlineFrame.setOnClickListener(view -> animation.hide());
         return binding.getRoot();
     }
 
@@ -124,11 +120,11 @@ public class HomeFragment extends Fragment {
     }
 
     private void updateUI(final @NonNull Summary summary) {
-        updateUI(summary.getAlarmInfo(TYPE_EGG), binding.infoCircleEgg, binding.infoCounterEgg);
-        updateUI(summary.getAlarmInfo(TYPE_CHAMPAGNE), binding.infoCircleChampagne, binding.infoCounterChampagne);
-        updateUI(summary.getAlarmInfo(TYPE_BREAD), binding.infoCircleBread, binding.infoCounterBread);
-        updateUI(summary.getAlarmInfo(TYPE_POTATOES), binding.infoCirclePotatoes, binding.infoCounterPotatoes);
-        updateUI(summary.getAlarmInfo(TYPE_CLOCK), binding.infoCircleClock, binding.infoCounterClock);
+        updateUI(summary.getAlarmInfo(Alarm.TYPE_EGG), binding.infoCircleEgg, binding.infoCounterEgg);
+        updateUI(summary.getAlarmInfo(Alarm.TYPE_CHAMPAGNE), binding.infoCircleChampagne, binding.infoCounterChampagne);
+        updateUI(summary.getAlarmInfo(Alarm.TYPE_BREAD), binding.infoCircleBread, binding.infoCounterBread);
+        updateUI(summary.getAlarmInfo(Alarm.TYPE_POTATOES), binding.infoCirclePotatoes, binding.infoCounterPotatoes);
+        updateUI(summary.getAlarmInfo(Alarm.TYPE_CLOCK), binding.infoCircleClock, binding.infoCounterClock);
 
         if (summary.hasAlarm()) {
             binding.imageViewClock.setAlarmTime(summary.getTriggerTime());

@@ -16,6 +16,7 @@ import com.stho.mayai.databinding.FragmentShowLogBinding;
 
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class ShowLogFragment extends Fragment {
 
     private ShowLogViewModel viewModel;

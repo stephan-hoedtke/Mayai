@@ -56,6 +56,23 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_navigation_settings_to_navigation_settings_details"
+            app:destination="@id/navigation_settings_details"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_settings_details"
+        android:name="com.stho.mayai.ui.settings.SettingsDetailsFragment"
+        tools:layout="@layout/fragment_settings_details" >
+        <argument
+            android:name="Type"
+            app:argType="integer" />
     </fragment>
 
     <fragment
