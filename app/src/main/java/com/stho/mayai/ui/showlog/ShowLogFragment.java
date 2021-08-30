@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -14,7 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.stho.mayai.R;
 import com.stho.mayai.databinding.FragmentShowLogBinding;
 
-import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class ShowLogFragment extends Fragment {
@@ -31,7 +32,7 @@ public class ShowLogFragment extends Fragment {
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
-    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(final @NonNull LayoutInflater inflater, final @Nullable ViewGroup container, final @Nullable Bundle savedInstanceState) {
         binding = FragmentShowLogBinding.inflate(inflater,container, false);
         binding.list.setLayoutManager(new LinearLayoutManager(getContext()));
 
@@ -56,7 +57,7 @@ public class ShowLogFragment extends Fragment {
         }
     }
 
-    private @NotNull String getTitleString() {
+    private @NonNull String getTitleString() {
         return getString(R.string.title_log);
     }
 }

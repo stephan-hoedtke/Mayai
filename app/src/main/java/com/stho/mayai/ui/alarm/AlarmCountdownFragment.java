@@ -39,14 +39,14 @@ public class AlarmCountdownFragment extends Fragment {
     private final Touch autoDisappearRotary = new Touch(5000);
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(final @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = AlarmViewModel.build(this);
         setHasOptionsMenu(true);
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final @NonNull LayoutInflater inflater, final @Nullable ViewGroup container, final @Nullable Bundle savedInstanceState) {
         binding = FragmentAlarmCountdownBinding.inflate(inflater, container, false);
         binding.image.setOnClickListener(view -> edit());
         binding.textViewRemainingTime.setOnClickListener(view -> edit());
@@ -63,7 +63,7 @@ public class AlarmCountdownFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel.getAlarmLD().observe(getViewLifecycleOwner(), this::onUpdateAlarm);
         viewModel.getStatusNameLD().observe(getViewLifecycleOwner(), this::onUpdateStatusName);
@@ -97,7 +97,7 @@ public class AlarmCountdownFragment extends Fragment {
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(final @NonNull MenuItem item) {
         if (item.getItemId() == R.id.menu_hint) {
             animation.toggle();
         }
@@ -129,22 +129,22 @@ public class AlarmCountdownFragment extends Fragment {
         }
     }
 
-    private void onUpdateAlarm(Alarm alarm) {
+    private void onUpdateAlarm(final @Nullable Alarm alarm) {
         if (alarm != null) {
             binding.image.setAlarm(alarm);
             updateActionBar(alarm);
         }
     }
 
-    private void onUpdateStatusName(String statusName) {
+    private void onUpdateStatusName(final @NonNull String statusName) {
         binding.textViewStatusName.setText(statusName);
     }
 
-    private void onUpdateRemainingSeconds(int remainingSeconds) {
+    private void onUpdateRemainingSeconds(final int remainingSeconds) {
         binding.textViewRemainingTime.setText(Helpers.getSecondsAsString(remainingSeconds));
     }
 
-    private void setAngle(float angle) {
+    private void setAngle(final float angle) {
         binding.rotary.setAngle(angle);
     }
 
@@ -184,7 +184,7 @@ public class AlarmCountdownFragment extends Fragment {
         }
     }
 
-    private void updateActionBar(Alarm alarm) {
+    private void updateActionBar(final @NonNull Alarm alarm) {
         final ActionBar actionBar = ((AppCompatActivity)requireActivity()).getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(alarm.getName());

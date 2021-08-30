@@ -1,8 +1,10 @@
 package com.stho.mayai;
 
-import org.jetbrains.annotations.Nullable;
+
+import androidx.annotation.Nullable;
 
 public interface IAlarms {
     int size();
-    @Nullable Alarm get(int position);
+    @Nullable
+    Alarm get(int position);
 }

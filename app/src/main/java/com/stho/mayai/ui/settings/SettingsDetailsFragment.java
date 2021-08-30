@@ -32,7 +32,7 @@ public class SettingsDetailsFragment extends Fragment {
     private final Touch touch = new Touch(500);
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    public void onCreate(final @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         int type = Helpers.getTypeFromFragmentArguments(this);
         viewModel = SettingsDetailsViewModel.build(this, type);
@@ -40,7 +40,7 @@ public class SettingsDetailsFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(final @NonNull LayoutInflater inflater, final @Nullable ViewGroup container, final @Nullable Bundle savedInstanceState) {
         binding = FragmentSettingsDetailsBinding.inflate(inflater, container, false);
         binding.rotary.setOnAngleChangedListener(delta -> viewModel.rotate(delta));
         binding.headlineFrame.setOnClickListener(view -> animation.hide());
@@ -49,7 +49,7 @@ public class SettingsDetailsFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(final @NonNull View view, final @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel.getDefaultSecondsLD().observe(getViewLifecycleOwner(), this::onObserveDefaultSeconds);
         viewModel.getAngleLD().observe(getViewLifecycleOwner(), this::onObserveAngle);
@@ -82,22 +82,22 @@ public class SettingsDetailsFragment extends Fragment {
     }
 
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+    public boolean onOptionsItemSelected(final @NonNull MenuItem item) {
         if (item.getItemId() == R.id.menu_hint) {
             animation.toggle();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void onObserveDefaultSeconds(int defaultSeconds) {
+    private void onObserveDefaultSeconds(final int defaultSeconds) {
         binding.textViewDefaultTime.setText(Helpers.getSecondsAsString(defaultSeconds));
     }
 
-    private void onObserveAngle(float angle) {
+    private void onObserveAngle(final float angle) {
         binding.rotary.setAngle(angle);
     }
 
-    private void onObserveType(int type) {
+    private void onObserveType(final int type) {
         final int imageId = Alarm.getIconId(type);
         final int stringId = Alarm.getTypeStringId(type);
         final String typeString = getString(stringId);
@@ -105,7 +105,7 @@ public class SettingsDetailsFragment extends Fragment {
         updateActionBar(typeString);
     }
 
-    private void observeIsModified(boolean isModified) {
+    private void observeIsModified(final boolean isModified) {
         binding.buttonReset.setEnabled(isModified);
     }
 

@@ -1,8 +1,7 @@
 package com.stho.mayai;
 
 import androidx.annotation.NonNull;
-
-import org.jetbrains.annotations.Nullable;
+import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -19,7 +18,8 @@ public class Alarms implements IAlarms {
         return alarm;
     }
 
-    @Nullable Alarm getReference(final @NonNull Alarm alarm) {
+    @Nullable
+    Alarm getReference(final @NonNull Alarm alarm) {
         return map.get(alarm.getId());
     }
 

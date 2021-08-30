@@ -9,11 +9,13 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -84,6 +86,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private @NonNull NavController findNavController() {
-        return Navigation.findNavController(this, R.id.nav_host_fragment);
+        // Note, when the nav_host_fragment fragment is replaced by FragmentContainerView in activity_main.xml
+        // as suggested by lint, then
+        //          Navigation.findNavController(this, R.id.nav_host_fragment);
+        // doesn't work during onCreate() of the activity.
+        // The fragment manager is still initializing.
+        // See also: https://issuetracker.google.com/issues/142847973?pli=1
+        final NavHostFragment navHostFragment = (NavHostFragment)getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        return Objects.requireNonNull(navHostFragment).getNavController();
     }
 }

@@ -20,7 +20,6 @@ import com.stho.mayai.MayaiWorker;
 import com.stho.mayai.R;
 import com.stho.mayai.databinding.FragmentAlarmsEntryBinding;
 
-import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
@@ -47,9 +46,8 @@ public class AlarmsRecyclerViewAdapter extends RecyclerView.Adapter<AlarmsRecycl
         return Objects.requireNonNull(alarms.get(position));
     }
 
-    @NotNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public @NonNull ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final Context context = parent.getContext();
         final LayoutInflater inflater = LayoutInflater.from(context);
         final FragmentAlarmsEntryBinding binding = FragmentAlarmsEntryBinding.inflate(inflater, parent, false);

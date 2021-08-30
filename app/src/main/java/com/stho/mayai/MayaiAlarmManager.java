@@ -81,6 +81,6 @@ public class MayaiAlarmManager {
         final Intent intent = new Intent(context, MainActivity.class);
         Helpers.putAlarmToIntent(intent, alarm);
         Helpers.putActionDetailsToIntent(intent);
-        return PendingIntent.getActivity(context, 0, intent, FLAG_IMMUTABLE| FLAG_UPDATE_CURRENT);
+        return PendingIntent.getActivity(context, 0, intent, FLAG_IMMUTABLE|FLAG_UPDATE_CURRENT);
     }
 }

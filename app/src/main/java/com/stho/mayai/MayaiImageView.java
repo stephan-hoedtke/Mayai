@@ -34,7 +34,7 @@ public class MayaiImageView extends androidx.appcompat.widget.AppCompatImageView
 
     public MayaiImageView(final @NonNull Context context, final @Nullable AttributeSet attrs) {
         super(context, attrs);
-        getLayoutAttributes(context, attrs);
+        prepareImageWhenLayoutIsClock(attrs);
     }
 
     public void setAlarm(final @NonNull Alarm alarm) {
@@ -141,7 +141,7 @@ public class MayaiImageView extends androidx.appcompat.widget.AppCompatImageView
         }
     }
 
-    private void getLayoutAttributes(final @NonNull Context context, final @Nullable AttributeSet attrs) {
+    private void prepareImageWhenLayoutIsClock(final @Nullable AttributeSet attrs) {
         if (attrs != null) {
             int resId = attrs.getAttributeResourceValue(NAMESPACE_ANDROID, SRC, -1);
             if (isClock(resId)) {

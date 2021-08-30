@@ -14,13 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.stho.mayai.R;
 
-import org.jetbrains.annotations.NotNull;
-
 /*
     See:
         https://medium.com/@zackcosborn/step-by-step-recyclerview-swipe-to-delete-and-undo-7bbae1fce27e
         https://www.androidhive.info/2017/09/android-recyclerview-swipe-delete-undo-using-itemtouchhelper/
  */
+@SuppressWarnings("SpellCheckingInspection")
 public class SwipeAlarmToDelete extends ItemTouchHelper.SimpleCallback {
 
     private final AlarmsRecyclerViewAdapter adapter;
@@ -65,7 +64,7 @@ public class SwipeAlarmToDelete extends ItemTouchHelper.SimpleCallback {
     }
 
     @Override
-    public void onChildDraw(final @NotNull Canvas c, final @NotNull RecyclerView recyclerView, final @NotNull RecyclerView.ViewHolder viewHolder, final float dX, final float dY, final int actionState, final boolean isCurrentlyActive) {
+    public void onChildDraw(final @NonNull Canvas c, final @NonNull RecyclerView recyclerView, final @NonNull RecyclerView.ViewHolder viewHolder, final float dX, final float dY, final int actionState, final boolean isCurrentlyActive) {
         final View foreground = ((AlarmsRecyclerViewAdapter.ViewHolder) viewHolder).binding.foreground;
         getDefaultUIUtil().onDraw(c, recyclerView, foreground, dX, dY, actionState, isCurrentlyActive);
     }
