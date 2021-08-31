@@ -16,11 +16,11 @@
     <string name="label_stop_alarm">Stop alarm</string>
     <string name="label_start_alarm">Start alarm</string>
     <string name="label_headline_home">Tap short to start a new alarm,\n tap long to see all alarms</string>
-    <string name="label_headline_countdown">Tap image to modify the alarm, \n tap the bell to cancel it</string>
-    <string name="label_headline_settings">Specify default alarm duration\n in minutes</string>
+    <string name="label_headline_countdown">Tap the image to modify the alarm,\n rotate the scale to set the time,\n tap the bell to cancel it</string>
+    <string name="label_headline_settings">Tap the pencil to change the default alarm duration,\n tap the reset icon to revert changes,\n tap the bug for trouble shooting</string>
+    <string name="label_headline_settings_details">Rotate the scale\n to change the default alarm duration,\n tap the reset icon to revert changes</string>
     <string name="label_headline_debug">Open system notification settings,\n open next scheduled alarm,\n tap the bell to cancel it,\n display the log</string>
-    <string name="label_headline_alarms">Swipe to delete alarm,\n tap long or double tap to edit it</string>
-    <string name="label_headline_settings_details">Swipe and rotate the scale\n to specify the default alarm time</string>
+    <string name="label_headline_alarms">Swipe to delete the alarm,\n tap long or double tap to edit it</string>
     <string name="label_image">image</string>
     <string name="label_channel_settings">Open Channel Settings</string>
     <string name="label_open_alarm">Open Alarm</string>

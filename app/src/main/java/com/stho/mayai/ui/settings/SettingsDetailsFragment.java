@@ -42,7 +42,10 @@ public class SettingsDetailsFragment extends Fragment {
     @Override
     public View onCreateView(final @NonNull LayoutInflater inflater, final @Nullable ViewGroup container, final @Nullable Bundle savedInstanceState) {
         binding = FragmentSettingsDetailsBinding.inflate(inflater, container, false);
-        binding.rotary.setOnAngleChangedListener(delta -> viewModel.rotate(delta));
+        binding.rotary.setOnAngleChangedListener(delta -> {
+            touch.touch();
+            viewModel.rotate(delta);
+        });
         binding.headlineFrame.setOnClickListener(view -> animation.hide());
         binding.buttonReset.setOnClickListener(view -> viewModel.reset());
         return binding.getRoot();
@@ -54,7 +57,7 @@ public class SettingsDetailsFragment extends Fragment {
         viewModel.getDefaultSecondsLD().observe(getViewLifecycleOwner(), this::onObserveDefaultSeconds);
         viewModel.getAngleLD().observe(getViewLifecycleOwner(), this::onObserveAngle);
         viewModel.getTypeLD().observe(getViewLifecycleOwner(), this::onObserveType);
-        viewModel.getIsModifiedLD().observe(getViewLifecycleOwner(), this::observeIsModified);
+        viewModel.getIsModifiedLD().observe(getViewLifecycleOwner(), this::onObserveIsModified);
         animation = ViewAnimation.build(binding.headlineFrame);
         rotaryShow();
     }
@@ -105,7 +108,7 @@ public class SettingsDetailsFragment extends Fragment {
         updateActionBar(typeString);
     }
 
-    private void observeIsModified(final boolean isModified) {
+    private void onObserveIsModified(final boolean isModified) {
         binding.buttonReset.setEnabled(isModified);
     }
 

@@ -2,6 +2,7 @@ package com.stho.mayai.ui.settings;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -43,6 +44,7 @@ public class SettingsFragment extends Fragment {
         binding = FragmentSettingsBinding.inflate(inflater, container, false);
         binding.buttonDebug.setOnClickListener(view -> findNavController().navigate(SettingsFragmentDirections.actionNavigationSettingsToNavigationDebug()));
         binding.buttonReset.setOnClickListener(view -> viewModel.reset());
+        binding.buttonResetDefault.setOnClickListener(view -> viewModel.resetDefault());
         binding.buttonModifyEgg.setOnClickListener(view -> onEdit(Alarm.TYPE_EGG));
         binding.buttonModifyChampagne.setOnClickListener(view -> onEdit(Alarm.TYPE_CHAMPAGNE));
         binding.buttonModifyBread.setOnClickListener(view -> onEdit(Alarm.TYPE_BREAD));
@@ -56,6 +58,8 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         viewModel.getSettingsLD().observe(getViewLifecycleOwner(), this::onObserveSettings);
+        viewModel.getIsModifiedLD().observe(getViewLifecycleOwner(), this::onObserveIsModified);
+        viewModel.getIsDifferentFromDefaultLD().observe(getViewLifecycleOwner(), this::onObserveIsDifferentFromDefault);
         animation = ViewAnimation.build(binding.headlineFrame);
         updateActionBar();
     }
@@ -94,6 +98,16 @@ public class SettingsFragment extends Fragment {
         binding.minutesBread.setText(Helpers.getMinutesAsString(settings.getMinutesBread()));
         binding.minutesPotatoes.setText(Helpers.getMinutesAsString(settings.getMinutesPotatoes()));
         binding.minutesClock.setText(Helpers.getMinutesAsString(settings.getMinutesClock()));
+    }
+
+    private void onObserveIsModified(final boolean isModified) {
+        binding.buttonReset.setEnabled(isModified);
+    }
+
+    private void onObserveIsDifferentFromDefault(final boolean isDifferentFromDefault) {
+        binding.buttonResetDefault.setEnabled(isDifferentFromDefault);
+        binding.buttonResetDefault.setTextColor(isDifferentFromDefault ?
+                ContextCompat.getColor(requireContext(), R.color.primaryTextColor) : Color.GRAY);
     }
 
     private void updateActionBar()    {

@@ -280,14 +280,27 @@
             android:src="@drawable/debug_pressable"
             app:layout_constraintStart_toStartOf="@id/vertical_guideline3"
             app:layout_constraintEnd_toEndOf="@id/vertical_guideline4"
-            app:layout_constraintBottom_toTopOf="@id/buttonReset"
+            app:layout_constraintBottom_toTopOf="@id/buttonResetDefault"
             android:contentDescription="@string/label_headline_debug"
             android:clickable="true"
             android:focusable="true"
             android:background="?android:attr/selectableItemBackgroundBorderless" />
 
-        <Button
+        <ImageView
             android:id="@+id/buttonReset"
+            android:layout_width="0dp"
+            android:layout_height="80sp"
+            android:src="@drawable/reset_pressable"
+            app:layout_constraintStart_toStartOf="@id/vertical_guideline1"
+            app:layout_constraintEnd_toEndOf="@id/vertical_guideline2"
+            app:layout_constraintBottom_toTopOf="@id/buttonResetDefault"
+            android:contentDescription="@string/label_undo"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackgroundBorderless" />
+
+        <Button
+            android:id="@+id/buttonResetDefault"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"

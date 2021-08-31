@@ -1,6 +1,8 @@
 package com.stho.mayai;
 
-public class Settings {
+import androidx.annotation.NonNull;
+
+public class Settings implements ISettings {
 
     private double minutesEgg;
     private double minutesChampagne;
@@ -13,15 +15,35 @@ public class Settings {
         minutesChampagne = 26;
         minutesBread = 10.5;
         minutesPotatoes = 22;
-        minutesClock = 3;
+        minutesClock = 45;
     }
 
-    public void reset() {
-        minutesEgg = 7.2;
-        minutesChampagne = 26;
-        minutesBread = 10.5;
-        minutesPotatoes = 22;
-        minutesClock = 3;
+    Settings(final @NonNull ISettings template) {
+        minutesEgg = template.getMinutes(Alarm.TYPE_EGG);
+        minutesChampagne = template.getMinutes(Alarm.TYPE_CHAMPAGNE);
+        minutesBread = template.getMinutes(Alarm.TYPE_BREAD);
+        minutesPotatoes = template.getMinutes(Alarm.TYPE_POTATOES);
+        minutesClock = template.getMinutes(Alarm.TYPE_CLOCK);
+    }
+
+    public void takeOver(final @NonNull ISettings template) {
+        minutesEgg = template.getMinutes(Alarm.TYPE_EGG);
+        minutesChampagne = template.getMinutes(Alarm.TYPE_CHAMPAGNE);
+        minutesBread = template.getMinutes(Alarm.TYPE_BREAD);
+        minutesPotatoes = template.getMinutes(Alarm.TYPE_POTATOES);
+        minutesClock = template.getMinutes(Alarm.TYPE_CLOCK);
+    }
+
+    public boolean areDifferent(final @NonNull ISettings template) {
+        return areDifferent(minutesEgg, template.getMinutes(Alarm.TYPE_EGG))
+                || areDifferent(minutesChampagne, template.getMinutes(Alarm.TYPE_CHAMPAGNE))
+                || areDifferent(minutesBread, template.getMinutes(Alarm.TYPE_BREAD))
+                || areDifferent(minutesPotatoes, template.getMinutes(Alarm.TYPE_POTATOES))
+                || areDifferent(minutesClock, template.getMinutes(Alarm.TYPE_CLOCK));
+    }
+
+    public @NonNull ISettings clone() {
+        return new Settings(this);
     }
 
     public void setMinutesEgg(final double value) {
@@ -64,6 +86,7 @@ public class Settings {
         return minutesClock;
     }
 
+    @Override
     public double getMinutes(int type) {
         switch (type) {
             case Alarm.TYPE_EGG:
@@ -86,6 +109,7 @@ public class Settings {
         }
     }
 
+    @Override
     public void setMinutes(int type, double minutes) {
         switch (type) {
             case Alarm.TYPE_EGG:
@@ -147,5 +171,13 @@ public class Settings {
         } catch (Exception ex) {
             return null; // ignore the parse error
         }
+    }
+
+    public static @NonNull ISettings defaultValues() {
+        return new Settings();
+    }
+
+    public static boolean areDifferent(double a, double b) {
+        return !(Math.abs(a - b) < 0.01);
     }
 }
