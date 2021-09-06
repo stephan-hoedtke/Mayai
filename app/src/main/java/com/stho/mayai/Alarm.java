@@ -16,6 +16,7 @@ public class Alarm {
     public static final int TYPE_POTATOES = 3;
     public static final int TYPE_CHAMPAGNE = 4;
     public static final int TYPE_CLOCK = 5;
+    public static final int TYPE_CAKE = 6;
 
     public static final int STATUS_NONE = 0;
     public static final int STATUS_PENDING = 1;
@@ -154,6 +155,9 @@ public class Alarm {
             case TYPE_BREAD:
                 return R.drawable.bread;
 
+            case TYPE_CAKE:
+                    return R.drawable.cake;
+
             default:
                 return R.drawable.clock_background;
         }
@@ -173,6 +177,9 @@ public class Alarm {
             case TYPE_BREAD:
                 return R.string.title_bread;
 
+            case TYPE_CAKE:
+                return R.string.title_cake;
+
             default:
                 return R.string.title_clock;
         }
@@ -191,6 +198,9 @@ public class Alarm {
 
             case TYPE_BREAD:
                 return R.drawable.bread256;
+
+            case TYPE_CAKE:
+                return R.drawable.cake256;
 
             default:
                 return R.drawable.clock256;

@@ -25,22 +25,22 @@
         <com.stho.mayai.MayaiImageView
             android:id="@+id/imageViewClock"
             android:layout_width="0dp"
-            android:layout_height="130sp"
+            android:layout_height="140sp"
             android:layout_marginHorizontal="@dimen/activity_vertical_margin"
-            android:layout_marginBottom="17dp"
+            android:layout_marginBottom="10dp"
             android:contentDescription="@string/label_set_alarm"
             android:background="@drawable/background_selector"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/vertical_guideline1"
-            android:src="@drawable/clock" />
+            app:layout_constraintStart_toStartOf="@id/vertical_guideline2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/clock"/>
 
         <com.stho.mayai.MayaiImageView
             android:id="@+id/imageViewChampagne"
             android:layout_width="0dp"
             android:layout_height="300sp"
             android:layout_marginHorizontal="@dimen/activity_vertical_margin"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="40dp"
             android:contentDescription="@string/label_set_alarm_for_champagne"
             android:background="@drawable/background_selector"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -53,26 +53,26 @@
             android:layout_width="0dp"
             android:layout_height="130sp"
             android:layout_marginHorizontal="@dimen/activity_vertical_margin"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="0dp"
             android:contentDescription="@string/label_set_alarm_for_eggs"
             android:background="@drawable/background_selector"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/imageViewCake"
             app:layout_constraintStart_toStartOf="@id/vertical_guideline2"
             app:layout_constraintEnd_toEndOf="parent"
             android:src="@drawable/egg" />
 
         <com.stho.mayai.MayaiImageView
-            android:id="@+id/imageViewPotatoes"
+            android:id="@+id/imageViewCake"
             android:layout_width="0dp"
             android:layout_height="130sp"
             android:layout_marginHorizontal="@dimen/activity_vertical_margin"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="20dp"
             android:contentDescription="@string/label_set_alarm_for_potatoes"
             android:background="@drawable/background_selector"
             app:layout_constraintBottom_toTopOf="@id/imageViewClock"
             app:layout_constraintStart_toEndOf="@id/vertical_guideline2"
             app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/potatoes" />
+            android:src="@drawable/cake" />
 
         <com.stho.mayai.MayaiImageView
             android:id="@+id/imageViewBread"
@@ -82,10 +82,23 @@
             android:layout_marginBottom="10dp"
             android:contentDescription="@string/label_set_alarm_for_bread"
             android:background="@drawable/background_selector"
-            app:layout_constraintBottom_toTopOf="@id/imageViewPotatoes"
-            app:layout_constraintStart_toEndOf="@id/vertical_guideline2"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/vertical_guideline1"
             android:src="@drawable/bread" />
+
+        <com.stho.mayai.MayaiImageView
+            android:id="@+id/imageViewPotatoes"
+            android:layout_width="0dp"
+            android:layout_height="120sp"
+            android:layout_marginHorizontal="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="0dp"
+            android:contentDescription="@string/label_set_alarm_for_eggs"
+            android:background="@drawable/background_selector"
+            app:layout_constraintBottom_toTopOf="@id/imageViewBread"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/vertical_guideline1"
+            android:src="@drawable/potatoes" />
 
         <ImageView
             android:id="@+id/infoCircleEgg"
@@ -129,6 +142,15 @@
             android:layout_height="@dimen/counter_image_size"
             app:layout_constraintTop_toTopOf="@id/imageViewClock"
             app:layout_constraintEnd_toEndOf="@id/imageViewClock"
+            android:src="@drawable/circle_green"
+            android:contentDescription="@string/label_empty" />
+
+        <ImageView
+            android:id="@+id/infoCircleCake"
+            android:layout_width="@dimen/counter_image_size"
+            android:layout_height="@dimen/counter_image_size"
+            app:layout_constraintTop_toTopOf="@id/imageViewCake"
+            app:layout_constraintEnd_toEndOf="@id/imageViewCake"
             android:src="@drawable/circle_green"
             android:contentDescription="@string/label_empty" />
 
@@ -186,6 +208,18 @@
             android:layout_height="@dimen/counter_image_size"
             app:layout_constraintTop_toTopOf="@id/imageViewClock"
             app:layout_constraintEnd_toEndOf="@id/imageViewClock"
+            android:textAlignment="center"
+            android:textColor="@color/colorBackground"
+            android:gravity="center"
+            android:textSize="@dimen/counter_text_size"
+            android:text="@string/label_default_count" />
+
+        <TextView
+            android:id="@+id/infoCounterCake"
+            android:layout_width="@dimen/counter_image_size"
+            android:layout_height="@dimen/counter_image_size"
+            app:layout_constraintTop_toTopOf="@id/imageViewCake"
+            app:layout_constraintEnd_toEndOf="@id/imageViewCake"
             android:textAlignment="center"
             android:textColor="@color/colorBackground"
             android:gravity="center"
