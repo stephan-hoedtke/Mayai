@@ -45,16 +45,18 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
-        binding.imageViewEgg.setOnClickListener(view -> startCounter(Alarm.TYPE_EGG,  viewModel.getSettings().getMinutesEgg()));
-        binding.imageViewChampagne.setOnClickListener(view -> startCounter(Alarm.TYPE_CHAMPAGNE, viewModel.getSettings().getMinutesChampagne()));
-        binding.imageViewBread.setOnClickListener(view -> startCounter(Alarm.TYPE_BREAD, viewModel.getSettings().getMinutesBread()));
-        binding.imageViewPotatoes.setOnClickListener(view -> startCounter(Alarm.TYPE_POTATOES, viewModel.getSettings().getMinutesPotatoes()));
-        binding.imageViewClock.setOnClickListener(view -> startCounter(Alarm.TYPE_CLOCK, viewModel.getSettings().getMinutesClock()));
+        binding.imageViewEgg.setOnClickListener(view -> startCounter(Alarm.TYPE_EGG));
+        binding.imageViewChampagne.setOnClickListener(view -> startCounter(Alarm.TYPE_CHAMPAGNE));
+        binding.imageViewBread.setOnClickListener(view -> startCounter(Alarm.TYPE_BREAD));
+        binding.imageViewPotatoes.setOnClickListener(view -> startCounter(Alarm.TYPE_POTATOES));
+        binding.imageViewClock.setOnClickListener(view -> startCounter(Alarm.TYPE_CLOCK));
+        binding.imageViewCake.setOnClickListener(view -> startCounter(Alarm.TYPE_CAKE));
         binding.imageViewEgg.setOnLongClickListener(view -> { display(); return false; });
         binding.imageViewChampagne.setOnLongClickListener(view -> { display(); return false; });
         binding.imageViewBread.setOnLongClickListener(view -> { display(); return false; });
         binding.imageViewPotatoes.setOnLongClickListener(view -> { display(); return false; });
         binding.imageViewClock.setOnLongClickListener(view -> { display(); return false; });
+        binding.imageViewCake.setOnLongClickListener(view -> { display(); return false; });
         binding.headlineFrame.setOnClickListener(view -> animation.hide());
         return binding.getRoot();
     }
@@ -106,6 +108,11 @@ public class HomeFragment extends Fragment {
         findNavController().navigate(HomeFragmentDirections.actionGlobalNavigationAlarms());
     }
 
+    private void startCounter(final int type) {
+        final double minutes = viewModel.getSettings().getMinutes(type);
+        startCounter(type, minutes);
+    }
+
     private void startCounter(final int type, final double durationInMinutes) {
         final Alarm alarm = new Alarm(type, getString(Alarm.getTypeStringId(type)), durationInMinutes);
         MayaiWorker.build(requireContext()).scheduleAlarm(alarm);
@@ -125,6 +132,7 @@ public class HomeFragment extends Fragment {
         updateUI(summary.getAlarmInfo(Alarm.TYPE_BREAD), binding.infoCircleBread, binding.infoCounterBread);
         updateUI(summary.getAlarmInfo(Alarm.TYPE_POTATOES), binding.infoCirclePotatoes, binding.infoCounterPotatoes);
         updateUI(summary.getAlarmInfo(Alarm.TYPE_CLOCK), binding.infoCircleClock, binding.infoCounterClock);
+        updateUI(summary.getAlarmInfo(Alarm.TYPE_CAKE), binding.infoCircleCake, binding.infoCounterCake);
 
         if (summary.hasAlarm()) {
             binding.imageViewClock.setAlarmTime(summary.getTriggerTime());

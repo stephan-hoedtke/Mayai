@@ -10,8 +10,8 @@ android {
         applicationId "com.stho.mayai"
         minSdkVersion 27
         targetSdkVersion 31
-        versionCode 5
-        versionName "1.5.1"
+        versionCode 6
+        versionName "1.6.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

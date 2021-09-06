@@ -49,6 +49,7 @@ public class SettingsFragment extends Fragment {
         binding.buttonModifyChampagne.setOnClickListener(view -> onEdit(Alarm.TYPE_CHAMPAGNE));
         binding.buttonModifyBread.setOnClickListener(view -> onEdit(Alarm.TYPE_BREAD));
         binding.buttonModifyPotatoes.setOnClickListener(view -> onEdit(Alarm.TYPE_POTATOES));
+        binding.buttonModifyCake.setOnClickListener(view -> onEdit(Alarm.TYPE_CAKE));
         binding.buttonModifyClock.setOnClickListener(view -> onEdit(Alarm.TYPE_CLOCK));
         binding.headlineFrame.setOnClickListener(view -> animation.hide());
         return binding.getRoot();
@@ -98,6 +99,7 @@ public class SettingsFragment extends Fragment {
         binding.minutesBread.setText(Helpers.getMinutesAsString(settings.getMinutesBread()));
         binding.minutesPotatoes.setText(Helpers.getMinutesAsString(settings.getMinutesPotatoes()));
         binding.minutesClock.setText(Helpers.getMinutesAsString(settings.getMinutesClock()));
+        binding.minutesCake.setText(Helpers.getMinutesAsString(settings.getMinutesCake()));
     }
 
     private void onObserveIsModified(final boolean isModified) {

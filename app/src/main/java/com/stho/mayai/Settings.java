@@ -9,6 +9,7 @@ public class Settings implements ISettings {
     private double minutesBread;
     private double minutesPotatoes;
     private double minutesClock;
+    private double minutesCake;
 
     Settings() {
         minutesEgg = 7.2;
@@ -16,6 +17,7 @@ public class Settings implements ISettings {
         minutesBread = 10.5;
         minutesPotatoes = 22;
         minutesClock = 45;
+        minutesCake = 30;
     }
 
     Settings(final @NonNull ISettings template) {
@@ -24,6 +26,7 @@ public class Settings implements ISettings {
         minutesBread = template.getMinutes(Alarm.TYPE_BREAD);
         minutesPotatoes = template.getMinutes(Alarm.TYPE_POTATOES);
         minutesClock = template.getMinutes(Alarm.TYPE_CLOCK);
+        minutesCake = template.getMinutes(Alarm.TYPE_CAKE);
     }
 
     public void takeOver(final @NonNull ISettings template) {
@@ -32,6 +35,7 @@ public class Settings implements ISettings {
         minutesBread = template.getMinutes(Alarm.TYPE_BREAD);
         minutesPotatoes = template.getMinutes(Alarm.TYPE_POTATOES);
         minutesClock = template.getMinutes(Alarm.TYPE_CLOCK);
+        minutesCake = template.getMinutes(Alarm.TYPE_CAKE);
     }
 
     public boolean areDifferent(final @NonNull ISettings template) {
@@ -39,7 +43,9 @@ public class Settings implements ISettings {
                 || areDifferent(minutesChampagne, template.getMinutes(Alarm.TYPE_CHAMPAGNE))
                 || areDifferent(minutesBread, template.getMinutes(Alarm.TYPE_BREAD))
                 || areDifferent(minutesPotatoes, template.getMinutes(Alarm.TYPE_POTATOES))
-                || areDifferent(minutesClock, template.getMinutes(Alarm.TYPE_CLOCK));
+                || areDifferent(minutesClock, template.getMinutes(Alarm.TYPE_CLOCK))
+                || areDifferent(minutesCake, template.getMinutes(Alarm.TYPE_CAKE));
+
     }
 
     public @NonNull ISettings clone() {
@@ -66,6 +72,8 @@ public class Settings implements ISettings {
         this.minutesClock = value;
     }
 
+    public void setMinutesCake(final double value) { this.minutesCake = value; }
+
     public double getMinutesEgg() {
         return minutesEgg;
     }
@@ -86,6 +94,8 @@ public class Settings implements ISettings {
         return minutesClock;
     }
 
+    public double getMinutesCake() { return minutesCake; }
+
     @Override
     public double getMinutes(int type) {
         switch (type) {
@@ -103,6 +113,9 @@ public class Settings implements ISettings {
 
             case Alarm.TYPE_CLOCK:
                 return minutesClock;
+
+            case Alarm.TYPE_CAKE:
+                return minutesCake;
 
             default:
                 throw new IllegalArgumentException("Invalid alarm type");
@@ -132,6 +145,10 @@ public class Settings implements ISettings {
                 minutesClock = minutes;
                 break;
 
+            case Alarm.TYPE_CAKE:
+                minutesCake = minutes;
+                break;
+
             default:
                 throw new IllegalArgumentException("Invalid alarm type");
         }
@@ -150,7 +167,9 @@ public class Settings implements ISettings {
                 + DELIMITER
                 + Double.toString(this.minutesPotatoes)
                 + DELIMITER
-                + Double.toString(this.minutesClock);
+                + Double.toString(this.minutesClock)
+                + DELIMITER
+                + Double.toString(this.minutesCake);
     }
 
     static Settings parseSettings(String value) {
@@ -164,6 +183,9 @@ public class Settings implements ISettings {
                     settings.setMinutesBread(Double.parseDouble(token[2]));
                     settings.setMinutesPotatoes(Double.parseDouble(token[3]));
                     settings.setMinutesClock(Double.parseDouble(token[4]));
+                    if (token.length > 5) { // With version 1.6.0
+                        settings.setMinutesCake(Double.parseDouble(token[5]));
+                    }
                     return settings;
                 }
             }
