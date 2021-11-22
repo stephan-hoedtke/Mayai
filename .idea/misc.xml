@@ -8,8 +8,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/shoedtke/AndroidStudioProjects/STHO/Mayai/app/src/main/res/drawable/alarm_pressable.xml" value="0.1890625" />
         <entry key="..\:/Users/shoedtke/AndroidStudioProjects/STHO/Mayai/app/src/main/res/drawable/background_selector.xml" value="0.13796296296296295" />
         <entry key="..\:/Users/shoedtke/AndroidStudioProjects/STHO/Mayai/app/src/main/res/drawable/ic_launcher_background.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/shoedtke/AndroidStudioProjects/STHO/Mayai/app/src/main/res/drawable/repeat_pressable.xml" value="0.21510416666666668" />
         <entry key="..\:/Users/shoedtke/AndroidStudioProjects/STHO/Mayai/app/src/main/res/layout/activity_alarm_target.xml" value="0.14719202898550723" />
         <entry key="..\:/Users/shoedtke/AndroidStudioProjects/STHO/Mayai/app/src/main/res/layout/activity_main.xml" value="0.14719202898550723" />
         <entry key="..\:/Users/shoedtke/AndroidStudioProjects/STHO/Mayai/app/src/main/res/layout/edit_number_dialog.xml" value="0.14719202898550723" />

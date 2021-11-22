@@ -32,7 +32,6 @@
     <string name="label_default_count">2</string>
     <string name="label_show_hint">Show Hint</string>
     <string name="label_swipe_and_rotate_the_scale">Swipe and rotate the scale to change the alarm time</string>
-    <string name="label_show_or_hide_the_scale">Show or hide the scale to change the alarm time</string>
     <string name="label_set_alarm_for_champagne">Set alarm for champagne</string>
     <string name="label_set_alarm_for_eggs">Set alarm for eggs</string>
     <string name="label_set_alarm_for_potatoes">Set alarm for potatoes</string>
@@ -40,6 +39,7 @@
     <string name="label_set_alarm">Set alarm</string>
     <string name="label_modify_default_alarm_time">Modify default alarm time</string>
     <string name="label_reset_default_settings">Reset default durations</string>
+    <string name="label_repeat_countdown_with_last_duration">Repeat countdown with last duration</string>
     <string name="label_undo">Undo</string>
     <string name="label_version_params">Version: %s</string>
     <string name="text_alarm_canceled">Alarm was canceled.</string>

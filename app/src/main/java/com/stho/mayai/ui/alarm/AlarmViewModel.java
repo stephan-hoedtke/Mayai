@@ -79,13 +79,28 @@ public class AlarmViewModel extends AndroidViewModel {
         return (float)angle;
     }
 
-    void rotate(final double delta) {
+    void rotateDelaySchedule(final double delta) {
         final Alarm alarm = getAlarm();
         if (alarm != null) {
             double seconds = alarm.getRemainingSeconds() + (delta * SECONDS_PER_DEGREE);
             double minutes = Helpers.toMinutes(seconds);
 
+            // Note, while rotating the alarm state will be changed to pending.
+            // Once the rotation is done, the schedule will be updated.
+            // See: touch.isReady()
             MayaiWorker.build(getApplication()).reschedule(alarm, minutes, false);
+            touchAlarm();
+        }
+    }
+
+    void repeatCountdown() {
+        final Alarm alarm = getAlarm();
+        if (alarm != null)
+        {
+            double seconds = alarm.getDurationInSeconds();
+            double minutes = Helpers.toMinutes(seconds);
+
+            MayaiWorker.build(getApplication()).reschedule(alarm, minutes, true);
             touchAlarm();
         }
     }

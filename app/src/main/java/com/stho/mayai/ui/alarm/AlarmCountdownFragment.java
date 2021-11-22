@@ -49,14 +49,14 @@ public class AlarmCountdownFragment extends Fragment {
     public View onCreateView(final @NonNull LayoutInflater inflater, final @Nullable ViewGroup container, final @Nullable Bundle savedInstanceState) {
         binding = FragmentAlarmCountdownBinding.inflate(inflater, container, false);
         binding.image.setOnClickListener(view -> edit());
-        binding.textViewRemainingTime.setOnClickListener(view -> edit());
+        binding.textViewRemainingTime.setOnClickListener(view -> onShowOrHideRotary());
         binding.headlineFrame.setOnClickListener(view -> animation.hide());
         binding.buttonStopPlaying.setOnClickListener(view -> cancelAlarm());
-        binding.buttonShowRotary.setOnClickListener(view -> onShowRotary());
+        binding.buttonRepeat.setOnClickListener(view -> repeatCountdown());
         binding.rotary.setOnAngleChangedListener(delta -> {
             touch.touch();
             autoDisappearRotary.touch();
-            viewModel.rotate(delta);
+            viewModel.rotateDelaySchedule(delta);
         });
         rotaryHide();
         return binding.getRoot();
@@ -173,7 +173,7 @@ public class AlarmCountdownFragment extends Fragment {
         return (binding.rotaryFrame.getVisibility() == View.VISIBLE);
     }
 
-    private void onShowRotary() {
+    private void onShowOrHideRotary() {
         if (isRotaryVisible()) {
             viewModel.setPermanent(false);
             rotaryDisappear();
@@ -223,6 +223,11 @@ public class AlarmCountdownFragment extends Fragment {
             });
             binding.image.animate().alpha(1f).setDuration(DURATION);
         }
+    }
+
+    private void repeatCountdown() {
+        viewModel.repeatCountdown();
+        rotaryAppear();
     }
 
     private static final int DURATION = 333;
